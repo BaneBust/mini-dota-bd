@@ -433,7 +433,7 @@ document.getElementById('merc-search').addEventListener('input', e => {
 // ─── BUILD CREATOR ─────────────────────────────────────────────────────────────
 const PREDEFINED_TAGS = [
   'Carry', 'Semi-Carry', 'Support', 'Ganker', 'Pusher', 'Nuker', 'Tank',
-  'Orb-Heavy', 'Crit', 'Lifesteal', 'AoE', 'Beginner', 'Fortgeschritten', 'Early-Game', 'Late-Game'
+  'Orb-Heavy', 'Crit', 'Lifesteal', 'AoE', 'Beginner', 'Advanced', 'Early-Game', 'Late-Game'
 ];
 const selectedTags = new Set();
 
