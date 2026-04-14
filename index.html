@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
       <button class="nav-btn" data-tab="items">Items</button>
       <button class="nav-btn" data-tab="mercs">Mercs</button>
       <button class="nav-btn" data-tab="builds">Builds</button>
-      <button class="nav-btn" data-tab="build-creator">Build erstellen</button>
+      <button class="nav-btn" data-tab="build-creator">Create Build</button>
     </nav>
   </header>
 
@@ -22,9 +22,9 @@
     <!-- HEROES TAB -->
     <section id="tab-heroes" class="tab active">
       <div class="search-bar">
-        <input type="text" id="hero-search" placeholder="Hero suchen...">
+        <input type="text" id="hero-search" placeholder="Search heroes...">
         <select id="hero-filter-stat">
-          <option value="">Alle Stats</option>
+          <option value="">All Stats</option>
           <option value="STR">Strength</option>
           <option value="AGI">Agility</option>
           <option value="INT">Intelligence</option>
@@ -36,9 +36,9 @@
     <!-- ITEMS TAB -->
     <section id="tab-items" class="tab">
       <div class="search-bar">
-        <input type="text" id="item-search" placeholder="Item suchen...">
+        <input type="text" id="item-search" placeholder="Search items...">
         <select id="item-filter-cat">
-          <option value="">Alle Kategorien</option>
+          <option value="">All Categories</option>
           <option value="Orb">Orbs</option>
           <option value="Upgradable">Upgradable</option>
           <option value="Advanced">Advanced</option>
@@ -56,7 +56,7 @@
     <!-- MERCS TAB -->
     <section id="tab-mercs" class="tab">
       <div class="search-bar">
-        <input type="text" id="merc-search" placeholder="Merc suchen...">
+        <input type="text" id="merc-search" placeholder="Search mercs...">
       </div>
       <div id="merc-list" class="card-grid"></div>
     </section>
@@ -64,7 +64,7 @@
     <!-- BUILDS TAB -->
     <section id="tab-builds" class="tab">
       <div class="search-bar">
-        <input type="text" id="build-search" placeholder="Build suchen...">
+        <input type="text" id="build-search" placeholder="Search builds...">
       </div>
       <div id="build-list" class="card-grid"></div>
     </section>
@@ -72,27 +72,27 @@
     <!-- BUILD CREATOR TAB -->
     <section id="tab-build-creator" class="tab">
       <div class="build-creator">
-        <h2>Neuen Build erstellen</h2>
+        <h2>Create New Build</h2>
         <div class="creator-form">
           <div class="form-row">
             <label>Build Name</label>
-            <input type="text" id="bc-name" placeholder="z.B. Blink-Blade Build">
+            <input type="text" id="bc-name" placeholder="e.g. Blink-Blade Build">
           </div>
           <div class="form-row">
-            <label>Dein Name</label>
-            <input type="text" id="bc-author" placeholder="z.B. Kehls (optional)">
+            <label>Your Name</label>
+            <input type="text" id="bc-author" placeholder="e.g. PlayerName (optional)">
           </div>
           <div class="form-row">
             <label>Hero</label>
             <select id="bc-hero">
-              <option value="">Hero wählen...</option>
+              <option value="">Select hero...</option>
             </select>
           </div>
 
           <div id="bc-skillorder-section" class="form-row hidden">
-            <label class="phase-label" style="color:var(--gold-light); margin-bottom:10px;">Skill Order (Lvl 1–10)</label>
+            <label class="phase-label" style="color:var(--gold-light); margin-bottom:10px;">Skill Order (Lvl 1–25)</label>
             <div id="bc-skillorder-grid" class="skillorder-grid"></div>
-            <div class="skillorder-hint">Klick = zuweisen · nochmal klicken = entfernen · max. 6 Ränge pro Skill</div>
+            <div class="skillorder-hint">Click = assign · click again = remove · max. 6 ranks per skill</div>
           </div>
 
           <div class="form-row phase-section">
@@ -130,7 +130,7 @@
               <div class="item-slot empty" data-slot="5">+</div>
             </div>
             <div class="legendary-row">
-              <span class="legendary-row-label">⚔ Legendary Ersatz (optional — welches Endgame-Item wird ersetzt?)</span>
+              <span class="legendary-row-label">⚔ Legendary Replacement (optional — which Endgame item does it replace?)</span>
               <div id="bc-slots-legendary" class="item-slots" data-phase="legendary">
                 <div class="item-slot legendary-slot empty" data-slot="0">—</div>
                 <div class="item-slot legendary-slot empty" data-slot="1">—</div>
@@ -143,7 +143,7 @@
           </div>
 
           <div id="bc-item-picker" class="item-picker hidden">
-            <input type="text" id="bc-item-search" placeholder="Item suchen...">
+            <input type="text" id="bc-item-search" placeholder="Search items...">
             <div id="bc-item-picker-list"></div>
           </div>
 
@@ -152,13 +152,13 @@
             <div id="bc-tags-container" class="tags-selector"></div>
           </div>
           <div class="form-row">
-            <label>Notizen</label>
-            <textarea id="bc-notes" rows="4" placeholder="Build-Reihenfolge, Strategie, Tipps..."></textarea>
+            <label>Notes</label>
+            <textarea id="bc-notes" rows="4" placeholder="Build order, strategy, tips..."></textarea>
           </div>
-          <button id="bc-save" class="btn-primary">Build speichern</button>
+          <button id="bc-save" class="btn-primary">Save Build</button>
         </div>
         <div id="bc-preview" class="build-preview hidden">
-          <h3>Vorschau</h3>
+          <h3>Preview</h3>
           <div id="bc-preview-content"></div>
         </div>
       </div>

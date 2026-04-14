@@ -28,12 +28,12 @@ async function loadData() {
 
 async function loadBuildsFromSupabase() {
   const grid = document.getElementById('build-list');
-  grid.innerHTML = '<p style="color:var(--text-dim); padding:16px;">Builds werden geladen…</p>';
+  grid.innerHTML = '<p style="color:var(--text-dim); padding:16px;">Loading builds…</p>';
   const { data, error } = await _sbc
     .from('community_builds')
     .select('*')
     .order('created_at', { ascending: false });
-  if (error) { console.error(error); showToast('Fehler beim Laden der Builds'); return; }
+  if (error) { console.error(error); showToast('Error loading builds'); return; }
   builds = data || [];
   renderBuilds();
 }
@@ -131,7 +131,7 @@ function showHeroDetail(id, el) {
       </div>
       <div id="hero-level-stats" class="level-stats-display"></div>
     </div>
-  ` : '<p style="color:var(--text-dim); margin-bottom:16px;">Level-Stats noch nicht dokumentiert.</p>';
+  ` : '<p style="color:var(--text-dim); margin-bottom:16px;">Level stats not yet documented.</p>';
 
   const spritePositions = ['0%', '33.33%', '66.67%', '100%'];
   const abilitiesHtml = hero.abilities.length > 0 ? hero.abilities.map((ab, idx) => {
@@ -152,8 +152,8 @@ function showHeroDetail(id, el) {
           ${ab.hotkey ? `<span class="ability-type">Hotkey: ${ab.hotkey}</span>` : ''}
         </div>
         <div class="ability-desc">${ab.description}</div>
-        ${ab.required_level ? `<div class="ability-req">Benötigt Ability Level ${ab.required_level}${ab.hero_level_required ? ` / Hero Level ${ab.hero_level_required}` : ''}</div>` : ''}
-        ${ab.area ? `<div class="ability-req">Bereich: ${ab.area}</div>` : ''}
+        ${ab.required_level ? `<div class="ability-req">Requires Ability Level ${ab.required_level}${ab.hero_level_required ? ` / Hero Level ${ab.hero_level_required}` : ''}</div>` : ''}
+        ${ab.area ? `<div class="ability-req">Area: ${ab.area}</div>` : ''}
         ${keys.length > 0 ? `
           <table class="levels-table">
             <thead><tr><th>Rank</th>${keys.map(k => `<th>${formatKey(k)}</th>`).join('')}</tr></thead>
@@ -162,7 +162,7 @@ function showHeroDetail(id, el) {
         ` : ''}
       </div>
     `;
-  }).join('') : '<p style="color:var(--text-dim)">Fähigkeiten noch nicht dokumentiert.</p>';
+  }).join('') : '<p style="color:var(--text-dim)">Abilities not yet documented.</p>';
 
   const heroHtml = `
     <div class="detail-header">
@@ -285,14 +285,14 @@ function renderBuilds(filter = '') {
   grid.innerHTML = filtered.map(b => {
     const hero = heroes.find(h => h.id === b.hero_id);
     const totalItems = [...(b.first_buy || []), ...(b.midgame || []), ...(b.endgame || [])].filter(Boolean).length;
-    const tagStr = b.tags?.length > 0 ? b.tags.map(t => `<span class="build-tag-pill">${t}</span>`).join('') : '<span style="color:var(--text-dim)">keine Tags</span>';
+    const tagStr = b.tags?.length > 0 ? b.tags.map(t => `<span class="build-tag-pill">${t}</span>`).join('') : '<span style="color:var(--text-dim)">no tags</span>';
 
     return `
       <div class="card build-card" onclick="showBuildDetail('${b.id}', this)">
         <div class="build-card-header">
           <div class="build-card-info">
             <div class="card-name">${b.name}</div>
-            <div class="card-sub">${hero ? hero.name : b.hero_id} · <span style="color:var(--text-dim)">${b.author || 'Anonym'}</span></div>
+            <div class="card-sub">${hero ? hero.name : b.hero_id} · <span style="color:var(--text-dim)">${b.author || 'Anonymous'}</span></div>
             <div class="build-card-meta">${totalItems} Items · <span class="build-tag-row">${tagStr}</span></div>
           </div>
           <div class="build-expand-icon">▼</div>
@@ -357,7 +357,7 @@ function showBuildDetail(id, el) {
   }
 
   html += `<div class="build-detail-meta" style="color:var(--text-dim);font-size:11px;margin-top:10px;">
-    von ${b.author || 'Anonym'} · ${new Date(b.created_at).toLocaleDateString('de-DE')}
+    by ${b.author || 'Anonymous'} · ${new Date(b.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}
   </div></div>`;
 
   showInlineDetail('build-list', el, html);
@@ -405,7 +405,7 @@ function showMercDetail(id, el) {
       <div>
         <div class="detail-title">${merc.name}</div>
         <div class="detail-subtitle">
-          ${merc.building ? 'Gebäude: ' + merc.building + ' · ' : ''}
+          ${merc.building ? 'Building: ' + merc.building + ' · ' : ''}
           ${merc.cost != null ? 'Kosten: ' + merc.cost + 'g' + (merc.cost_lumber ? ' / ' + merc.cost_lumber + ' Lumber' : '') : ''}
         </div>
       </div>
@@ -539,7 +539,7 @@ function toggleSkillPoint(level, skillKey) {
   } else {
     const maxRank = skillKey === 'stats' ? 6 : (hero.abilities[parseInt(skillKey[1])]?.levels?.length || 6);
     const currentRank = skillOrder.filter(k => k === skillKey).length;
-    if (currentRank >= maxRank) { showToast(`Max. ${maxRank} Ränge für diesen Skill`); return; }
+    if (currentRank >= maxRank) { showToast(`Max. ${maxRank} ranks for this skill`); return; }
     skillOrder[level] = skillKey;
   }
   renderSkillOrderGrid(hero);
@@ -675,7 +675,7 @@ function updateCreatorPreview() {
     </div>` : '';
 
   content.innerHTML = `
-    <div style="color:var(--gold-light); margin-bottom:12px; font-size:15px;">${name || '(Kein Name)'} — ${hero ? hero.name : '?'}</div>
+    <div style="color:var(--gold-light); margin-bottom:12px; font-size:15px;">${name || '(No Name)'} — ${hero ? hero.name : '?'}</div>
     ${phasePreviewHTML('firstbuy', 'First Buy')}
     ${phasePreviewHTML('midgame', 'Midgame')}
     ${phasePreviewHTML('endgame', 'Endgame')}
@@ -688,16 +688,16 @@ document.getElementById('bc-name').addEventListener('input', updateCreatorPrevie
 document.getElementById('bc-save').addEventListener('click', async () => {
   const name = document.getElementById('bc-name').value.trim();
   const heroId = document.getElementById('bc-hero').value;
-  const author = document.getElementById('bc-author').value.trim() || 'Anonym';
+  const author = document.getElementById('bc-author').value.trim() || 'Anonymous';
   const notes = document.getElementById('bc-notes').value.trim();
   const tags = [...selectedTags];
 
-  if (!name) { showToast('Bitte einen Build-Namen eingeben'); return; }
-  if (!heroId) { showToast('Bitte einen Hero wählen'); return; }
+  if (!name) { showToast('Please enter a build name'); return; }
+  if (!heroId) { showToast('Please select a hero'); return; }
 
   const btn = document.getElementById('bc-save');
   btn.disabled = true;
-  btn.textContent = 'Wird gespeichert…';
+  btn.textContent = 'Saving…';
 
   const build = {
     name,
@@ -714,9 +714,9 @@ document.getElementById('bc-save').addEventListener('click', async () => {
 
   const { error } = await _sbc.from('community_builds').insert([build]);
   btn.disabled = false;
-  btn.textContent = 'Build speichern';
+  btn.textContent = 'Save Build';
 
-  if (error) { console.error(error); showToast('Fehler beim Speichern!'); return; }
+  if (error) { console.error(error); showToast('Error saving build!'); return; }
 
   await loadBuildsFromSupabase();
 
@@ -738,7 +738,7 @@ document.getElementById('bc-save').addEventListener('click', async () => {
   document.getElementById('bc-preview').classList.add('hidden');
   document.getElementById('bc-item-picker').classList.add('hidden');
 
-  showToast('Build gespeichert!');
+  showToast('Build saved!');
   document.querySelector('.nav-btn[data-tab="builds"]').click();
 });
 
