@@ -1,0 +1,315 @@
+{
+  "mercs": [
+    {
+      "id": "banshee",
+      "name": "Banshee",
+      "cost": 250,
+      "cost_lumber": 3,
+      "building": "Mercenary Camp",
+      "health": 585,
+      "description": "Cursing unit that can possess enemy units.",
+      "buffs": ["Anti-Magic Shell", "Curse"],
+      "abilities": [
+        {
+          "name": "Curse",
+          "type": "Active",
+          "description": "Curses a target enemy unit, causing it to have a 33% chance to miss on attacks for 30 seconds."
+        },
+        {
+          "name": "Anti-Magic Shell",
+          "type": "Active",
+          "description": "Forms a shield around a friendly unit, blocking 300 points of spell or magic damage for 90 seconds."
+        },
+        {
+          "name": "Possession",
+          "type": "Active",
+          "description": "Displaces the soul of an enemy, giving you permanent control of it — but kills the Banshee in the process."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "druid_of_the_claw",
+      "name": "Druid of the Claw",
+      "cost": 250,
+      "cost_lumber": 4,
+      "building": "Mercenary Camp",
+      "health": 730,
+      "description": "Support druid with damage aura, healing, and bear transformation.",
+      "buffs": ["Roar", "Rejuvenation"],
+      "abilities": [
+        {
+          "name": "Roar",
+          "type": "Active",
+          "description": "Increases the damage of friendly nearby units by 33% for 60 seconds."
+        },
+        {
+          "name": "Rejuvenation",
+          "type": "Active",
+          "description": "Heals a friendly unit for 500 hit points and 100 mana over 12 seconds."
+        },
+        {
+          "name": "Bear Form",
+          "type": "Active",
+          "description": "Transforms the Druid into a bear, slowing mana regeneration but increasing damage, maximum health and armor."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "dryad",
+      "name": "Dryad",
+      "cost": 250,
+      "cost_lumber": 2,
+      "building": "Mercenary Camp",
+      "health": 535,
+      "description": "Dispeller with poison attack and innate spell resistance.",
+      "buffs": ["Abolish Magic"],
+      "abilities": [
+        {
+          "name": "Abolish Magic",
+          "type": "Active",
+          "description": "Dispels positive buffs from enemy units and negative buffs from friendly units. Deals damage to summoned units. Can be auto-cast."
+        },
+        {
+          "name": "Slow Poison",
+          "type": "Passive",
+          "description": "A poison attack that deals 4 damage per second and slows the target's movement by 50% and attack speed."
+        },
+        {
+          "name": "Resistant Skin",
+          "type": "Passive",
+          "description": "Reduces the duration of negative spells and renders the unit immune to certain spells."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "mud_golem",
+      "name": "Mud Golem",
+      "cost": 250,
+      "cost_lumber": 0,
+      "building": "Mercenary Camp",
+      "health": 440,
+      "description": "Tanky unit immune to spells that slows enemies.",
+      "buffs": ["Slow", "Spell Immunity"],
+      "abilities": [
+        {
+          "name": "Slow",
+          "type": "Active",
+          "description": "Reduces movement by 55% and attack speed by 25% of an enemy unit for 8 seconds."
+        },
+        {
+          "name": "Spell Immunity",
+          "type": "Passive",
+          "description": "Renders this unit immune to negative spells."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "necromancer",
+      "name": "Necromancer",
+      "cost": 250,
+      "cost_lumber": 3,
+      "building": "Mercenary Camp",
+      "health": 675,
+      "description": "Raises skeletons, buffs attack speed, and cripples enemies.",
+      "buffs": ["Unholy Frenzy", "Raise Dead"],
+      "abilities": [
+        {
+          "name": "Raise Dead",
+          "type": "Active",
+          "description": "Raises 2 skeletons from a corpse, removing it. Lasts 45 seconds."
+        },
+        {
+          "name": "Unholy Frenzy",
+          "type": "Active",
+          "description": "Increases a unit's attack speed by 75% for 45 seconds."
+        },
+        {
+          "name": "Cripple",
+          "type": "Active",
+          "description": "Reduces movement speed by 75%, attack speed by 50%, and damage by 50% of a target enemy unit for 10 seconds."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "priest",
+      "name": "Priest",
+      "cost": 250,
+      "cost_lumber": 2,
+      "building": "Mercenary Camp",
+      "health": 580,
+      "description": "Healer that can dispel and buff armor and damage.",
+      "buffs": ["Heal", "Inner Fire"],
+      "abilities": [
+        {
+          "name": "Heal",
+          "type": "Active",
+          "description": "Heals a friendly unit for 50 hit points."
+        },
+        {
+          "name": "Dispel Magic",
+          "type": "Active",
+          "description": "Removes all buffs from units within 200 area and deals 300 damage to summoned units."
+        },
+        {
+          "name": "Inner Fire",
+          "type": "Active",
+          "description": "Increases armor by 5 and attack damage by 10% of a friendly unit for 60 seconds."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "raider",
+      "name": "Raider",
+      "cost": 250,
+      "cost_lumber": 1,
+      "building": "Mercenary Camp",
+      "health": 810,
+      "description": "Tanky unit that immobilizes enemies with Ensnare.",
+      "buffs": ["Ensnare"],
+      "abilities": [
+        {
+          "name": "Ensnare",
+          "type": "Active",
+          "description": "Catches an enemy unit in a net and bounds it to the ground, immobilizing it for 4 (9 vs. air) seconds."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "shaman",
+      "name": "Shaman",
+      "cost": 250,
+      "cost_lumber": 3,
+      "building": "Mercenary Camp",
+      "health": 580,
+      "description": "Versatile support with purge, lightning shield, and bloodlust.",
+      "buffs": ["Bloodlust", "Lightning Shield"],
+      "abilities": [
+        {
+          "name": "Purge",
+          "type": "Active",
+          "description": "Removes all buffs from a target unit and slows its movement speed. Also deals 600 damage to summoned units."
+        },
+        {
+          "name": "Lightning Shield",
+          "type": "Active",
+          "description": "Forms a shield around a unit, dealing 24 damage to nearby enemy units around the target for 60 seconds."
+        },
+        {
+          "name": "Bloodlust",
+          "type": "Active",
+          "description": "Increases a friendly unit's attack rate by 40% and movement speed by 25% for 60 seconds."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sorceress",
+      "name": "Sorceress",
+      "cost": 250,
+      "cost_lumber": 2,
+      "building": "Mercenary Camp",
+      "health": 725,
+      "description": "Can slow, turn allies invisible, or polymorph enemies into sheep.",
+      "buffs": ["Slow", "Invisibility"],
+      "abilities": [
+        {
+          "name": "Slow",
+          "type": "Active",
+          "description": "Reduces movement by 55% and attack speed by 25% of an enemy unit for 15 seconds."
+        },
+        {
+          "name": "Invisibility",
+          "type": "Active",
+          "description": "Makes a unit invisible for 120 seconds. If the unit attacks or casts a spell, it will become visible."
+        },
+        {
+          "name": "Polymorph",
+          "type": "Active",
+          "description": "Turns an enemy unit into a sheep for 2 minutes. The targeted unit retains its hit points but cannot attack."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "spirit_walker",
+      "name": "Spirit Walker",
+      "cost": 250,
+      "cost_lumber": 3,
+      "building": "Mercenary Camp",
+      "health": 620,
+      "description": "Links units to distribute damage, dispels buffs, and can turn ethereal.",
+      "buffs": ["Spirit Link"],
+      "abilities": [
+        {
+          "name": "Spirit Link",
+          "type": "Active",
+          "description": "Links units together in a chain. Distributes a portion of all damage dealt to linked units among the others."
+        },
+        {
+          "name": "Disenchant",
+          "type": "Active",
+          "description": "Removes all buffs from units in a target area. Deals 400 damage to summoned units."
+        },
+        {
+          "name": "Ethereal Form",
+          "type": "Active",
+          "description": "Turns the unit ethereal, making it immune to physical attacks but vulnerable to magic damage."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "witch_doctor",
+      "name": "Witch Doctor",
+      "cost": 250,
+      "cost_lumber": 4,
+      "building": "Mercenary Camp",
+      "health": 825,
+      "description": "Places wards for detection, stunning, and area healing.",
+      "buffs": ["Healing Ward", "Sentry Ward"],
+      "abilities": [
+        {
+          "name": "Sentry Ward",
+          "type": "Active",
+          "description": "Places a ward that reveals enemy units. Lasts 6 minutes."
+        },
+        {
+          "name": "Stasis Trap",
+          "type": "Active",
+          "description": "Places a ward that stuns enemy units for 4 seconds. The ward activates when enemy units approach it."
+        },
+        {
+          "name": "Healing Ward",
+          "type": "Active",
+          "description": "Places a ward that heals 3% of the hit points of nearby friendly units per second."
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "zeppelin",
+      "name": "Zeppelin",
+      "cost": 250,
+      "cost_lumber": 1,
+      "building": "Mercenary Camp",
+      "health": 575,
+      "description": "Flying transport that carries up to 8 friendly units.",
+      "buffs": ["Flying Transport"],
+      "abilities": [
+        {
+          "name": "Flying Air Transport",
+          "type": "Active",
+          "description": "Loads targeted friendly land units and unloads them at a target location. Can transport up to 8 units."
+        }
+      ],
+      "notes": ""
+    }
+  ]
+}

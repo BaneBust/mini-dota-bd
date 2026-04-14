@@ -1,0 +1,52 @@
+{
+  "builds": [
+    {
+      "id": "blademaster_arashicage",
+      "name": "Arashicage",
+      "hero_id": "blademaster",
+      "items": [],
+      "notes": "Level 16 build seen in screenshot. Items not fully readable.",
+      "tags": []
+    },
+    {
+      "id": "blood_mage_gladius",
+      "name": "Gladius Darkmon",
+      "hero_id": "blood_mage",
+      "items": [],
+      "notes": "Level 14 build seen in screenshot. Items not fully readable.",
+      "tags": []
+    },
+    {
+      "id": "crypt_lord_horusman",
+      "name": "Horusman",
+      "hero_id": "crypt_lord",
+      "items": [],
+      "notes": "Level 15 build seen in screenshot. Items not fully readable.",
+      "tags": []
+    },
+    {
+      "id": "far_seer_magis",
+      "name": "Magis Coldeye",
+      "hero_id": "far_seer",
+      "items": [],
+      "notes": "Level 13 build seen in screenshot. STR 43, AGI 34, INT 24. Items not fully readable.",
+      "tags": []
+    },
+    {
+      "id": "tinker_gaz",
+      "name": "Gaz Stripbolt",
+      "hero_id": "tinker",
+      "items": [],
+      "notes": "Level 1 build seen in screenshot. Damage 46+83, STR 46+12. Items not fully readable.",
+      "tags": []
+    },
+    {
+      "id": "warden_kiri",
+      "name": "Kiri Sunstalker",
+      "hero_id": "warden",
+      "items": [],
+      "notes": "Build seen in screenshot. Items not fully readable.",
+      "tags": []
+    }
+  ]
+}

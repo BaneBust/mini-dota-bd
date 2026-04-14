@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-Dota WC3 — Build Database</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Mini-Dota WC3</h1>
+    <nav>
+      <button class="nav-btn active" data-tab="heroes">Heroes</button>
+      <button class="nav-btn" data-tab="items">Items</button>
+      <button class="nav-btn" data-tab="mercs">Mercs</button>
+      <button class="nav-btn" data-tab="builds">Builds</button>
+      <button class="nav-btn" data-tab="build-creator">Build erstellen</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HEROES TAB -->
+    <section id="tab-heroes" class="tab active">
+      <div class="search-bar">
+        <input type="text" id="hero-search" placeholder="Hero suchen...">
+        <select id="hero-filter-stat">
+          <option value="">Alle Stats</option>
+          <option value="STR">Strength</option>
+          <option value="AGI">Agility</option>
+          <option value="INT">Intelligence</option>
+        </select>
+      </div>
+      <div id="hero-list" class="card-grid"></div>
+    </section>
+
+    <!-- ITEMS TAB -->
+    <section id="tab-items" class="tab">
+      <div class="search-bar">
+        <input type="text" id="item-search" placeholder="Item suchen...">
+        <select id="item-filter-cat">
+          <option value="">Alle Kategorien</option>
+          <option value="Orb">Orbs</option>
+          <option value="Upgradable">Upgradable</option>
+          <option value="Advanced">Advanced</option>
+          <option value="Special">Special</option>
+          <option value="Consumable">Consumable</option>
+          <option value="Legendary">Legendary</option>
+          <option value="Library">Library</option>
+          <option value="Goblin Merchant">Goblin Merchant</option>
+          <option value="Summon">Summons</option>
+        </select>
+      </div>
+      <div id="item-list" class="card-grid"></div>
+    </section>
+
+    <!-- MERCS TAB -->
+    <section id="tab-mercs" class="tab">
+      <div class="search-bar">
+        <input type="text" id="merc-search" placeholder="Merc suchen...">
+      </div>
+      <div id="merc-list" class="card-grid"></div>
+    </section>
+
+    <!-- BUILDS TAB -->
+    <section id="tab-builds" class="tab">
+      <div class="search-bar">
+        <input type="text" id="build-search" placeholder="Build suchen...">
+      </div>
+      <div id="build-list" class="card-grid"></div>
+    </section>
+
+    <!-- BUILD CREATOR TAB -->
+    <section id="tab-build-creator" class="tab">
+      <div class="build-creator">
+        <h2>Neuen Build erstellen</h2>
+        <div class="creator-form">
+          <div class="form-row">
+            <label>Build Name</label>
+            <input type="text" id="bc-name" placeholder="z.B. Blink-Blade Build">
+          </div>
+          <div class="form-row">
+            <label>Dein Name</label>
+            <input type="text" id="bc-author" placeholder="z.B. Kehls (optional)">
+          </div>
+          <div class="form-row">
+            <label>Hero</label>
+            <select id="bc-hero">
+              <option value="">Hero wählen...</option>
+            </select>
+          </div>
+
+          <div id="bc-skillorder-section" class="form-row hidden">
+            <label class="phase-label" style="color:var(--gold-light); margin-bottom:10px;">Skill Order (Lvl 1–10)</label>
+            <div id="bc-skillorder-grid" class="skillorder-grid"></div>
+            <div class="skillorder-hint">Klick = zuweisen · nochmal klicken = entfernen · max. 6 Ränge pro Skill</div>
+          </div>
+
+          <div class="form-row phase-section">
+            <label class="phase-label phase-label-firstbuy">First Buy</label>
+            <div id="bc-slots-firstbuy" class="item-slots" data-phase="firstbuy">
+              <div class="item-slot empty" data-slot="0">+</div>
+              <div class="item-slot empty" data-slot="1">+</div>
+              <div class="item-slot empty" data-slot="2">+</div>
+              <div class="item-slot empty" data-slot="3">+</div>
+              <div class="item-slot empty" data-slot="4">+</div>
+              <div class="item-slot empty" data-slot="5">+</div>
+            </div>
+          </div>
+
+          <div class="form-row phase-section">
+            <label class="phase-label phase-label-midgame">Midgame</label>
+            <div id="bc-slots-midgame" class="item-slots" data-phase="midgame">
+              <div class="item-slot empty" data-slot="0">+</div>
+              <div class="item-slot empty" data-slot="1">+</div>
+              <div class="item-slot empty" data-slot="2">+</div>
+              <div class="item-slot empty" data-slot="3">+</div>
+              <div class="item-slot empty" data-slot="4">+</div>
+              <div class="item-slot empty" data-slot="5">+</div>
+            </div>
+          </div>
+
+          <div class="form-row phase-section">
+            <label class="phase-label phase-label-endgame">Endgame</label>
+            <div id="bc-slots-endgame" class="item-slots" data-phase="endgame">
+              <div class="item-slot empty" data-slot="0">+</div>
+              <div class="item-slot empty" data-slot="1">+</div>
+              <div class="item-slot empty" data-slot="2">+</div>
+              <div class="item-slot empty" data-slot="3">+</div>
+              <div class="item-slot empty" data-slot="4">+</div>
+              <div class="item-slot empty" data-slot="5">+</div>
+            </div>
+            <div class="legendary-row">
+              <span class="legendary-row-label">⚔ Legendary Ersatz (optional — welches Endgame-Item wird ersetzt?)</span>
+              <div id="bc-slots-legendary" class="item-slots" data-phase="legendary">
+                <div class="item-slot legendary-slot empty" data-slot="0">—</div>
+                <div class="item-slot legendary-slot empty" data-slot="1">—</div>
+                <div class="item-slot legendary-slot empty" data-slot="2">—</div>
+                <div class="item-slot legendary-slot empty" data-slot="3">—</div>
+                <div class="item-slot legendary-slot empty" data-slot="4">—</div>
+                <div class="item-slot legendary-slot empty" data-slot="5">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="bc-item-picker" class="item-picker hidden">
+            <input type="text" id="bc-item-search" placeholder="Item suchen...">
+            <div id="bc-item-picker-list"></div>
+          </div>
+
+          <div class="form-row">
+            <label>Tags</label>
+            <div id="bc-tags-container" class="tags-selector"></div>
+          </div>
+          <div class="form-row">
+            <label>Notizen</label>
+            <textarea id="bc-notes" rows="4" placeholder="Build-Reihenfolge, Strategie, Tipps..."></textarea>
+          </div>
+          <button id="bc-save" class="btn-primary">Build speichern</button>
+        </div>
+        <div id="bc-preview" class="build-preview hidden">
+          <h3>Vorschau</h3>
+          <div id="bc-preview-content"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>

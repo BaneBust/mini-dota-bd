@@ -1,0 +1,12 @@
+# Exclude all screenshots except hero spell icon sprites
+screenshots/**
+!screenshots/Heros/
+!screenshots/Heros/*/
+!screenshots/Heros/*/Spell-Icon.png
+
+# Local dev files
+start.bat
+capture_tool.py
+*.pyc
+__pycache__/
+.claude/
