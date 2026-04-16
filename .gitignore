@@ -1,8 +1,14 @@
-# Exclude all screenshots except hero spell icon sprites
+# Exclude all screenshots except hero spell icons and shop icon sheets
 screenshots/**
 !screenshots/Heros/
 !screenshots/Heros/*/
 !screenshots/Heros/*/Spell-Icon.png
+!screenshots/Shops/
+!screenshots/Shops/*/
+!screenshots/Shops/*/Icon.png
+!screenshots/Shops/*/icon.png
+!screenshots/Shops/*/1-8.png
+!screenshots/Shops/*/9.png
 
 # Local dev files
 start.bat
