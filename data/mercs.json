@@ -8,7 +8,10 @@
       "building": "Mercenary Camp",
       "health": 585,
       "description": "Cursing unit that can possess enemy units.",
-      "buffs": ["Anti-Magic Shell", "Curse"],
+      "buffs": [
+        "Anti-Magic Shell",
+        "Curse"
+      ],
       "abilities": [
         {
           "name": "Curse",
@@ -26,7 +29,11 @@
           "description": "Displaces the soul of an enemy, giving you permanent control of it — but kills the Banshee in the process."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 6,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "druid_of_the_claw",
@@ -36,7 +43,10 @@
       "building": "Mercenary Camp",
       "health": 730,
       "description": "Support druid with damage aura, healing, and bear transformation.",
-      "buffs": ["Roar", "Rejuvenation"],
+      "buffs": [
+        "Roar",
+        "Rejuvenation"
+      ],
       "abilities": [
         {
           "name": "Roar",
@@ -54,7 +64,11 @@
           "description": "Transforms the Druid into a bear, slowing mana regeneration but increasing damage, maximum health and armor."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 9,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "dryad",
@@ -64,7 +78,9 @@
       "building": "Mercenary Camp",
       "health": 535,
       "description": "Dispeller with poison attack and innate spell resistance.",
-      "buffs": ["Abolish Magic"],
+      "buffs": [
+        "Abolish Magic"
+      ],
       "abilities": [
         {
           "name": "Abolish Magic",
@@ -82,7 +98,11 @@
           "description": "Reduces the duration of negative spells and renders the unit immune to certain spells."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 8,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "mud_golem",
@@ -92,7 +112,10 @@
       "building": "Mercenary Camp",
       "health": 440,
       "description": "Tanky unit immune to spells that slows enemies.",
-      "buffs": ["Slow", "Spell Immunity"],
+      "buffs": [
+        "Slow",
+        "Spell Immunity"
+      ],
       "abilities": [
         {
           "name": "Slow",
@@ -105,7 +128,11 @@
           "description": "Renders this unit immune to negative spells."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 10,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "necromancer",
@@ -115,7 +142,10 @@
       "building": "Mercenary Camp",
       "health": 675,
       "description": "Raises skeletons, buffs attack speed, and cripples enemies.",
-      "buffs": ["Unholy Frenzy", "Raise Dead"],
+      "buffs": [
+        "Unholy Frenzy",
+        "Raise Dead"
+      ],
       "abilities": [
         {
           "name": "Raise Dead",
@@ -133,7 +163,11 @@
           "description": "Reduces movement speed by 75%, attack speed by 50%, and damage by 50% of a target enemy unit for 10 seconds."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 7,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "priest",
@@ -143,7 +177,10 @@
       "building": "Mercenary Camp",
       "health": 580,
       "description": "Healer that can dispel and buff armor and damage.",
-      "buffs": ["Heal", "Inner Fire"],
+      "buffs": [
+        "Heal",
+        "Inner Fire"
+      ],
       "abilities": [
         {
           "name": "Heal",
@@ -161,7 +198,11 @@
           "description": "Increases armor by 5 and attack damage by 10% of a friendly unit for 60 seconds."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 4,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "raider",
@@ -171,7 +212,9 @@
       "building": "Mercenary Camp",
       "health": 810,
       "description": "Tanky unit that immobilizes enemies with Ensnare.",
-      "buffs": ["Ensnare"],
+      "buffs": [
+        "Ensnare"
+      ],
       "abilities": [
         {
           "name": "Ensnare",
@@ -179,7 +222,11 @@
           "description": "Catches an enemy unit in a net and bounds it to the ground, immobilizing it for 4 (9 vs. air) seconds."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 0,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "shaman",
@@ -189,7 +236,10 @@
       "building": "Mercenary Camp",
       "health": 580,
       "description": "Versatile support with purge, lightning shield, and bloodlust.",
-      "buffs": ["Bloodlust", "Lightning Shield"],
+      "buffs": [
+        "Bloodlust",
+        "Lightning Shield"
+      ],
       "abilities": [
         {
           "name": "Purge",
@@ -207,7 +257,11 @@
           "description": "Increases a friendly unit's attack rate by 40% and movement speed by 25% for 60 seconds."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 2,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "sorceress",
@@ -217,7 +271,10 @@
       "building": "Mercenary Camp",
       "health": 725,
       "description": "Can slow, turn allies invisible, or polymorph enemies into sheep.",
-      "buffs": ["Slow", "Invisibility"],
+      "buffs": [
+        "Slow",
+        "Invisibility"
+      ],
       "abilities": [
         {
           "name": "Slow",
@@ -235,7 +292,11 @@
           "description": "Turns an enemy unit into a sheep for 2 minutes. The targeted unit retains its hit points but cannot attack."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 5,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "spirit_walker",
@@ -245,7 +306,9 @@
       "building": "Mercenary Camp",
       "health": 620,
       "description": "Links units to distribute damage, dispels buffs, and can turn ethereal.",
-      "buffs": ["Spirit Link"],
+      "buffs": [
+        "Spirit Link"
+      ],
       "abilities": [
         {
           "name": "Spirit Link",
@@ -263,7 +326,11 @@
           "description": "Turns the unit ethereal, making it immune to physical attacks but vulnerable to magic damage."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 1,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "witch_doctor",
@@ -273,7 +340,10 @@
       "building": "Mercenary Camp",
       "health": 825,
       "description": "Places wards for detection, stunning, and area healing.",
-      "buffs": ["Healing Ward", "Sentry Ward"],
+      "buffs": [
+        "Healing Ward",
+        "Sentry Ward"
+      ],
       "abilities": [
         {
           "name": "Sentry Ward",
@@ -291,7 +361,11 @@
           "description": "Places a ward that heals 3% of the hit points of nearby friendly units per second."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 3,
+      "icon_cols": 4,
+      "icon_rows": 3
     },
     {
       "id": "zeppelin",
@@ -301,7 +375,9 @@
       "building": "Mercenary Camp",
       "health": 575,
       "description": "Flying transport that carries up to 8 friendly units.",
-      "buffs": ["Flying Transport"],
+      "buffs": [
+        "Flying Transport"
+      ],
       "abilities": [
         {
           "name": "Flying Air Transport",
@@ -309,7 +385,11 @@
           "description": "Loads targeted friendly land units and unloads them at a target location. Can transport up to 8 units."
         }
       ],
-      "notes": ""
+      "notes": "",
+      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
+      "icon_index": 11,
+      "icon_cols": 4,
+      "icon_rows": 3
     }
   ]
 }

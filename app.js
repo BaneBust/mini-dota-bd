@@ -422,9 +422,13 @@ function renderMercs(filter = '') {
 
   grid.innerHTML = filtered.map(m => `
     <div class="card ${m.buffs.length === 0 ? 'card-incomplete' : ''}" onclick="showMercDetail('${m.id}', this)">
-      <div class="card-name">${m.name}</div>
-      ${m.building ? `<div class="card-sub">${m.building}</div>` : ''}
-      ${m.cost != null ? `<div class="card-cost">🪙 ${m.cost}${m.cost_lumber ? ` 🪵 ${m.cost_lumber}` : ''}</div>` : ''}
+      <div class="card-top-row">
+        ${m.icon != null ? `<div class="item-card-icon" ${itemIconStyle(m.icon, m.icon_index, m.icon_cols || 4, m.icon_rows || 3, 40)}></div>` : ''}
+        <div class="card-top-text">
+          ${m.cost != null ? `<div class="card-cost">🪙 ${m.cost}${m.cost_lumber ? ` 🪵 ${m.cost_lumber}` : ''}</div>` : ''}
+          <div class="card-name">${m.name}</div>
+        </div>
+      </div>
       <div style="font-size:12px; color:var(--text-dim); margin-top:6px;">
         ${m.buffs.length > 0 ? m.buffs.map(b => `<span>${b}</span>`).join(' · ') : 'Noch nicht dokumentiert'}
       </div>
@@ -449,11 +453,12 @@ function showMercDetail(id, el) {
 
   const mercHtml = `
     <div class="detail-header">
-      <div>
+      ${merc.icon != null ? `<div class="item-detail-icon" ${itemIconStyle(merc.icon, merc.icon_index, merc.icon_cols || 4, merc.icon_rows || 3, 56)}></div>` : ''}
+      <div style="flex:1;">
         <div class="detail-title">${merc.name}</div>
         <div class="detail-subtitle">
           ${merc.building ? 'Building: ' + merc.building + ' · ' : ''}
-          ${merc.cost != null ? 'Kosten: ' + merc.cost + 'g' + (merc.cost_lumber ? ' / ' + merc.cost_lumber + ' Lumber' : '') : ''}
+          ${merc.cost != null ? '🪙 ' + merc.cost + (merc.cost_lumber ? ` 🪵 ${merc.cost_lumber}` : '') : ''}
         </div>
       </div>
     </div>
