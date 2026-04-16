@@ -194,6 +194,20 @@ document.getElementById('hero-filter-stat').addEventListener('change', e => {
 });
 
 // ─── ITEMS ─────────────────────────────────────────────────────────────────────
+// Returns inline style string for a CSS sprite icon from item data.
+// size = rendered px size.
+function itemIconStyle(sheet, index, cols, rows, size) {
+  const col = index % cols;
+  const row = Math.floor(index / cols);
+  const xPct = cols > 1 ? (col / (cols - 1)) * 100 : 0;
+  const yPct = rows > 1 ? (row / (rows - 1)) * 100 : 0;
+  return `style="width:${size}px;height:${size}px;background-image:url('${sheet}');background-size:${cols * 100}% ${rows * 100}%;background-position:${xPct.toFixed(2)}% ${yPct.toFixed(2)}%;background-repeat:no-repeat;"`;
+}
+function itemIcon(it, size) {
+  if (it.icon == null || it.icon_index == null) return '';
+  return itemIconStyle(it.icon, it.icon_index, it.icon_cols || 4, it.icon_rows || 3, size);
+}
+
 function renderItems(filter = '', catFilter = '') {
   const grid = document.getElementById('item-list');
   const filtered = items.filter(it => {
@@ -204,11 +218,19 @@ function renderItems(filter = '', catFilter = '') {
 
   grid.innerHTML = filtered.map(it => `
     <div class="card" onclick="showItemTooltip('${it.id}', this)">
-      ${it.cost != null ? `<div class="card-cost">🪙 ${it.cost}${it.cost_lumber ? ` 🪵 ${it.cost_lumber}` : ''}</div>` : ''}
-      <div class="card-name">${it.name}</div>
+      <div class="card-top-row">
+        ${itemIcon(it, 40) ? `<div class="item-card-icon" ${itemIcon(it, 40)}></div>` : ''}
+        <div class="card-top-text">
+          ${it.cost != null ? `<div class="card-cost">🪙 ${it.cost}${it.cost_lumber ? ` 🪵 ${it.cost_lumber}` : ''}</div>` : ''}
+          <div class="card-name">${it.name}</div>
+        </div>
+      </div>
       <div class="card-sub" style="margin-bottom:8px;">${it.description.substring(0, 80)}${it.description.length > 80 ? '...' : ''}</div>
-      <span class="card-tag tag-${it.category.replace(/ /g, '-')}">${it.category}</span>
-      ${it.unique ? '<span class="card-tag" style="margin-left:4px; background:rgba(200,164,74,0.15); color:var(--gold); border:1px solid var(--gold);">Unique</span>' : ''}
+      <div class="card-tags-row">
+        <span class="card-tag tag-${it.category.replace(/ /g, '-')}">${it.category}</span>
+        ${it.unique ? '<span class="card-tag tag-unique">Unique</span>' : ''}
+        ${it.upgrade_tiers ? `<span class="card-tag tag-stack">Stackable ×${it.upgrade_tiers}</span>` : ''}
+      </div>
     </div>
   `).join('');
 }
@@ -243,13 +265,31 @@ function showItemTooltip(id, el) {
       </div>`
     : '';
 
+  const numericStats = item.stats ? Object.entries(item.stats).filter(([, v]) => typeof v === 'number') : [];
+  const stackHtml = item.upgrade_tiers && numericStats.length > 0
+    ? `<div style="margin-bottom:16px;">
+        <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">STACK PROGRESSION</div>
+        <div class="stats-grid" style="margin-bottom:0;">
+          ${Array.from({length: item.upgrade_tiers}, (_, i) => i + 1).map(n => `
+            <div class="stat-box">
+              <div class="stat-label" style="color:var(--gold)">×${n}</div>
+              <div class="stat-value" style="color:var(--gold-light); font-size:13px; line-height:1.5;">
+                ${numericStats.map(([k, v]) => `+${v * n} ${statLabels[k] || k.replace(/_/g, ' ')}`).join('<br>')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`
+    : '';
+
   const itemHtml = `
     <div class="detail-header">
+      ${itemIcon(item, 56) ? `<div class="item-detail-icon" ${itemIcon(item, 56)}></div>` : ''}
       <div style="flex:1;">
         <div class="detail-title">${item.name}</div>
         <div class="detail-subtitle" style="margin-top:6px;">
           <span class="card-tag tag-${item.category.replace(/ /g, '-')}">${item.category}</span>
-          ${item.unique ? '<span class="card-tag" style="margin-left:6px; background:rgba(200,164,74,0.15); color:var(--gold); border:1px solid var(--gold);">Unique</span>' : ''}
+          ${item.unique ? '<span class="card-tag tag-unique" style="margin-left:6px;">Unique</span>' : ''}
           ${item.legendary ? '<span class="card-tag" style="margin-left:6px; background:rgba(200,80,20,0.15); color:#e06030; border:1px solid #e06030;">Legendary</span>' : ''}
         </div>
       </div>
@@ -259,6 +299,7 @@ function showItemTooltip(id, el) {
       </div>
     </div>
     <p style="color:var(--text); line-height:1.6; margin-bottom:16px;">${item.description}</p>
+    ${stackHtml}
     ${statsHtml}
     ${item.notes ? `<div style="color:var(--text-dim); font-size:13px; border-top:1px solid var(--border); padding-top:12px;">${item.notes}</div>` : ''}
   `;
@@ -284,7 +325,7 @@ function renderBuilds(filter = '') {
 
   grid.innerHTML = filtered.map(b => {
     const hero = heroes.find(h => h.id === b.hero_id);
-    const totalItems = [...(b.first_buy || []), ...(b.midgame || []), ...(b.endgame || [])].filter(Boolean).length;
+    const totalItems = [...(b.first_buy || []), ...(b.midgame || []), ...(b.endgame || [])].filter(e => e && (typeof e === 'string' ? e : e.id)).length;
     const tagStr = b.tags?.length > 0 ? b.tags.map(t => `<span class="build-tag-pill">${t}</span>`).join('') : '<span style="color:var(--text-dim)">no tags</span>';
 
     return `
@@ -316,12 +357,18 @@ function showBuildDetail(id, el) {
   let html = `<div class="build-detail-expanded" style="margin-top:0; padding-top:0; border-top:none;">`;
 
   phases.forEach(({ key, label, color }) => {
-    const phaseItems = (b[key] || []).map(id => items.find(i => i.id === id)?.name || id).filter(Boolean);
+    const phaseItems = (b[key] || []).map(entry => {
+      const id = typeof entry === 'string' ? entry : entry.id;
+      const stacks = typeof entry === 'object' && entry.stacks > 1 ? ` ×${entry.stacks}` : '';
+      return { name: items.find(i => i.id === id)?.name || id, stacks };
+    });
     if (phaseItems.length === 0) return;
     html += `
       <div class="build-phase-row">
         <div class="build-phase-label" style="color:${color}">${label}</div>
-        <div class="build-phase-items">${phaseItems.map(n => `<span class="build-item-pill">${n}</span>`).join('')}</div>
+        <div class="build-phase-items">${phaseItems.map(({ name, stacks }) =>
+          `<span class="build-item-pill">${name}${stacks ? `<span style="color:var(--gold);font-weight:700;">${stacks}</span>` : ''}</span>`
+        ).join('')}</div>
       </div>`;
   });
 
@@ -442,7 +489,56 @@ const selectedPhaseItems = {
   midgame:   new Array(6).fill(null),
   endgame:   new Array(6).fill(null),
 };
+const selectedPhaseStacks = {
+  firstbuy:  new Array(6).fill(1),
+  midgame:   new Array(6).fill(1),
+  endgame:   new Array(6).fill(1),
+};
 const legendaryReplacements = new Array(6).fill(null);
+
+function fillSlot(slotEl, item, phase, slotIdx, stacks) {
+  slotEl.classList.remove('empty');
+  slotEl.classList.add('filled');
+  slotEl.title = item.name;
+  if (item.icon != null && item.icon_index != null) {
+    const cols = item.icon_cols || 4, rows = item.icon_rows || 3;
+    const col = item.icon_index % cols, row = Math.floor(item.icon_index / cols);
+    const xPct = cols > 1 ? (col / (cols - 1)) * 100 : 0;
+    const yPct = rows > 1 ? (row / (rows - 1)) * 100 : 0;
+    slotEl.style.backgroundImage = `url('${item.icon}')`;
+    slotEl.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
+    slotEl.style.backgroundPosition = `${xPct.toFixed(2)}% ${yPct.toFixed(2)}%`;
+    slotEl.style.backgroundRepeat = 'no-repeat';
+    slotEl.classList.add('has-icon');
+  }
+  const stackBadge = item.upgrade_tiers
+    ? `<div class="slot-stack-badge" onclick="cycleStack(event,'${phase}',${slotIdx})">×${stacks}</div>`
+    : '';
+  slotEl.innerHTML = `${stackBadge}<div class="remove-item">×</div>`;
+}
+
+function clearSlot(slotEl, isLegendary) {
+  slotEl.classList.remove('filled', 'has-icon');
+  slotEl.classList.add('empty');
+  slotEl.title = '';
+  slotEl.style.backgroundImage = '';
+  slotEl.style.backgroundSize = '';
+  slotEl.style.backgroundPosition = '';
+  slotEl.style.backgroundRepeat = '';
+  slotEl.innerHTML = isLegendary ? '—' : '+';
+}
+
+function cycleStack(event, phase, slotIdx) {
+  event.stopPropagation();
+  const id = selectedPhaseItems[phase][slotIdx];
+  const item = items.find(i => i.id === id);
+  if (!item || !item.upgrade_tiers) return;
+  selectedPhaseStacks[phase][slotIdx] = (selectedPhaseStacks[phase][slotIdx] % item.upgrade_tiers) + 1;
+  const slot = document.querySelector(`#bc-slots-${phase} .item-slot[data-slot="${slotIdx}"]`);
+  const badge = slot.querySelector('.slot-stack-badge');
+  if (badge) badge.textContent = `×${selectedPhaseStacks[phase][slotIdx]}`;
+  updateCreatorPreview();
+}
 
 function populateBuildCreator() {
   const sel = document.getElementById('bc-hero');
@@ -572,9 +668,8 @@ function openPicker(phase, slotIdx, mode) {
     if (slot.classList.contains('filled')) {
       if (e.target.closest('.remove-item')) {
         selectedPhaseItems[phase][idx] = null;
-        slot.classList.remove('filled');
-        slot.classList.add('empty');
-        slot.innerHTML = '+';
+        selectedPhaseStacks[phase][idx] = 1;
+        clearSlot(slot, false);
         updateCreatorPreview();
       }
       return;
@@ -590,9 +685,7 @@ document.getElementById('bc-slots-legendary').addEventListener('click', e => {
   if (slot.classList.contains('filled')) {
     if (e.target.closest('.remove-item')) {
       legendaryReplacements[idx] = null;
-      slot.classList.remove('filled');
-      slot.classList.add('empty');
-      slot.innerHTML = '—';
+      clearSlot(slot, true);
       updateCreatorPreview();
     }
     return;
@@ -629,11 +722,11 @@ function selectItem(id) {
     slot.classList.add('filled');
     slot.innerHTML = `${item.name}<div class="remove-item">×</div>`;
   } else {
-    selectedPhaseItems[activePhase][activeSlot] = id;
-    const slot = document.querySelector(`#bc-slots-${activePhase} .item-slot[data-slot="${activeSlot}"]`);
-    slot.classList.remove('empty');
-    slot.classList.add('filled');
-    slot.innerHTML = `${item.name}<div class="remove-item">×</div>`;
+    const phase = activePhase, slotIdx = activeSlot;
+    selectedPhaseItems[phase][slotIdx] = id;
+    selectedPhaseStacks[phase][slotIdx] = 1;
+    const slot = document.querySelector(`#bc-slots-${phase} .item-slot[data-slot="${slotIdx}"]`);
+    fillSlot(slot, item, phase, slotIdx, 1);
   }
 
   document.getElementById('bc-item-picker').classList.add('hidden');
@@ -643,13 +736,16 @@ function selectItem(id) {
 }
 
 function phasePreviewHTML(phase, label) {
-  const filled = selectedPhaseItems[phase].filter(Boolean);
-  if (filled.length === 0) return '';
-  const names = filled.map(id => items.find(i => i.id === id)?.name || id);
+  const entries = selectedPhaseItems[phase]
+    .map((id, i) => id ? { name: items.find(it => it.id === id)?.name || id, stacks: selectedPhaseStacks[phase][i] } : null)
+    .filter(Boolean);
+  if (entries.length === 0) return '';
   return `
     <div style="margin-bottom:10px;">
       <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:4px;">${label}</div>
-      <div class="preview-items">${names.map(n => `<span class="preview-item">${n}</span>`).join('')}</div>
+      <div class="preview-items">${entries.map(({ name, stacks }) =>
+        `<span class="preview-item">${name}${stacks > 1 ? ` <span style="color:var(--gold)">×${stacks}</span>` : ''}</span>`
+      ).join('')}</div>
     </div>`;
 }
 
@@ -703,9 +799,12 @@ document.getElementById('bc-save').addEventListener('click', async () => {
     name,
     hero_id: heroId,
     author,
-    first_buy: selectedPhaseItems.firstbuy.filter(Boolean),
-    midgame: selectedPhaseItems.midgame.filter(Boolean),
-    endgame: selectedPhaseItems.endgame.filter(Boolean),
+    first_buy: selectedPhaseItems.firstbuy
+      .map((id, i) => id ? { id, stacks: selectedPhaseStacks.firstbuy[i] } : null).filter(Boolean),
+    midgame: selectedPhaseItems.midgame
+      .map((id, i) => id ? { id, stacks: selectedPhaseStacks.midgame[i] } : null).filter(Boolean),
+    endgame: selectedPhaseItems.endgame
+      .map((id, i) => id ? { id, stacks: selectedPhaseStacks.endgame[i] } : null).filter(Boolean),
     legendary_replacements: legendaryReplacements.filter(Boolean),
     skill_order: [...skillOrder],
     notes,
@@ -727,13 +826,12 @@ document.getElementById('bc-save').addEventListener('click', async () => {
   selectedTags.clear();
   document.querySelectorAll('#bc-tags-container .tag-btn').forEach(b => b.classList.remove('active'));
   Object.keys(selectedPhaseItems).forEach(p => selectedPhaseItems[p].fill(null));
+  Object.keys(selectedPhaseStacks).forEach(p => selectedPhaseStacks[p].fill(1));
   legendaryReplacements.fill(null);
   skillOrder.fill(null);
   document.getElementById('bc-skillorder-section').classList.add('hidden');
   document.querySelectorAll('#tab-build-creator .item-slot').forEach(s => {
-    s.classList.remove('filled');
-    s.classList.add('empty');
-    s.innerHTML = s.classList.contains('legendary-slot') ? '—' : '+';
+    clearSlot(s, s.classList.contains('legendary-slot'));
   });
   document.getElementById('bc-preview').classList.add('hidden');
   document.getElementById('bc-item-picker').classList.add('hidden');
