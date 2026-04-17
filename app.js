@@ -325,7 +325,7 @@ function renderBuilds(filter = '') {
 
   grid.innerHTML = filtered.map(b => {
     const hero = heroes.find(h => h.id === b.hero_id);
-    const totalItems = [...(b.first_buy || []), ...(b.midgame || []), ...(b.endgame || [])].filter(e => e && (typeof e === 'string' ? e : e.id)).length;
+    const totalItems = [...(b.items_firstbuy || []), ...(b.items_midgame || []), ...(b.items_endgame || [])].filter(e => e && (typeof e === 'string' ? e : e.id)).length;
     const tagStr = b.tags?.length > 0 ? b.tags.map(t => `<span class="build-tag-pill">${t}</span>`).join('') : '<span style="color:var(--text-dim)">no tags</span>';
 
     return `
@@ -349,9 +349,9 @@ function showBuildDetail(id, el) {
   const soHero = heroes.find(h => h.id === b.hero_id);
 
   const phases = [
-    { key: 'first_buy', label: 'First Buy', color: '#4caf50' },
-    { key: 'midgame',   label: 'Midgame',   color: 'var(--gold)' },
-    { key: 'endgame',   label: 'Endgame',   color: '#e06030' },
+    { key: 'items_firstbuy', label: 'First Buy', color: '#4caf50' },
+    { key: 'items_midgame',  label: 'Midgame',   color: 'var(--gold)' },
+    { key: 'items_endgame',  label: 'Endgame',   color: '#e06030' },
   ];
 
   let html = `<div class="build-detail-expanded" style="margin-top:0; padding-top:0; border-top:none;">`;
@@ -372,7 +372,7 @@ function showBuildDetail(id, el) {
       </div>`;
   });
 
-  const legendary = (b.legendary_replacements || []).filter(Boolean);
+  const legendary = (b.items_legendary || []).filter(Boolean);
   if (legendary.length > 0) {
     const legNames = legendary.map(id => items.find(i => i.id === id)?.name || id);
     html += `
@@ -804,13 +804,13 @@ document.getElementById('bc-save').addEventListener('click', async () => {
     name,
     hero_id: heroId,
     author,
-    first_buy: selectedPhaseItems.firstbuy
+    items_firstbuy: selectedPhaseItems.firstbuy
       .map((id, i) => id ? { id, stacks: selectedPhaseStacks.firstbuy[i] } : null).filter(Boolean),
-    midgame: selectedPhaseItems.midgame
+    items_midgame: selectedPhaseItems.midgame
       .map((id, i) => id ? { id, stacks: selectedPhaseStacks.midgame[i] } : null).filter(Boolean),
-    endgame: selectedPhaseItems.endgame
+    items_endgame: selectedPhaseItems.endgame
       .map((id, i) => id ? { id, stacks: selectedPhaseStacks.endgame[i] } : null).filter(Boolean),
-    legendary_replacements: legendaryReplacements.filter(Boolean),
+    items_legendary: legendaryReplacements.filter(Boolean),
     skill_order: [...skillOrder],
     notes,
     tags,
