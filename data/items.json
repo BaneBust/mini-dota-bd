@@ -702,7 +702,7 @@
       "icon": "screenshots/Shops/Advance/Icon.png",
       "icon_index": 4,
       "cost": 2500,
-      "cost_lumber": 3,
+      "cost_lumber": 2,
       "effect_type": "aura",
       "description": "Passive Trueshot Aura: Increases attack damage of ranged units by 22%.",
       "stats": {
@@ -722,7 +722,7 @@
       "icon": "screenshots/Shops/Advance/Icon.png",
       "icon_index": 5,
       "cost": 2500,
-      "cost_lumber": 3,
+      "cost_lumber": 2,
       "effect_type": "aura",
       "description": "Passive Command Aura: Increases attack damage of friendly units by 22%.",
       "stats": {
