@@ -7,11 +7,12 @@
       "cost": 1000,
       "effect_type": "passive",
       "unique": true,
-      "description": "The hero recovers hit points equal to 30% of the attack damage dealt to enemy units. Compatible - stacks with other Unique effects. Non-Stackable with other Passive Lifesteal effects.",
+      "description": "Recovers 35% of the damage dealt as hit points.",
       "stats": {
-        "life_steal_pct": 30
+        "life_steal_pct": 35%,
+        "bonus_dmg": 10,
       },
-      "notes": "Stacks with other Unique orbs; does NOT stack with other lifesteal",
+      "notes": "Stacks with Orb effects; does NOT stack with itself",
       "icon": "screenshots/Shops/Orbs/Icon.png",
       "icon_index": 3,
       "icon_cols": 4,
