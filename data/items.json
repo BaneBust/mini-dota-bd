@@ -10,7 +10,7 @@
       "description": "Recovers 35% of the damage dealt as hit points.",
       "stats": {
         "life_steal_pct": 35,
-        "bonus_dmg": 10,
+        "bonus_dmg": 10
       },
       "notes": "Stacks with Orb effects; does NOT stack with itself",
       "icon": "screenshots/Shops/Orbs/Icon.png",
