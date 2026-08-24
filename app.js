@@ -7,21 +7,35 @@ const _sbc = window.supabase.createClient(
 let heroes = [];
 let items = [];
 let builds = [];
+// Whether the last builds fetch failed, so the empty screen can tell "could not
+// load" apart from "nobody has saved one yet".
+let buildsError = false;
 let mercs = [];
+let structures = [];
 let activeSlot = null;
 let activePhase = null;
 let pickerMode = 'item'; // 'item' or 'legendary'
 let detailHeroId = null;
 
+// The data files carry no version in their URL the way app.js does, so a
+// browser was free to keep serving the copy it downloaded yesterday -- edits to
+// items.json only showed up once the cache expired on its own. `no-cache` still
+// caches, it just asks the server first, so an unchanged file costs a 304.
+const loadJson = (file, key) =>
+  fetch(`data/${file}.json`, { cache: 'no-cache' }).then(r => r.json()).then(d => d[key]);
+
 async function loadData() {
-  [heroes, items, mercs] = await Promise.all([
-    fetch('data/heroes.json').then(r => r.json()).then(d => d.heroes),
-    fetch('data/items.json').then(r => r.json()).then(d => d.items),
-    fetch('data/mercs.json').then(r => r.json()).then(d => d.mercs),
+  [heroes, items, mercs, structures] = await Promise.all([
+    loadJson('heroes', 'heroes'),
+    loadJson('items', 'items'),
+    loadJson('mercs', 'mercs'),
+    loadJson('structures', 'structures'),
   ]);
+  fillRoleFilter();
   renderHeroes();
   renderItems();
   renderMercs();
+  renderStructures();
   populateBuildCreator();
   await loadBuildsFromSupabase();
 }
@@ -33,37 +47,136 @@ async function loadBuildsFromSupabase() {
     .from('community_builds')
     .select('*')
     .order('created_at', { ascending: false });
-  if (error) { console.error(error); showToast('Error loading builds'); return; }
-  builds = data || [];
+  // a failed fetch just means no builds to show; the console keeps the detail.
+  // The flag is what lets the empty screen say "could not load" rather than
+  // "none saved yet" -- from a blank grid the two are indistinguishable.
+  if (error) console.error(error);
+  buildsError = !!error;
+  builds = error ? [] : (data || []);
   renderBuilds();
 }
 
+// Every card opens a panel on click, which made the whole database unreachable
+// without a mouse: a div has no keyboard behaviour of its own, so tabbing
+// through the page skipped 24 heroes and 98 items entirely. The cards now carry
+// role="button" and a tab stop, and this supplies the half a real button would
+// have given for free -- Enter and Space activate, and Space does not also
+// scroll the page while the card has focus.
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest?.('.card[role="button"]');
+  if (!card) return;
+  e.preventDefault();
+  card.click();
+});
+
+// ─── EMPTY STATES ──────────────────────────────────────────────────────────────
+// A filter that matches nothing used to leave the grid blank -- no message, no
+// hint that the search was the reason, just a page that looked broken. What
+// goes here says which list came back empty and what to do about it, and never
+// apologises: the reader typed something, and the answer is that this map has
+// no such thing in it.
+function emptyState(title, hint) {
+  return `<div class="empty-state">
+      <div class="empty-title">${title}</div>
+      <div class="empty-hint">${hint}</div>
+    </div>`;
+}
+
+function noMatches(what, query) {
+  return emptyState(
+    query ? `No ${what} match “${query}”.` : `No ${what} to show.`,
+    'Try fewer letters, or clear the filters above.');
+}
+
 // ─── NAV ───────────────────────────────────────────────────────────────────────
+// Which tab is open lives in the URL. Reloading while reading the item list
+// used to drop you back on Heroes; now the address bar remembers, and a link
+// someone pastes opens on the tab they were looking at.
+const TAB_NAMES = [...document.querySelectorAll('.nav-btn')].map(b => b.dataset.tab);
+
+function showTab(tab) {
+  if (!TAB_NAMES.includes(tab)) tab = TAB_NAMES[0];
+  document.querySelectorAll('.nav-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.toggle('active', t.id === 'tab-' + tab));
+}
+
 document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    location.hash = btn.dataset.tab;
+    showTab(btn.dataset.tab);
   });
 });
 
+// Back and forward buttons, and a hand-edited address bar, land here too.
+window.addEventListener('hashchange', () => showTab(location.hash.slice(1)));
+showTab(location.hash.slice(1));
+
 // ─── HEROES ────────────────────────────────────────────────────────────────────
-function renderHeroes(filter = '', statFilter = '') {
+function renderHeroes(filter = '', statFilter = '', roleFilter = '') {
   const grid = document.getElementById('hero-list');
   const filtered = heroes.filter(h => {
     const matchName = h.name.toLowerCase().includes(filter.toLowerCase());
     const matchStat = !statFilter || h.primary_stat === statFilter;
-    return matchName && matchStat;
+    const matchRole = !roleFilter || (h.roles || []).includes(roleFilter);
+    return matchName && matchStat && matchRole;
   });
 
+  if (filtered.length === 0) {
+    grid.innerHTML = noMatches('heroes', filter);
+    return;
+  }
   grid.innerHTML = filtered.map(h => `
-    <div class="card ${h.abilities.length === 0 ? 'card-incomplete' : ''}" onclick="showHeroDetail('${h.id}', this)">
-      <div class="card-name">${h.name}</div>
-      ${h.lore_name ? `<div class="card-sub">${h.lore_name}</div>` : ''}
-      <span class="card-tag tag-${h.primary_stat || 'unknown'}">${h.primary_stat || '?'}</span>
+    <div class="card hero-card attr-${h.primary_stat || 'unknown'} ${h.abilities.length === 0 ? 'card-incomplete' : ''}" role="button" tabindex="0" onclick="showHeroDetail('${h.id}', this)">
+      ${h.icon != null ? `<div class="hero-portrait" style="background-image:url('${h.icon}')"></div>` : ''}
+      <div class="hero-card-body">
+        <div class="card-name">${h.name}</div>
+        <div class="hero-meta">
+          <span class="hero-attr">${ATTR_NAMES[h.primary_stat] || 'Unknown'}</span>
+          ${difficultyBar(h)}
+        </div>
+      </div>
     </div>
   `).join('');
+}
+
+// The filter above the grid has always said "Strength"; the card said "STR".
+// One name for the thing, and it is the one the game uses in the hero's own
+// stat block.
+const ATTR_NAMES = { STR: 'Strength', AGI: 'Agility', INT: 'Intelligence' };
+
+// The roles are the pick screen's own categories, read out of the hero selector
+// in war3map.j -- the same eight buttons you filter by when choosing a hero in
+// game, in the order the selector declares them. They all share one chip
+// colour: the attribute beside them is already colour-coded, and eight more
+// hues would have turned the header into a paint chart.
+// The map states difficulty in the hero's own tooltip as a row of bullets:
+// filled ones in a colour that climbs green -> yellow -> orange -> red, the
+// remainder in grey. It is drawn, not named -- the tooltip never says "Hard" --
+// so this draws it too rather than inventing a vocabulary for it.
+//
+// The scale is four bullets for twenty-three heroes and five for Blood Mage,
+// who gets a longer bar in a purple the others never use. That is the map's
+// own doing, so the total is read from difficulty_max instead of assumed.
+function difficultyBar(hero) {
+  if (hero.difficulty == null) return '';
+  const max = hero.difficulty_max || 4;
+  // Drawn as shapes rather than as the bullet character the tooltip uses: a •
+  // is a punctuation mark sized to sit inside a line of text, and at the size
+  // this needs it came out thin and grey-looking whatever colour it was given.
+  const pips = Array.from({ length: max }, (_, i) =>
+    `<span class="diff-pip${i < hero.difficulty ? ' filled' : ''}"></span>`).join('');
+  return `<span class="hero-difficulty diff-${hero.difficulty}"
+    title="Difficulty ${hero.difficulty} of ${max}"
+    aria-label="Difficulty ${hero.difficulty} of ${max}">${pips}</span>`;
+}
+
+function roleTags(hero) {
+  if (!hero.roles || hero.roles.length === 0) return '';
+  return `<div class="card-tags-row role-row">${hero.roles
+    .map(r => `<span class="card-tag tag-role">${r}</span>`).join('')}</div>`;
 }
 
 function statDelta(curr, prev, key) {
@@ -82,7 +195,7 @@ function renderHeroLevelStats(hero, level) {
   document.getElementById('hero-level-stats').innerHTML = `
     <div class="level-stats-row">
       <div class="level-stat-item">
-        <span class="level-stat-label">HP</span>
+        <span class="level-stat-label">Hit Points</span>
         <span class="level-stat-value">${s.hp ?? '?'} ${statDelta(s, prev, 'hp')}</span>
       </div>
       <div class="level-stat-item">
@@ -90,19 +203,19 @@ function renderHeroLevelStats(hero, level) {
         <span class="level-stat-value">${s.mana ?? '?'} ${statDelta(s, prev, 'mana')}</span>
       </div>
       <div class="level-stat-item">
-        <span class="level-stat-label">DMG</span>
+        <span class="level-stat-label">Damage</span>
         <span class="level-stat-value">${s.damage_min ?? '?'}–${s.damage_max ?? '?'}</span>
       </div>
       <div class="level-stat-item">
-        <span class="level-stat-label" style="color:var(--str)">STR</span>
+        <span class="level-stat-label" style="color:var(--str)">Strength</span>
         <span class="level-stat-value" style="color:var(--str)">${s.str != null ? parseFloat(s.str).toFixed(1) : '?'} ${statDelta(s, prev, 'str')}</span>
       </div>
       <div class="level-stat-item">
-        <span class="level-stat-label" style="color:var(--agi)">AGI</span>
+        <span class="level-stat-label" style="color:var(--agi)">Agility</span>
         <span class="level-stat-value" style="color:var(--agi)">${s.agi != null ? parseFloat(s.agi).toFixed(1) : '?'} ${statDelta(s, prev, 'agi')}</span>
       </div>
       <div class="level-stat-item">
-        <span class="level-stat-label" style="color:var(--int)">INT</span>
+        <span class="level-stat-label" style="color:var(--int)">Intelligence</span>
         <span class="level-stat-value" style="color:var(--int)">${s.int != null ? parseFloat(s.int).toFixed(1) : '?'} ${statDelta(s, prev, 'int')}</span>
       </div>
       ${s.armor != null ? `<div class="level-stat-item"><span class="level-stat-label">Armor</span><span class="level-stat-value">${s.armor} ${statDelta(s, prev, 'armor')}</span></div>` : ''}
@@ -133,16 +246,165 @@ function showHeroDetail(id, el) {
     </div>
   ` : '<p style="color:var(--text-dim); margin-bottom:16px;">Level stats not yet documented.</p>';
 
-  const spritePositions = ['0%', '33.33%', '66.67%', '100%'];
   const abilitiesHtml = hero.abilities.length > 0 ? hero.abilities.map((ab, idx) => {
-    const levelRows = ab.levels.map((lv, i) => {
-      const keys = Object.keys(lv).filter(k => k !== 'rank');
-      return `<tr><td>Rank ${lv.rank}</td>${keys.map(k => `<td>${lv[k] ?? '—'}</td>`).join('')}</tr>`;
-    });
-    const keys = ab.levels[0] ? Object.keys(ab.levels[0]).filter(k => k !== 'rank') : [];
-    const iconHtml = hero.spell_icon_sprite && idx < 4
-      ? `<div class="ability-icon" style="background-image:url('${hero.spell_icon_sprite}');background-position:${spritePositions[ab.sprite_index ?? idx]} 0%"></div>`
-      : '';
+    // Columns come from every level, not from level 1: the map often leaves
+    // level 1 on the base game's value, so a spell whose cooldown only appears
+    // from level 2 up used to lose the whole column. A level that has nothing
+    // to say in a column shows a dash.
+    const keys = [...new Set(ab.levels.flatMap(lv => Object.keys(lv)))]
+      .filter(k => k !== 'rank');
+    // A summon's damage is one stat the game stores as two fields. Two columns
+    // headed "Damage Min" and "Damage Max" make the reader join them back up on
+    // every row, and an averaged column instead throws away the spread the game
+    // actually rolls -- so the pair prints as the range it is, "20–28", under
+    // the single heading the `_min` field already carries.
+    const rangeMax = {};
+    for (const k of keys) {
+      if (k.endsWith('_min') && keys.includes(k.slice(0, -4) + '_max')) {
+        rangeMax[k] = k.slice(0, -4) + '_max';
+      }
+    }
+    const paired = new Set(Object.values(rangeMax));
+    const colKeys = keys.filter(k => !paired.has(k));
+    // The heading belongs to the stat, not to the field: `dmg_min` is the
+    // Damage column, and its `_min` only says which half of the pair it stores.
+    const columnLabel = k => statLabel(k in rangeMax ? k.slice(0, -4) : k);
+    // A number written once on the spell is the value every rank pays: Impale
+    // costs 90 mana at rank 1 the same as at rank 6, and the data only bothers
+    // to repeat it on the ranks where the map does. So a blank cell falls back
+    // to the spell's own figure.
+    //
+    // But only where that figure is provably the constant -- every rank that
+    // names the field has to agree with it. Some spells carry a stale scalar
+    // from the base game that the ladder then contradicts: Blizzard says
+    // cooldown 5 while its ranks count 6.5/7/7.5/8/8.5, and filling rank 1
+    // with 5 would publish a number the map never had. Where the spell and its
+    // ranks disagree, the blank stays a dash -- an admitted gap beats a
+    // confident invention.
+    const spellDefault = k => k in ab &&
+      ab.levels.every(lv => !(k in lv) || lv[k] === ab[k]);
+    // Everything the spell says about itself outside the ladder -- cooldown,
+    // range, mana. These hold for every rank, so they join the ladder as
+    // columns of their own and repeat down it rather than sitting in a
+    // separate strip above the table: a reader looking up what rank 3 costs
+    // finds it on the rank 3 row, not in two places at once. Printing 800 six
+    // times is the price. The list is what is left after the fields that have
+    // their own place in the card, and it keeps the order the data file
+    // writes, which is the order the map's own tooltip uses.
+    //
+    // An explicit null is not the same as an absent key. Absent means the stat
+    // does not apply -- an aura has no cooldown, and a Cooldown column of
+    // dashes on Devotion Aura is a lie dressed as diligence. Null means the
+    // stat is real but nobody has the number yet: the map stores only the
+    // fields it overrides, so a dozen spells leave their cooldown to base-game
+    // files the .w3x does not carry. Those keep their column and show dashes,
+    // because a card that simply omits Chain Lightning's cooldown reads as "it
+    // has none" when the truth is "this is a gap".
+    const metaKeys = Object.keys(ab).filter(k =>
+      !ABILITY_STRUCTURAL.has(k) && !keys.includes(k));
+    // What a column actually holds at a given rank, once the fall-back to the
+    // spell's own figure has been applied. Everything below reads the ladder
+    // through this so the bars and the printed numbers can never disagree.
+    const cellValue = (k, lv) => k in lv ? lv[k]
+      : spellDefault(k) ? ab[k] : undefined;
+    // A bar is drawn wherever the column moves, and nowhere else: a key missing
+    // from `bars` says the same thing on every rank -- Stampede's cooldown of
+    // 180, a summon's duration of 70 -- and a row of six identical full-width
+    // rules would be the loudest thing in the table while saying nothing.
+    //
+    // Each bar is scaled against zero, so its length is the value and two bars
+    // in a column can be compared by eye.
+    //
+    // These used to be measured from the column's own minimum instead, to stop
+    // a near-flat ladder like 75/75/80/80/85/85 drawing six rules of nearly the
+    // same length. It did that, but it cost the bars their meaning: the shortest
+    // rank always drew a 12% stub and the longest always filled the cell, no
+    // matter what separated them. Avatar has two ranks, 400 and 800 bonus hit
+    // points, and drew them at 12% and 100% -- a doubling shown as eight times
+    // the length. A reader cannot tell that from a column that really does climb
+    // eightfold, which makes the bar worse than no bar.
+    //
+    // A flat ladder now draws six nearly-equal bars, and that is the honest
+    // picture of a stat that barely moves. The shape is still visible; it is
+    // just no longer exaggerated into something the numbers do not say.
+    //
+    // A column that dips below zero has no zero to stand on, so it keeps the
+    // old range-relative treatment rather than drawing a negative width.
+    const bars = {};
+    for (const k of colKeys) {
+      const nums = ab.levels.map(lv => cellValue(k, lv))
+        .filter(v => typeof v === 'number');
+      if (nums.length < 2) continue;
+      const max = Math.max(...nums), min = Math.min(...nums);
+      if (max <= min) continue;
+      bars[k] = min >= 0 ? { base: 0, top: max } : { base: min, top: max };
+    }
+    // Health and mana carry the game's own colours; every other ladder is gold.
+    // A heal is health -- Tranquility's and Holy Light's ladders were drawing in
+    // gold next to Hit Points columns drawing in green, which is the same
+    // quantity in two colours. `reduction` and `falloff` are excluded: those
+    // ladders are about suppressing a heal, not delivering one.
+    const HEALTH = /(^|_)hp($|_)|hit_points|(^|_)heal(_|$)|(^|_)life_regen($|_)/;
+    // A damage ladder takes the map's own magic-damage colour when the spell
+    // says that is what it deals. The spell's prose is the only place the type
+    // is recorded -- there is no damage-type field -- and it is the same
+    // sentence the reader has just read, so the two cannot disagree. Physical
+    // and universal damage stay gold: only magic gets a colour of its own.
+    const magic = /\bmagic\b[^.]*\bdamage\b/i.test(ab.description || '');
+    const isDamage = k => /(^|_)(damage|dmg)($|_)/.test(k);
+    const barClass = k => /(^|_)mana($|_)/.test(k) ? ' lv-mana'
+      : HEALTH.test(k) && !/reduction|falloff/.test(k) ? ' lv-hp'
+      : /(^|_)bounty($|_)/.test(k) ? ' lv-gold'
+      : magic && isDamage(k) ? ' lv-magic' : '';
+    const cell = (k, lv) => {
+      const v = cellValue(k, lv);
+      // The top of a range is only ever printed beside its bottom, so a rank
+      // that has one and not the other falls back to the single figure.
+      const hi = k in rangeMax ? cellValue(rangeMax[k], lv) : undefined;
+      const text = v === undefined ? '—'
+        : hi === undefined ? statValue(k, v)
+        : `${statValue(k, v)}–${statValue(rangeMax[k], hi)}`;
+      if (!(k in bars) || typeof v !== 'number') return `<td>${text}</td>`;
+      // A stub floor, so a genuine zero still reads as a filled-in cell rather
+      // than as one nobody got to.
+      const { base, top } = bars[k];
+      const fill = Math.max(0.06, (v - base) / (top - base));
+      return `<td class="lv-cell${barClass(k)}" style="--fill:${
+        fill.toFixed(3)}">${text}</td>`;
+    };
+    const levelRows = ab.levels.map(lv =>
+      `<tr><td>Level ${lv.rank}</td>${
+        colKeys.map(k => cell(k, lv)).join('')}${
+        metaKeys.map(k => `<td>${ab[k] === null ? '—' : statValue(k, ab[k])}</td>`).join('')}</tr>`);
+    // One PNG per spell now, pulled from the game's own icons by
+    // tools/icons.py --abilities. A spell whose art could not be resolved
+    // keeps "icon": null and draws as a black tile: an obvious gap beats
+    // quietly borrowing the neighbouring spell's picture.
+    const iconHtml = `<div class="ability-icon"${
+      ab.icon ? ` style="background-image:url('${ab.icon}')"` : ''}></div>`;
+    // A second axis the rank ladder cannot hold: Robo-Goblin's bonus depends on
+    // the spell's rank *and* on how far Engineering Upgrade has been taken, so
+    // the numbers form a grid rather than a column. Reading it off prose --
+    // "1 strength and 1 armor (2/3/4/5/6/7)" is how the map writes it -- means
+    // counting brackets to find what a level 2 Robo-Goblin gives at upgrade 4.
+    const sc = ab.scaling;
+    const scalingHtml = !sc ? '' : `
+      <div class="scaling-box">
+        <div class="scaling-caption">${ab.name} — ${sc.caption}</div>
+        <table class="scaling-table">
+          <thead>
+            <tr><th class="sc-corner"></th>
+                <th class="sc-group" colspan="${sc.steps.length}">${sc.title}</th></tr>
+            <tr><th class="sc-corner">${ab.name}</th>${sc.steps.map(s =>
+              `<th class="sc-step">${sc.step_label} ${s}</th>`).join('')}</tr>
+          </thead>
+          <tbody>${sc.rows.map((r, i) =>
+            `<tr class="sc-rank-${i + 1}">
+               <td class="sc-rowlabel"><span class="sc-chip">Level ${r.rank}</span></td>${
+              r.values.map(v => `<td><span class="sc-chip">${v}</span></td>`).join('')}
+             </tr>`).join('')}</tbody>
+        </table>
+      </div>`;
     return `
       <div class="ability-card">
         <div class="ability-header">
@@ -153,31 +415,38 @@ function showHeroDetail(id, el) {
         </div>
         <div class="ability-desc">${ab.description}</div>
         ${ab.required_level ? `<div class="ability-req">Requires Ability Level ${ab.required_level}${ab.hero_level_required ? ` / Hero Level ${ab.hero_level_required}` : ''}</div>` : ''}
-        ${ab.area ? `<div class="ability-req">Area: ${ab.area}</div>` : ''}
-        ${keys.length > 0 ? `
+        ${colKeys.length + metaKeys.length > 0 ? `
+          <div class="levels-table-wrap">
           <table class="levels-table">
-            <thead><tr><th>Rank</th>${keys.map(k => `<th>${formatKey(k)}</th>`).join('')}</tr></thead>
+            <thead><tr><th>Level</th>${[...colKeys, ...metaKeys].map(k =>
+              `<th>${columnLabel(k)}</th>`).join('')}</tr></thead>
             <tbody>${levelRows.join('')}</tbody>
           </table>
+          </div>
         ` : ''}
+        ${scalingHtml}
       </div>
     `;
   }).join('') : '<p style="color:var(--text-dim)">Abilities not yet documented.</p>';
 
   const heroHtml = `
     <div class="detail-header">
+      ${hero.icon != null ? `<div class="item-detail-icon" ${itemIconStyle(hero.icon, hero.icon_index, hero.icon_cols || 4, hero.icon_rows || 3, 64)}></div>` : ''}
       <div>
         <div class="detail-title">${hero.name}</div>
         <div class="detail-subtitle">
           ${hero.lore_name ? hero.lore_name + ' · ' : ''}
           ${hero.race ? hero.race + ' · ' : ''}
-          Primärattribut: <span style="color:var(--${hero.primary_stat?.toLowerCase() || 'text-dim'})">${hero.primary_stat || 'Unbekannt'}</span>
+          Primary Attribute: <span style="color:var(--${hero.primary_stat?.toLowerCase() || 'text-dim'})">${ATTR_NAMES[hero.primary_stat] || 'Unknown'}</span>
         </div>
+        ${hero.difficulty != null
+          ? `<div class="detail-difficulty">Difficulty ${difficultyBar(hero)}</div>` : ''}
+        ${roleTags(hero)}
       </div>
     </div>
     ${statsHtml}
     <div class="abilities-section">
-      <h3>Fähigkeiten</h3>
+      <h3>Abilities</h3>
       ${abilitiesHtml}
     </div>
     ${hero.notes ? `<div style="margin-top:12px; color:var(--text-dim); font-size:13px;">${hero.notes}</div>` : ''}
@@ -186,17 +455,46 @@ function showHeroDetail(id, el) {
   if (hero.stats_by_level.length > 0) renderHeroLevelStats(hero, 1);
 }
 
-document.getElementById('hero-search').addEventListener('input', e => {
-  renderHeroes(e.target.value, document.getElementById('hero-filter-stat').value);
-});
-document.getElementById('hero-filter-stat').addEventListener('change', e => {
-  renderHeroes(document.getElementById('hero-search').value, e.target.value);
-});
+// Three controls now feed one render, so each reads the other two rather than
+// each knowing its own argument position.
+function rerenderHeroes() {
+  renderHeroes(document.getElementById('hero-search').value,
+               document.getElementById('hero-filter-stat').value,
+               document.getElementById('hero-filter-role').value);
+}
+document.getElementById('hero-search').addEventListener('input', rerenderHeroes);
+document.getElementById('hero-filter-stat').addEventListener('change', rerenderHeroes);
+document.getElementById('hero-filter-role').addEventListener('change', rerenderHeroes);
+
+// The order the pick screen lays its eight filter buttons out in, which is the
+// order of the bitmask they are declared with in war3map.j (Carry 1, Tank 2,
+// Support 4 ... Mage 128). Collecting the roles in the order the heroes happen
+// to be listed would have put Support first, because Paladin is.
+const ROLE_ORDER = ['Carry', 'Tank', 'Support', 'Stun',
+                    'Jungler', 'Summoner', 'Pusher', 'Mage'];
+
+// The options come from the data rather than from the markup, so a role the map
+// adds later reaches the filter without anyone editing index.html. One the
+// order above has never heard of still shows up -- at the end, rather than
+// silently not at all.
+function fillRoleFilter() {
+  const present = [...new Set(heroes.flatMap(h => h.roles || []))];
+  present.sort((a, b) => {
+    const ia = ROLE_ORDER.indexOf(a), ib = ROLE_ORDER.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
+  document.getElementById('hero-filter-role').insertAdjacentHTML('beforeend',
+    present.map(r => `<option value="${r}">${r}</option>`).join(''));
+}
 
 // ─── ITEMS ─────────────────────────────────────────────────────────────────────
 // Returns inline style string for a CSS sprite icon from item data.
 // size = rendered px size.
 function itemIconStyle(sheet, index, cols, rows, size) {
+  // index === null means the file is a standalone icon, not a spritesheet
+  if (index == null) {
+    return `style="width:${size}px;height:${size}px;background-image:url('${sheet}');background-size:contain;background-position:center;background-repeat:no-repeat;"`;
+  }
   const col = index % cols;
   const row = Math.floor(index / cols);
   const xPct = cols > 1 ? (col / (cols - 1)) * 100 : 0;
@@ -204,77 +502,244 @@ function itemIconStyle(sheet, index, cols, rows, size) {
   return `style="width:${size}px;height:${size}px;background-image:url('${sheet}');background-size:${cols * 100}% ${rows * 100}%;background-position:${xPct.toFixed(2)}% ${yPct.toFixed(2)}%;background-repeat:no-repeat;"`;
 }
 function itemIcon(it, size) {
-  if (it.icon == null || it.icon_index == null) return '';
+  if (it.icon == null) return '';
   return itemIconStyle(it.icon, it.icon_index, it.icon_cols || 4, it.icon_rows || 3, size);
+}
+
+// The category doubles as the shop an item is sold at; a few read better as the
+// building's own name in a heading.
+const SHOP_TITLES = {
+  Consumable: 'Consumables',
+  Orb: 'Orbs',
+  Summon: 'Summons',
+};
+
+// Which shop an item is grouped and filtered under. Upgradable is two separate
+// shops in game, so the data keeps them apart to hold their order -- but the
+// number is bookkeeping and never reaches the page.
+const shopLabel = cat => cat.replace(/^Upgradable \d+$/, 'Upgradable');
+
+// What the tag on an item says. Usually the shop, except where the shop is the
+// building and the tag wants the kind of item: the Black Market sells
+// legendaries, and that is what a reader is looking for on the card.
+const TAG_LABELS = { 'Black Market': 'Legendary', 'Orb': 'Orb Effect' };
+const tagLabel = cat => TAG_LABELS[cat] || shopLabel(cat);
+
+// "Unique" on this site only ever meant "carries an orb effect, and orb effects
+// do not stack" -- the Orb stock and the tag said the same thing in two words,
+// so they are one tag now. The claws, gauntlets and legendary blades are sold
+// elsewhere and still need it; an orb has it from its shop tag already.
+function orbEffectTag(it, style = '') {
+  if (!it.unique || tagLabel(it.category) === 'Orb Effect') return '';
+  return `<span class="card-tag tag-Orb"${style ? ` style="${style}"` : ''}>Orb Effect</span>`;
+}
+
+// The two lines a card can spare for what the item does. A description now
+// opens with its label on its own line -- "Active Illusion", "Non-Combat
+// Consumable" -- and the card is already showing that label as a tag, so
+// spending the preview on it says the same word twice and pushes the actual
+// effect out of view. The label is dropped and the effect gets both lines.
+// Where the clamp falls is CSS's business: chopping the string at a fixed
+// character count used to cut words in half.
+// `note` is the second line a card may carry beside the sentence above: the
+// preview keeps only the first line of a description by design, and on an item
+// whose later line is the part you keep -- Health Stone spends its one charge on
+// the heal and leaves the regeneration behind -- that rule hid the half that
+// outlives the item and showed the half that does not. Written in the data as
+// `preview_note` and only where a card actually needs it, so the default stays
+// one sentence per tile.
+function cardBlurb(desc, note = '') {
+  if (!desc && !note) return '';
+  const lines = desc.split('\n');
+  // A label names the effect ("Active Illusion", "Frost Attack"). A line that
+  // opens with a sign is a bonus, not a name -- "+5 Agility" over "+5 Strength"
+  // used to lose the Agility to the label rule and the tile showed half the
+  // item.
+  const isLabel = lines.length > 1 && lines[0].length < 40
+    && !lines[0].endsWith('.') && !/^\+/.test(lines[0]);
+  const body = (isLabel ? lines.slice(1) : lines).map(l => l.trim()).filter(Boolean);
+  // Only the first line of the body. A description's later lines are the
+  // secondary facts -- what an upgrade changes, what else the item carries --
+  // and on a tile clamped to two lines they crowded out the one sentence that
+  // says what the item does. They are all still there when the item is opened.
+  // A list of flat bonuses is the exception: every line of "+12 Damage" /
+  // "+12% Attack Speed" is the item, so the list is kept whole.
+  const bonusList = body.length > 1 && body.every(l => /^\+/.test(l));
+  const text = (bonusList ? body.join('\n') : body[0] || '')
+    // Some labels the map writes inline instead of on their own line -- Health
+    // Stone opens "Consume: Instantly restores 500 health." The colon form is
+    // the same word the tag beside it already carries, so it goes too.
+    .replace(/^[A-Z][A-Za-z -]{0,24}:\s*/, '');
+  const full = [text, note].filter(Boolean).join('\n');
+  return full ? `<div class="card-sub">${full}</div>` : '';
 }
 
 function renderItems(filter = '', catFilter = '') {
   const grid = document.getElementById('item-list');
   const filtered = items.filter(it => {
     const matchName = it.name.toLowerCase().includes(filter.toLowerCase());
-    const matchCat = !catFilter || it.category === catFilter;
+    const matchCat = !catFilter || shopLabel(it.category) === catFilter;
     return matchName && matchCat;
   });
 
-  grid.innerHTML = filtered.map(it => `
-    <div class="card" onclick="showItemTooltip('${it.id}', this)">
+  const card = it => `
+    <div class="card" role="button" tabindex="0" onclick="showItemTooltip('${it.id}', this)">
       <div class="card-top-row">
-        ${itemIcon(it, 40) ? `<div class="item-card-icon" ${itemIcon(it, 40)}></div>` : ''}
+        ${itemIcon(it, 56) ? `<div class="item-card-icon" ${itemIcon(it, 56)}></div>` : ''}
         <div class="card-top-text">
-          ${it.cost != null ? `<div class="card-cost">🪙 ${it.cost}${it.cost_lumber ? ` 🪵 ${it.cost_lumber}` : ''}</div>` : ''}
+          ${priceHtml(it) ? `<div class="card-cost">${priceHtml(it)}</div>` : ''}
           <div class="card-name">${it.name}</div>
         </div>
       </div>
-      <div class="card-sub" style="margin-bottom:8px;">${it.description.substring(0, 80)}${it.description.length > 80 ? '...' : ''}</div>
-      <div class="card-tags-row">
-        <span class="card-tag tag-${it.category.replace(/ /g, '-')}">${it.category}</span>
-        ${it.unique ? '<span class="card-tag tag-unique">Unique</span>' : ''}
-        ${it.upgrade_tiers ? `<span class="card-tag tag-stack">Stackable ×${it.upgrade_tiers}</span>` : ''}
+      <div class="card-tags-row" style="margin-bottom:8px;">
+        ${shopTag(it)}
+        ${extraTags(it)}
+        ${hasAura(it) ? '<span class="card-tag tag-Aura">Aura</span>' : ''}
+        ${orbEffectTag(it)}
       </div>
-    </div>
-  `).join('');
+      ${cardBlurb(it.description, it.preview_note)}
+    </div>`;
+
+  // one block per shop, in the order a player walks past them; data/items.json
+  // already holds each shop's items in its own grid order. Summons are the
+  // exception: they are read last, so the section sinks to the bottom however
+  // the data lists it.
+  if (filtered.length === 0) {
+    grid.innerHTML = noMatches('items', filter);
+    return;
+  }
+  const shops = [...new Set(filtered.map(it => shopLabel(it.category)))]
+    .sort((a, b) => (a === 'Summon') - (b === 'Summon'));
+  grid.innerHTML = shops.map(shop => {
+    const inShop = filtered.filter(it => shopLabel(it.category) === shop);
+    return `
+      <div class="merc-group">
+        <h3 class="merc-group-title">${SHOP_TITLES[shop] || shop}<span class="merc-group-count">${inShop.length}</span></h3>
+        <div class="card-grid">${inShop.map(card).join('')}</div>
+      </div>`;
+  }).join('');
 }
 
 function showItemTooltip(id, el) {
   const item = items.find(it => it.id === id);
 
-  const statLabels = {
-    life_steal_pct: 'Lifesteal', bonus_dmg: 'Bonus Dmg', ranged: 'Ranged',
-    armor_reduction: 'Armor Reduction', armor_reduction_duration: 'Armor Red. Duration',
-    slow_pct: 'Slow', slow_duration: 'Slow Duration', splash_pct: 'Splash',
-    splash_aoe: 'Splash AoE', heal_reduction_pct: 'Heal Reduction',
-    heal_reduction_duration: 'Heal Red. Duration', move_speed: 'Move Speed',
-    blink_range: 'Blink Range', active_cooldown: 'Cooldown',
-    true_sight_aoe: 'True Sight AoE', dark_minion_duration: 'Minion Duration',
-    summons: 'Summons', summon_unit: 'Unit', duration: 'Duration',
-    aura: 'Aura', impact_dmg: 'Impact Dmg', stun_duration: 'Stun',
-    immolation_dps: 'Immolation DPS', trigger: 'Trigger',
-  };
+  // Aura numbers get their own block. Left in STATS every one of them had to
+  // repeat the word "Aura" in its label to stay unambiguous; under a heading
+  // that says it once, each box can just name the stat.
+  const allStats = Object.entries(item.stats || {});
+  const isAura = k => k === 'aura' || k.startsWith('aura_');
+  const isActive = k => k.startsWith('active_');
+  const auraStats = allStats.filter(([k]) => isAura(k));
+  const active = allStats.filter(([k]) => isActive(k));
+  // What is left splits again: the flat bonuses a hero carries around, and the
+  // effect the item fires on hit. Mixing them meant an orb listed its slow
+  // percentages next to its armor as though they were the same kind of thing.
+  // `duration` sits in FLAT_STATS because on the eight items that carry it, six
+  // are summons and the number is how long the summoned thing lives -- a fact
+  // about the summon, next to what it summons. The other two are Poisoned Blade
+  // and Scroll of Speed, where the number times an effect rather than a unit:
+  // the blade's 8 seconds is how long the poison ticks and the slow holds, so
+  // under STATS it sat apart from the three numbers it governs and read as if
+  // only the slow were timed. What tells the two apart is whether the item
+  // summons at all.
+  // (Rod of Necromancy used to be a ninth, carrying `duration: "permanent"`.
+  // That was the description's heading copied into the stats: "Permanent" says
+  // the item is not spent when used, the way Ancestral Staff -- same heading,
+  // no duration -- is not spent. It says nothing about how long the skeletons
+  // stand, so the stat is gone and the heading keeps the fact.)
+  const summonsSomething = allStats.some(([k]) => k === 'summons' || k === 'summon_unit');
+  const isFlat = k => FLAT_STATS.has(k) && !(k === 'duration' && !summonsSomething);
+  const flat = allStats.filter(([k]) =>
+    !isAura(k) && !isActive(k) && isFlat(k));
+  const effect = allStats.filter(([k]) =>
+    !isAura(k) && !isActive(k) && !isFlat(k));
+  // A heading over a single box costs more than it explains -- Killmaim's one
+  // lifesteal number reads fine sitting with its damage, and the Staff of
+  // Silence has three numbers in total, which is a list, not three lists. A
+  // group only breaks out once it and what it leaves behind both hold up.
+  const splitEffect = effect.length > 1 && flat.length > 1;
+  // When the two do not split, the boxes keep the order the item is written in
+  // rather than flat-bonuses-then-effect: the data lists a shield's armor
+  // first because that is what the item is bought for, and pulling the flat
+  // stats out first moved it into the middle.
+  const head = splitEffect ? flat
+    : allStats.filter(([k]) => !isAura(k) && !isActive(k));
+  const splitActive = active.length > 1 && head.length > 1;
 
-  const statsHtml = item.stats && Object.keys(item.stats).length > 0
-    ? `<div style="margin-bottom:16px;">
-        <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">STATS</div>
-        <div class="stats-grid" style="margin-bottom:0;">
-          ${Object.entries(item.stats).map(([k, v]) => `
-            <div class="stat-box">
-              <div class="stat-label">${statLabels[k] || k.replace(/_/g, ' ')}</div>
-              <div class="stat-value" style="color:var(--gold-light); font-size:14px;">${v === true ? '✓' : v}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>`
-    : '';
+  const plainStats = splitActive ? head : head.concat(active);
+  const effectStats = splitEffect ? effect : [];
+  const activeStats = splitActive ? active : [];
 
-  const numericStats = item.stats ? Object.entries(item.stats).filter(([, v]) => typeof v === 'number') : [];
+  // Boxes run in the order the item lists them -- the data is written the way
+  // the item reads in game, so an armor bonus stated first stays first. Two
+  // kinds of stat are exempt, and both for the same reason: they are not
+  // bonuses the item advertises, so letting the data file decide where they
+  // land meant they landed somewhere different on every item. TAIL_STATS
+  // (Attacks Air) is a property this site derives and the map never states;
+  // CHARGE_STATS is the footnote about how many times you get to use what the
+  // item does. Both sink to the end, charges behind the rest, and the sort is
+  // stable so everything else keeps the order it was written in.
+  const tailRank = k => CHARGE_STATS.has(k) ? 2 : TAIL_STATS.has(k) ? 1 : 0;
+  const tailLast = entries => [...entries].sort(
+    ([ka], [kb]) => tailRank(ka) - tailRank(kb));
+
+  const statBlock = (title, entries, label) => entries.length === 0 ? '' : `
+    <div style="margin-bottom:16px;">
+      <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">${title}</div>
+      <div class="stats-grid" style="margin-bottom:0;">
+        ${tailLast(entries).map(([k, v]) => `
+          <div class="stat-box">
+            <div class="stat-label">${label(k)}</div>
+            <div class="stat-value">${statValue(k, v)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+
+  // On a weapon that procs, the effect is the item: nobody buys the Corrupted
+  // Blade for its 50 damage, they buy it to strip 16 armor, and the damage is
+  // the footnote. Items whose flat bonuses are the point -- Deathguard's
+  // evasion, Inferno Stone's summon -- keep those first.
+  const effectFirst = item.effect_type === 'on_attack';
+  const statsHtml = (effectFirst
+                      ? statBlock('EFFECT', effectStats, statLabel)
+                        + statBlock('STATS', plainStats, statLabel)
+                      : statBlock('STATS', plainStats, statLabel)
+                        + statBlock('EFFECT', effectStats, statLabel))
+                  + statBlock('ACTIVE', activeStats, activeLabel)
+                  + statBlock('AURA', auraStats, auraLabel);
+
+  // An upgrade raises the stat the item is named for, and nothing else. Areas,
+  // intervals, durations, ranges and cooldowns hold still along a ladder -- the
+  // Cloak of Flames burns for 10/20/30/40 damage but always in an area of 260 --
+  // so multiplying them by the tier invented numbers like "Interval 2".
+  // Some ladders are not a multiple of tier 1 at all -- the Amulet of Spell
+  // Shield counts *down* 45/35/25/15 -- so the data can spell a rung out in
+  // stack_values, and that always wins over the multiplication.
+  const stackValues = item.stack_values || {};
+  // A rung spelled out as the same number four times is not a progression --
+  // the Rusty Mining Pick's bash always hits for 25 however many you hold, and
+  // printing "25 Bash Bonus Damage" on every tier just crowds out the two stats
+  // that do move. Constants belong in STATS, which lists them once.
+  const stacks = k => k in stackValues && new Set(stackValues[k]).size > 1;
+  const numericStats = item.stats
+    ? Object.entries(item.stats).filter(([k, v]) => stacks(k) ||
+        (!(k in stackValues) &&
+          typeof v === 'number' && !/_(aoe|interval|duration|range|cooldown)$/.test(k)))
+    : [];
+  const tierCell = ([k, v], n) => k in stackValues
+    ? `${statValue(k, stackValues[k][n - 1])} ${stackLabel(k)}`
+    : `+${statValue(k, v * n)} ${stackLabel(k)}`;
+
   const stackHtml = item.upgrade_tiers && numericStats.length > 0
     ? `<div style="margin-bottom:16px;">
         <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">STACK PROGRESSION</div>
-        <div class="stats-grid" style="margin-bottom:0;">
+        <div class="stats-grid stack-grid" style="margin-bottom:0;">
           ${Array.from({length: item.upgrade_tiers}, (_, i) => i + 1).map(n => `
-            <div class="stat-box">
+            <div class="stat-box${numericStats.length > 1 ? ' stack-box' : ''}">
               <div class="stat-label" style="color:var(--gold)">×${n}</div>
-              <div class="stat-value" style="color:var(--gold-light); font-size:13px; line-height:1.5;">
-                ${numericStats.map(([k, v]) => `+${v * n} ${statLabels[k] || k.replace(/_/g, ' ')}`).join('<br>')}
+              <div class="stat-value">
+                ${numericStats.map(e => tierCell(e, n)).join('<br>')}
               </div>
             </div>
           `).join('')}
@@ -282,26 +747,43 @@ function showItemTooltip(id, el) {
       </div>`
     : '';
 
+  // The Black Market's shop tag already reads "Legendary", in the same orange
+  // chip -- side by side with a badge saying it again, the header said the word
+  // twice. The badge is for a legendary that is sold somewhere else, or whose
+  // shop tag is hidden.
+  const legendaryBadge = item.legendary &&
+    !(!item.hide_shop_tag && tagLabel(item.category) === 'Legendary');
+
+  // The price used to sit in its own column, pinned to the right edge of a
+  // panel as wide as the page -- on the Potion of Invisibility it ended up an
+  // inch of empty space away from anything it described, and the eye never got
+  // there. It reads with the name instead, and the effect type stops being a
+  // grey whisper in the corner and joins the tags, which is what it is.
   const itemHtml = `
     <div class="detail-header">
-      ${itemIcon(item, 56) ? `<div class="item-detail-icon" ${itemIcon(item, 56)}></div>` : ''}
+      ${itemIcon(item, 64) ? `<div class="item-detail-icon" ${itemIcon(item, 64)}></div>` : ''}
       <div style="flex:1;">
-        <div class="detail-title">${item.name}</div>
-        <div class="detail-subtitle" style="margin-top:6px;">
-          <span class="card-tag tag-${item.category.replace(/ /g, '-')}">${item.category}</span>
-          ${item.unique ? '<span class="card-tag tag-unique" style="margin-left:6px;">Unique</span>' : ''}
-          ${item.legendary ? '<span class="card-tag" style="margin-left:6px; background:rgba(200,80,20,0.15); color:#e06030; border:1px solid #e06030;">Legendary</span>' : ''}
+        <div class="detail-title">
+          ${item.name}
+          ${priceHtml(item) ? `<span class="detail-price">${priceHtml(item, '&nbsp; ')}</span>` : ''}
+        </div>
+        <div class="detail-subtitle card-tags-row" style="margin-top:6px;">
+          ${shopTag(item)}
+          ${extraTags(item)}
+          ${hasAura(item) ? '<span class="card-tag tag-Aura">Aura</span>' : ''}
+          ${orbEffectTag(item)}
+          ${legendaryBadge ? '<span class="card-tag" style="background:rgba(200,80,20,0.15); color:var(--endgame); border:1px solid var(--endgame);">Legendary</span>' : ''}
+          ${effectTypeTags(item)}
         </div>
       </div>
-      <div style="text-align:right; white-space:nowrap;">
-        ${item.cost != null ? `<div style="color:var(--gold); font-weight:700;">🪙 ${item.cost}${item.cost_lumber ? ` &nbsp;🪵 ${item.cost_lumber}` : ''}</div>` : ''}
-        <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">${item.effect_type || ''}</div>
-      </div>
     </div>
-    <p style="color:var(--text); line-height:1.6; margin-bottom:16px;">${item.description}</p>
-    ${stackHtml}
+    ${item.description ? `<p style="color:var(--text); line-height:1.6; margin-bottom:16px; white-space:pre-line;">${item.description}</p>` : ''}
     ${statsHtml}
-    ${item.notes ? `<div style="color:var(--text-dim); font-size:13px; border-top:1px solid var(--border); padding-top:12px;">${item.notes}</div>` : ''}
+    ${stackHtml}
+    ${item.notes ? `<div>
+        <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:2px;">NOTES</div>
+        <div style="color:var(--text-dim); font-size:13px; line-height:1.5;">${item.notes}</div>
+      </div>` : ''}
   `;
 
   showInlineDetail('item-list', el, itemHtml);
@@ -323,13 +805,27 @@ function renderBuilds(filter = '') {
     (b.tags && b.tags.some(t => t.toLowerCase().includes(filter.toLowerCase())))
   );
 
+  // Three different empty screens, and they mean three different things: the
+  // server did not answer, nobody has saved a build yet, or the search is too
+  // narrow. Showing the same blank grid for all three left the reader unable to
+  // tell a broken page from an empty one.
+  if (filtered.length === 0) {
+    grid.innerHTML = buildsError
+      ? emptyState('Builds could not be loaded.',
+          'They are stored on a server this page could not reach. Check the connection and reload.')
+      : builds.length === 0
+        ? emptyState('No builds saved yet.', 'Create Build makes the first one.')
+        : noMatches('builds', filter);
+    return;
+  }
+
   grid.innerHTML = filtered.map(b => {
     const hero = heroes.find(h => h.id === b.hero_id);
     const totalItems = [...(b.items_firstbuy || []), ...(b.items_midgame || []), ...(b.items_endgame || [])].filter(e => e && (typeof e === 'string' ? e : e.id)).length;
     const tagStr = b.tags?.length > 0 ? b.tags.map(t => `<span class="build-tag-pill">${t}</span>`).join('') : '<span style="color:var(--text-dim)">no tags</span>';
 
     return `
-      <div class="card build-card" onclick="showBuildDetail('${b.id}', this)">
+      <div class="card build-card" role="button" tabindex="0" onclick="showBuildDetail('${b.id}', this)">
         <div class="build-card-header">
           <div class="build-card-info">
             <div class="card-name">${b.name}</div>
@@ -349,9 +845,9 @@ function showBuildDetail(id, el) {
   const soHero = heroes.find(h => h.id === b.hero_id);
 
   const phases = [
-    { key: 'items_firstbuy', label: 'First Buy', color: '#4caf50' },
+    { key: 'items_firstbuy', label: 'First Buy', color: 'var(--positive)' },
     { key: 'items_midgame',  label: 'Midgame',   color: 'var(--gold)' },
-    { key: 'items_endgame',  label: 'Endgame',   color: '#e06030' },
+    { key: 'items_endgame',  label: 'Endgame',   color: 'var(--endgame)' },
   ];
 
   let html = `<div class="build-detail-expanded" style="margin-top:0; padding-top:0; border-top:none;">`;
@@ -377,8 +873,8 @@ function showBuildDetail(id, el) {
     const legNames = legendary.map(id => items.find(i => i.id === id)?.name || id);
     html += `
       <div class="build-phase-row">
-        <div class="build-phase-label" style="color:#e06030">⚔ Legendary</div>
-        <div class="build-phase-items">${legNames.map(n => `<span class="build-item-pill" style="border-color:#e06030;color:#e06030;">${n}</span>`).join('')}</div>
+        <div class="build-phase-label" style="color:var(--endgame)">⚔ Legendary</div>
+        <div class="build-phase-items">${legNames.map(n => `<span class="build-item-pill" style="border-color:var(--endgame);color:var(--endgame);">${n}</span>`).join('')}</div>
       </div>`;
   }
 
@@ -420,17 +916,31 @@ function renderMercs(filter = '') {
   const grid = document.getElementById('merc-list');
   const filtered = mercs.filter(m => m.name.toLowerCase().includes(filter.toLowerCase()));
 
-  grid.innerHTML = filtered.map(m => `
-    <div class="card ${m.buffs.length === 0 ? 'card-incomplete' : ''}" onclick="showMercDetail('${m.id}', this)">
+  const card = m => `
+    <div class="card ${m.abilities.length === 0 ? 'card-incomplete' : ''}" role="button" tabindex="0" onclick="showMercDetail('${m.id}', this)">
       <div class="card-top-row">
-        ${m.icon != null ? `<div class="item-card-icon" ${itemIconStyle(m.icon, m.icon_index, m.icon_cols || 4, m.icon_rows || 3, 40)}></div>` : ''}
+        ${m.icon != null ? `<div class="item-card-icon" ${itemIconStyle(m.icon, m.icon_index, m.icon_cols || 4, m.icon_rows || 3, 56)}></div>` : ''}
         <div class="card-top-text">
-          ${m.cost != null ? `<div class="card-cost">🪙 ${m.cost}${m.cost_lumber ? ` 🪵 ${m.cost_lumber}` : ''}</div>` : ''}
+          ${priceHtml(m) ? `<div class="card-cost">${priceHtml(m)}</div>` : ''}
           <div class="card-name">${m.name}</div>
         </div>
       </div>
       <div style="font-size:12px; color:var(--text-dim); margin-top:6px;">
-        ${m.buffs.length > 0 ? m.buffs.map(b => `<span>${b}</span>`).join(' · ') : 'Noch nicht dokumentiert'}
+        ${m.abilities.length > 0 ? m.abilities.map(a => `<span>${a.name}</span>`).join(' · ') : 'Not documented yet'}
+      </div>
+    </div>`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = noMatches('mercenaries', filter);
+    return;
+  }
+  // mercenaries are sold by two different buildings; keep them visibly apart
+  const buildings = [...new Set(filtered.map(m => m.building || 'Unknown'))].sort();
+  grid.innerHTML = buildings.map(b => `
+    <div class="merc-group">
+      <h3 class="merc-group-title">${b}<span class="merc-group-count">${filtered.filter(m => (m.building || 'Unknown') === b).length}</span></h3>
+      <div class="card-grid">
+        ${filtered.filter(m => (m.building || 'Unknown') === b).map(card).join('')}
       </div>
     </div>
   `).join('');
@@ -449,20 +959,20 @@ function showMercDetail(id, el) {
           <div class="ability-desc">${ab.description}</div>
         </div>
       `).join('')
-    : '<p style="color:var(--text-dim)">Fähigkeiten noch nicht dokumentiert.</p>';
+    : '<p style="color:var(--text-dim)">Abilities not documented yet.</p>';
 
   const mercHtml = `
     <div class="detail-header">
-      ${merc.icon != null ? `<div class="item-detail-icon" ${itemIconStyle(merc.icon, merc.icon_index, merc.icon_cols || 4, merc.icon_rows || 3, 56)}></div>` : ''}
+      ${merc.icon != null ? `<div class="item-detail-icon" ${itemIconStyle(merc.icon, merc.icon_index, merc.icon_cols || 4, merc.icon_rows || 3, 64)}></div>` : ''}
       <div style="flex:1;">
         <div class="detail-title">${merc.name}</div>
         <div class="detail-subtitle">
           ${merc.building ? 'Building: ' + merc.building + ' · ' : ''}
-          ${merc.cost != null ? '🪙 ' + merc.cost + (merc.cost_lumber ? ` 🪵 ${merc.cost_lumber}` : '') : ''}
+          ${priceHtml(merc)}
         </div>
       </div>
     </div>
-    ${merc.description ? `<p style="color:var(--text-dim); margin-bottom:16px;">${merc.description}</p>` : ''}
+    ${merc.description ? `<p style="color:var(--text-soft); line-height:1.6; margin-bottom:16px;">${merc.description}</p>` : ''}
     ${merc.buffs.length > 0 ? `
       <div style="margin-bottom:16px;">
         <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">BUFFS</div>
@@ -470,7 +980,7 @@ function showMercDetail(id, el) {
       </div>
     ` : ''}
     <div class="abilities-section">
-      <h3>Fähigkeiten</h3>
+      <h3>Abilities</h3>
       ${abilitiesHtml}
     </div>
     ${merc.notes ? `<div style="margin-top:12px; color:var(--text-dim); font-size:13px;">${merc.notes}</div>` : ''}
@@ -480,6 +990,129 @@ function showMercDetail(id, el) {
 
 document.getElementById('merc-search').addEventListener('input', e => {
   renderMercs(e.target.value);
+});
+
+// ─── TOWERS & BASES ────────────────────────────────────────────────────────────
+// The two teams mirror each other tower for tower, so they are shown side by
+// side rather than in one alphabetical list: the question a reader brings here
+// is almost always "what am I walking into", and that is answered by the lane
+// position, not by the unit's name.
+function structureStats(s) {
+  const stats = [
+    ['Hit Points', s.health],
+    ['HP Regeneration', s.health_regen],
+    ['Armor', s.armor],
+    ['Armor Type', s.armor_type],
+    ['Damage', s.damage],
+    ['Attack Type', s.attack_type],
+    ['Attack Cooldown', s.attack_cooldown],
+    // Damage alone ranks the towers wrongly: the Nerubian Tower hits for the
+    // same 120 as the Arcane one but swings a sixth slower, and only the
+    // per-second figure says so.
+    ['Damage per Second', s.damage != null && s.attack_cooldown
+      ? +(s.damage / s.attack_cooldown).toFixed(1) : undefined],
+    ['Attack Range', s.attack_range],
+  ];
+  return `<div class="level-stats-row structure-stats">${stats
+    .filter(([, v]) => v !== undefined)
+    .map(([label, v]) => `
+      <div class="level-stat-item">
+        <span class="level-stat-label">${label}</span>
+        <span class="level-stat-value">${v === null ? '—' : v}</span>
+      </div>`).join('')}</div>`;
+}
+
+function renderStructures(filter = '', team = '') {
+  const grid = document.getElementById('structure-list');
+  const filtered = structures.filter(s =>
+    s.name.toLowerCase().includes(filter.toLowerCase()) &&
+    (!team || s.team === team));
+
+  const card = s => `
+    <div class="card" role="button" tabindex="0" onclick="showStructureDetail('${s.id}', this)">
+      <div class="card-top-row">
+        <div class="item-card-icon" ${itemIconStyle(s.icon, null, 1, 1, 56)}></div>
+        <div class="card-top-text">
+          <div class="card-cost">${s.tier}${s.count > 1 ? ` · ${s.count} per team` : ''}</div>
+          <div class="card-name">${s.name}</div>
+        </div>
+      </div>
+      <div style="font-size:12px; color:var(--text-dim); margin-top:6px;">
+        ${[
+          s.health != null ? `${s.health} health` : null,
+          s.damage != null ? `${s.damage} damage` : null,
+          s.armor != null ? `${s.armor} armor` : null,
+        ].filter(Boolean).join(' · ')}
+      </div>
+    </div>`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = noMatches('towers', filter);
+    return;
+  }
+  const teams = [...new Set(filtered.map(s => s.team))];
+  grid.innerHTML = teams.map(t => `
+    <div class="merc-group">
+      <h3 class="merc-group-title">${t}<span class="merc-group-count structure-group-count">${
+        filtered.filter(s => s.team === t).length}</span></h3>
+      <div class="card-grid">
+        ${filtered.filter(s => s.team === t).map(card).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showStructureDetail(id, el) {
+  const s = structures.find(x => x.id === id);
+
+  const abilitiesHtml = s.abilities.length > 0
+    ? s.abilities.map(ab => `
+        <div class="ability-card">
+          <div class="ability-header">
+            <span class="ability-name">${ab.name}</span>
+            <span class="ability-type">${ab.type}</span>
+          </div>
+          <div class="ability-desc">${ab.description}</div>
+        </div>
+      `).join('')
+    : '<p style="color:var(--text-dim)">No abilities.</p>';
+
+  const bounty = [];
+  if (s.bounty) bounty.push(`🪙 ${s.bounty}`);
+  if (s.bounty_lumber) bounty.push(`🪵 ${s.bounty_lumber}`);
+
+  const html = `
+    <div class="detail-header">
+      <div class="item-detail-icon" ${itemIconStyle(s.icon, null, 1, 1, 64)}></div>
+      <div style="flex:1;">
+        <div class="detail-title">${s.name}</div>
+        <div class="detail-subtitle">
+          ${s.team} · ${s.kind} · ${s.count} per team
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--text-soft); line-height:1.6; margin-bottom:16px;">${s.description}</p>
+    <div class="stats-slider-section level-stats-display">${structureStats(s)}</div>
+    ${bounty.length > 0 ? `
+      <div style="margin-bottom:16px;">
+        <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">BOUNTY</div>
+        <span class="build-item-pill">${bounty.join(' ')}</span>
+      </div>
+    ` : ''}
+    <div class="abilities-section">
+      <h3>Abilities</h3>
+      ${abilitiesHtml}
+    </div>
+    ${s.notes ? `<div style="margin-top:12px; color:var(--text-dim); font-size:13px;">${s.notes}</div>` : ''}
+  `;
+  showInlineDetail('structure-list', el, html);
+}
+
+document.getElementById('structure-search').addEventListener('input', e => {
+  renderStructures(e.target.value, document.getElementById('structure-filter-team').value);
+});
+document.getElementById('structure-filter-team').addEventListener('change', e => {
+  renderStructures(document.getElementById('structure-search').value, e.target.value);
 });
 
 // ─── BUILD CREATOR ─────────────────────────────────────────────────────────────
@@ -505,15 +1138,20 @@ function fillSlot(slotEl, item, phase, slotIdx, stacks) {
   slotEl.classList.remove('empty');
   slotEl.classList.add('filled');
   slotEl.title = item.name;
-  if (item.icon != null && item.icon_index != null) {
-    const cols = item.icon_cols || 4, rows = item.icon_rows || 3;
-    const col = item.icon_index % cols, row = Math.floor(item.icon_index / cols);
-    const xPct = cols > 1 ? (col / (cols - 1)) * 100 : 0;
-    const yPct = rows > 1 ? (row / (rows - 1)) * 100 : 0;
+  if (item.icon != null) {
     slotEl.style.backgroundImage = `url('${item.icon}')`;
-    slotEl.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
-    slotEl.style.backgroundPosition = `${xPct.toFixed(2)}% ${yPct.toFixed(2)}%`;
     slotEl.style.backgroundRepeat = 'no-repeat';
+    if (item.icon_index == null) {          // standalone icon, not a sheet
+      slotEl.style.backgroundSize = 'contain';
+      slotEl.style.backgroundPosition = 'center';
+    } else {
+      const cols = item.icon_cols || 4, rows = item.icon_rows || 3;
+      const col = item.icon_index % cols, row = Math.floor(item.icon_index / cols);
+      const xPct = cols > 1 ? (col / (cols - 1)) * 100 : 0;
+      const yPct = rows > 1 ? (row / (rows - 1)) * 100 : 0;
+      slotEl.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
+      slotEl.style.backgroundPosition = `${xPct.toFixed(2)}% ${yPct.toFixed(2)}%`;
+    }
     slotEl.classList.add('has-icon');
   }
   const stackBadge = item.upgrade_tiers
@@ -607,7 +1245,12 @@ function renderSkillOrderGrid(hero) {
   rows.forEach(row => {
     const rankNow = ranks[row.key];
     html += `<div class="so-row" data-skill="${row.key}">`;
-    html += `<div class="so-label" title="${row.label}"><span class="so-key">${row.shortLabel}</span><span class="so-key-name">${row.label.substring(0,10)}${row.label.length>10?'…':''}</span></div>`;
+    // The full name, cut by CSS if the column really runs out. Chopping the
+    // string at ten characters in JavaScript turned Summon Bear, Summon
+    // Quilbeast and Summon Hawk into "Summon Bea…", "Summon Qui…" and "Summon
+    // Haw…" -- three rows you had to hover to tell apart, in the one place on
+    // the site where you are choosing between them.
+    html += `<div class="so-label" title="${row.label}"><span class="so-key">${row.shortLabel}</span><span class="so-key-name">${row.label}</span></div>`;
     for (let l = 0; l < SKILL_LEVELS; l++) {
       const selected = skillOrder[l] === row.key;
       const rankAtThisLevel = selected ? countRankUpTo(row.key, l) : '';
@@ -705,7 +1348,7 @@ document.getElementById('bc-item-search').addEventListener('input', e => {
 function renderPickerItems(filter) {
   const list = document.getElementById('bc-item-picker-list');
   const pool = pickerMode === 'legendary'
-    ? items.filter(it => it.category === 'Legendary')
+    ? items.filter(it => it.category === 'Black Market')
     : items;
   const filtered = pool.filter(it => it.name.toLowerCase().includes(filter.toLowerCase()));
   list.innerHTML = filtered.map(it => `
@@ -769,9 +1412,9 @@ function updateCreatorPreview() {
   const legendaryFilled = legendaryReplacements.filter(Boolean);
   const legendaryHTML = legendaryFilled.length > 0 ? `
     <div style="margin-bottom:10px;">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#e06030; margin-bottom:4px;">⚔ Legendary Ersatz</div>
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--endgame); margin-bottom:4px;">⚔ Legendary Ersatz</div>
       <div class="preview-items">${legendaryReplacements.map((id, i) => id
-        ? `<span class="preview-item" style="border-color:#e06030; color:#e06030;" title="Ersetzt Slot ${i+1}">${items.find(it => it.id === id)?.name || id}</span>`
+        ? `<span class="preview-item" style="border-color:var(--endgame); color:var(--endgame);" title="Ersetzt Slot ${i+1}">${items.find(it => it.id === id)?.name || id}</span>`
         : '').join('')}</div>
     </div>` : '';
 
@@ -873,12 +1516,293 @@ function showInlineDetail(gridId, cardEl, htmlContent) {
   panel.className = 'detail-panel inline-detail';
   panel.innerHTML = htmlContent;
   lastInRow.after(panel);
-  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Scroll to the card, not to the panel. A hero's panel is several screens
+  // tall, so asking to bring *it* into view put its top edge against the header
+  // and shoved the grid off the top -- you landed on the hero you picked with
+  // no way back to the others but scrolling up. Aiming at the card parks the
+  // row you clicked from just under the header with the panel opening directly
+  // beneath it, so the next hero is one click away instead of one scroll.
+  // html{scroll-padding-top} is what keeps the row clear of the sticky header.
+  cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ─── HELPERS ───────────────────────────────────────────────────────────────────
-function formatKey(key) {
-  return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+// Stat keys are stored the way the map names them (agi, bonus_dmg, aura_dmg_pct).
+// Nothing reaches the page abbreviated: every short form is spelled out, and a
+// trailing _pct leaves the label entirely -- the percent sign rides on the
+// number instead, so a stat reads "+20% Attack Speed".
+// The fields of an ability that are the card itself -- its name, its picture,
+// its ladder -- rather than a number the card has to state. Everything else on
+// a spell is a stat, and gets printed whether or not anyone remembered to add
+// a line for it here.
+const ABILITY_STRUCTURAL = new Set([
+  'name', 'type', 'description', 'hotkey', 'icon', 'levels',
+  'required_level', 'hero_level_required',
+  // its own table under the ladder, not a column in it
+  'scaling',
+  // where the art sits in its sheet, and where the entry came from: bookkeeping
+  // for the importer, not something a player reads off the spell
+  'sprite_index', 'from_base_game',
+]);
+
+const STAT_WORDS = {
+  str: 'Strength', agi: 'Agility', int: 'Intelligence',
+  dmg: 'Damage', dot: 'DoT', aoe: 'Area of Effect',
+  // The one abbreviation the site keeps. "Immolation Damage 10" reads as a
+  // per-hit number; the value is damage *per second*, and DPS is what the
+  // player already calls it -- spelling it out would only make the box wrap.
+  dps: 'DPS',
+  hp: 'Hit Points', xp: 'XP', pct: '%', mult: 'Multiplier',
+  regen: 'Regeneration', invis: 'Invisibility', sec: 'Second',
+  move: 'Movement', crit: 'Critical',
+  // the map says "attack rate", the site says attack speed -- one name for it
+  rate: 'Speed',
+};
+
+// Only for names the word-by-word rule cannot reach: "life_steal" is one word in
+// English, and these two read better trimmed than spelled out in full.
+const STAT_LABELS = {
+  life_steal_pct: 'Lifesteal',
+  lifesteal_pct: 'Lifesteal',
+  // An item has one range, one area and one cooldown, and they belong to the
+  // active -- saying "Active" in front of them adds a word and no meaning.
+  // "Active Damage" keeps its prefix: the item also carries damage of its own.
+  active_cooldown: 'Cooldown',
+  active_range: 'Range',
+  // Duration belongs with them for the same reason, and had been missing: on
+  // Voodoo Doll, whose stats are all its active and so never split into their
+  // own block, the label came through the word-by-word rule as "Active
+  // Duration" -- while Unholy Shield, which does split, showed the same stat as
+  // "Duration". One entry settles both.
+  active_duration: 'Duration',
+  active_aoe: 'Area of Effect',
+  // Mana is the one that does not follow them. Range, area and cooldown belong
+  // to the active and to nothing else, so under its heading they need no
+  // qualifier -- but mana is also a flat bonus several items grant, and Unholy
+  // Shield grants both: 300 to the pool under STATS, 50 charged per cast under
+  // ACTIVE. Two boxes reading "Mana" said the item gives mana twice. The cost
+  // keeps the word that tells them apart wherever it appears.
+  active_mana: 'Mana Cost',
+  summon_unit: 'Unit',
+  // The table is inside Force of Nature's own block and every other column in it
+  // is the treant's -- repeating the word in the header only made the column
+  // wider than the numbers under it.
+  treant_hp: 'Hit Points',
+  aura_move_pct: 'Aura Movement Speed',
+  // Under the AURA heading the sibling item's aura_dmg_pct is simply "Damage",
+  // because Command Aura buffs everyone and there is nobody to name. Trueshot
+  // Aura buffs only ranged units, so the label has to say whose damage this is
+  // -- and the word-by-word rule was rendering it "Damage Ranged", which is not
+  // English. "Ranged Unit Damage" is the unambiguous version, naming the unit
+  // the way "Damage to Summons" above names who the damage lands on, but at
+  // eighteen characters it wrapped the box onto a second line and a stat box
+  // has no room for one. Two words is what fits, so the label leans on the
+  // context the box already sits in: the heading over it says AURA and the
+  // description a few lines up says "increases attack damage of ranged units",
+  // which is what stops "Ranged Damage" being read as a damage type.
+  aura_dmg_ranged_pct: 'Ranged Damage',
+  // the box above already says what is being restored, so the one below it
+  // only has to say how long that takes
+  hp_restore_duration: 'Duration',
+  mana_restore_duration: 'Duration',
+  reveal_duration: 'Duration',
+  dark_minion_duration: 'Summon Duration',
+  bonus_dmg: 'Damage',
+  bonus_damage: 'Damage',
+  // The flat pool spells "Hit Points" out; the regeneration line is long
+  // enough already, so it keeps the short form.
+  hp_regen: 'HP Regeneration',
+  // "Damage Summoned" reads like a stat about summoning something; what these
+  // actually say is who the damage lands on.
+  active_dmg_summoned: 'Damage to Summons',
+  dmg_summoned: 'Damage to Summons',
+  bonus_dmg_summoned: 'Damage to Summons',
+  // What the map calls a spell damage reduction, players call resistance.
+  spell_dmg_reduction_pct: 'Spell Resistance',
+  // The description already says the attack becomes ranged; the stat box only
+  // has to surface the consequence a reader would otherwise miss.
+  ranged: 'Attacks Air',
+  armor_reduction_duration: 'Effect Duration',
+  heal_reduction_duration: 'Effect Duration',
+  // The effect is named on the line above ("+10% Cleave", "10 Immolation
+  // DPS", "30% Splash Damage"), so repeating it in front of the area only makes
+  // the line wrap -- which is exactly what "Splash Area of Effect" did on Orb
+  // of Fire and Firehand Gauntlets.
+  immolation_aoe: 'Area of Effect',
+  cleave_aoe: 'Area of Effect',
+  splash_aoe: 'Area of Effect',
+  // The map's own tooltip heads this effect "Splash Damage", and the bare
+  // "Splash" left the number saying 30% of nothing in particular. It is also
+  // what makes the box below it work: "Area of Effect" only reads as the splash
+  // radius because the box before it has named the splash.
+  splash_pct: 'Splash Damage',
+  cyclone_duration: 'Duration',
+  illusion_duration: 'Duration',
+  // Everything in this block is the illusion, so the label does not have to say
+  // so again -- and the spelled-out version wrapped onto a second line, which is
+  // the one thing a stat box has no room for.
+  illusion_dmg_taken_pct: 'Damage Taken',
+  invis_duration: 'Duration',
+  // A trailing "units" or "heroes" on a spell says who the number lands on,
+  // not what is being counted -- "Duration Units" reads like a count of units.
+  duration_units: 'Duration vs Units',
+  duration_heroes: 'Duration vs Heroes',
+  stun_units: 'Stun Duration vs Units',
+  stun_heroes: 'Stun Duration vs Heroes',
+  // "Gold Bounty" is what the World Editor calls the field, and this map pays in
+  // lumber too -- the currency belongs in the name.
+  bounty: 'Gold Bounty',
+  // "X Damage" in this game names a damage type -- Chaos Damage, Magic Damage --
+  // so "Units Damage" reads like a kind of damage and "Building Damage" like
+  // damage a building deals. "Damage to X" can only mean who is on the receiving
+  // end, and it takes the plural in both. Only spells that really split the two
+  // carry these; where one number covers everything the key is plain `damage`.
+  dmg_units: 'Damage to Units',
+  // Blizzard's building number is stored in the map as a factor of the unit
+  // damage. A factor is not a number a reader can use -- "0.45" says nothing
+  // until you multiply it by the column beside it -- so the data carries the
+  // product instead.
+  dmg_buildings: 'Damage to Buildings',
+  magic_dmg_amp_pct: 'Magic Damage Amplification',
+  // A falloff means nothing without saying what it falls off per, and the
+  // conditional bonus means nothing without naming the condition.
+  damage_falloff_pct: 'Jump Reduction',
+  heal_falloff_pct: 'Healing Falloff per Bounce',
+};
+
+function statLabel(key) {
+  if (STAT_LABELS[key]) return STAT_LABELS[key];
+  return key.replace(/_pct$/, '').split('_')
+    // `in`, not `||`: a word mapped to '' is one the label drops on purpose,
+    // and falling back would spell it out again as "Dps".
+    .map(w => w in STAT_WORDS ? STAT_WORDS[w] : w.charAt(0).toUpperCase() + w.slice(1))
+    .filter(Boolean)
+    .join(' ');
+}
+
+// A price shows only the currencies it is actually paid in. Gold Coins cost a
+// lumber and no gold, and "0 gold" is noise the same way "0 lumber" would be.
+function priceHtml(it, sep = ' ') {
+  const parts = [];
+  if (it.cost) parts.push(`🪙 ${it.cost}`);
+  if (it.cost_lumber) parts.push(`🪵 ${it.cost_lumber}`);
+  return parts.join(sep);
+}
+
+// The shop tag, unless the item says its own tags describe it better -- the
+// boots are all in the Special stock, but what a reader wants off the card is
+// that they give movement speed. The section heading still shows the shop.
+function shopTag(it) {
+  if (it.hide_shop_tag) return '';
+  return `<span class="card-tag tag-${it.category.replace(/ /g, '-')}">${tagLabel(it.category)}</span>`;
+}
+
+// How the item works -- active, passive, on attack -- said as a tag rather than
+// as the raw effect_type string. A part the header already shows is dropped:
+// the Staff of Silence lists "Active" in its own tags, and an item with aura
+// stats has the Aura tag from its numbers.
+const TYPE_LABELS = {
+  active: 'Active', passive: 'Passive', on_attack: 'On Attack',
+  aura: 'Aura', unit: 'Unit',
+};
+function effectTypeTags(it) {
+  const shown = new Set([...(it.tags || []), ...(hasAura(it) ? ['Aura'] : [])]);
+  return (it.effect_type || '').split('+')
+    .map(part => TYPE_LABELS[part.trim()])
+    .filter(label => label && !shown.has(label))
+    .map(label => `<span class="card-tag tag-${label.replace(/ /g, '-')}">${label}</span>`)
+    .join('');
+}
+
+// An item sold in one shop can still behave like another kind: the Scepter of
+// Avarice sits with the Special stock but is consumed on use. `tags` in the
+// data adds those extra labels next to the shop tag.
+function extraTags(it, style = '') {
+  return (it.tags || [])
+    .map(t => `<span class="card-tag tag-${t.replace(/ /g, '-')}"${style ? ` style="${style}"` : ''}>${t}</span>`)
+    .join('');
+}
+
+// Read off the stats rather than a hand-set flag: an item carries an aura
+// exactly when it has an aura_* stat, so the tag cannot drift from the numbers.
+function hasAura(it) {
+  return Object.keys(it.stats || {})
+    .some(k => k === 'aura' || k.startsWith('aura_'));
+}
+
+// The flat bonuses a hero simply carries. Everything else a stat can describe
+// -- a slow, a splash, a proc chance -- is the item doing something, and lands
+// in its own block instead.
+const FLAT_STATS = new Set([
+  'str', 'agi', 'int', 'armor', 'hp', 'mana', 'hp_regen', 'mana_regen_pct',
+  // bonus_dmg_summoned is deliberately absent: it only lands on the item's
+  // proc, so it belongs with the effect rather than with the flat bonuses.
+  'bonus_dmg', 'attack_speed_pct', 'move_speed',
+  'evasion_pct', 'spell_dmg_reduction_pct', 'ranged', 'charges', 'uses',
+  'inventory_slots', 'flying', 'divine_shield', 'gold_gain', 'lumber_gain',
+  'xp_gain', 'level_gain', 'aoe', 'duration', 'summons', 'summon_unit',
+]);
+
+// How many times the item can be used is not a bonus it grants; it is the
+// footnote under whatever it grants. These sort behind every other stat
+// instead of taking a place in the reading order below.
+const CHARGE_STATS = new Set(['charges', 'uses']);
+
+// "Attacks Air" is not a line the map's tooltip carries -- the site reads it off
+// the `ranged` flag and surfaces it because a melee hero picking up an orb would
+// otherwise not learn that the orb is what lets him hit air. Being an addition
+// rather than one of the item's stated bonuses, it has no natural place among
+// them, and the data file duly put it first on eight items, second on one and
+// third on three. It goes last on all of them instead, so the bonuses the map
+// does state stay in an unbroken run and read in the order the map states them.
+const TAIL_STATS = new Set(['ranged']);
+
+// There is no reading order table any more: the order an item lists its stats
+// in *is* the reading order, so changing what a box sits next to is an edit to
+// data/items.json, not to this file.
+
+// Same idea as the aura block: the heading says "active", the label need not.
+// The stripped key is the fallback, not the first move: a couple of stats mean
+// something different under ACTIVE than the same word means as a flat bonus --
+// `mana` is the pool the item adds, `active_mana` is what casting it costs --
+// so an entry written against the full key wins, exactly as in auraLabel.
+function activeLabel(key) {
+  return STAT_LABELS[key] || statLabel(key.replace(/^active_/, ''));
+}
+
+// A stack tier is a one-line phrase in a box barely wider than it, so it takes
+// the shortest label that is still unambiguous -- and only here. STATS has room
+// and keeps the full wording; these overrides do not leak into it.
+const STACK_LABELS = {
+  // Nothing else in the database is a reduction, so the qualifier only costs
+  // width. Under STATS it stays "Spell Resistance".
+  spell_dmg_reduction_pct: 'Reduction',
+};
+
+function stackLabel(key) {
+  // "+125 Active Damage" reads as a kind of damage rather than as the damage an
+  // active does. Same trim the ACTIVE block already makes.
+  return STACK_LABELS[key] || activeLabel(key);
+}
+
+// Inside the AURA block the heading already says "aura", so the label drops it.
+function auraLabel(key) {
+  if (key === 'aura') return 'Effect';
+  const explicit = STAT_LABELS[key];
+  return explicit ? explicit.replace(/^Aura /, '')
+                  : statLabel(key.replace(/^aura_/, ''));
+}
+
+function statValue(key, v) {
+  if (v === true) return '✓';
+  if (v == null) return '—';
+  // Values are stored the way the data files write them ("magic", "on_corpse");
+  // what the page shows is prose, so it reads as words and starts in caps.
+  if (typeof v === 'string') {
+    return v.replace(/_/g, ' ').replace(/\b[a-z]/g, c => c.toUpperCase());
+  }
+  return key.endsWith('_pct') ? `${v}%` : v;
 }
 
 function showToast(msg) {

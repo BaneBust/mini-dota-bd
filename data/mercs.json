@@ -4,9 +4,9 @@
       "id": "banshee",
       "name": "Banshee",
       "cost": 250,
-      "cost_lumber": 3,
+      "cost_lumber": 2,
       "building": "Mercenary Camp",
-      "health": 585,
+      "health": 505,
       "description": "Cursing unit that can possess enemy units.",
       "buffs": [
         "Anti-Magic Shell",
@@ -30,10 +30,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 6,
+      "icon": "icons/banshee.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "uban",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "druid_of_the_claw",
@@ -41,7 +44,7 @@
       "cost": 250,
       "cost_lumber": 4,
       "building": "Mercenary Camp",
-      "health": 730,
+      "health": 580,
       "description": "Support druid with damage aura, healing, and bear transformation.",
       "buffs": [
         "Roar",
@@ -65,10 +68,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 9,
+      "icon": "icons/druidoftheclaw.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "edoc",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "dryad",
@@ -99,10 +105,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 8,
+      "icon": "icons/dryad.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "edry",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "mud_golem",
@@ -129,10 +138,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 10,
+      "icon": "icons/mudgolem.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "ngrk",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "necromancer",
@@ -140,7 +152,7 @@
       "cost": 250,
       "cost_lumber": 3,
       "building": "Mercenary Camp",
-      "health": 675,
+      "health": 595,
       "description": "Raises skeletons, buffs attack speed, and cripples enemies.",
       "buffs": [
         "Unholy Frenzy",
@@ -164,10 +176,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 7,
+      "icon": "icons/necromancer.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "unec",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "priest",
@@ -175,7 +190,7 @@
       "cost": 250,
       "cost_lumber": 2,
       "building": "Mercenary Camp",
-      "health": 580,
+      "health": 500,
       "description": "Healer that can dispel and buff armor and damage.",
       "buffs": [
         "Heal",
@@ -199,10 +214,14 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 4,
+      "icon": "icons/priest.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "h008",
+      "damage_base": 9,
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "raider",
@@ -223,10 +242,13 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 0,
+      "icon": "icons/raider.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "orai",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "shaman",
@@ -234,7 +256,7 @@
       "cost": 250,
       "cost_lumber": 3,
       "building": "Mercenary Camp",
-      "health": 580,
+      "health": 500,
       "description": "Versatile support with purge, lightning shield, and bloodlust.",
       "buffs": [
         "Bloodlust",
@@ -258,10 +280,14 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 2,
+      "icon": "icons/shaman.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "oshm",
+      "damage_dice": 0,
+      "damage_sides": 0,
+      "attack_speed": 2
     },
     {
       "id": "sorceress",
@@ -269,7 +295,7 @@
       "cost": 250,
       "cost_lumber": 2,
       "building": "Mercenary Camp",
-      "health": 725,
+      "health": 645,
       "description": "Can slow, turn allies invisible, or polymorph enemies into sheep.",
       "buffs": [
         "Slow",
@@ -293,16 +319,19 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 5,
+      "icon": "icons/sorceress.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "hsor",
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "spirit_walker",
       "name": "Spirit Walker",
       "cost": 250,
-      "cost_lumber": 3,
+      "cost_lumber": 2,
       "building": "Mercenary Camp",
       "health": 620,
       "description": "Links units to distribute damage, dispels buffs, and can turn ethereal.",
@@ -327,10 +356,14 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 1,
+      "icon": "icons/spiritwalker.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "ospm",
+      "mana_max": 100,
+      "damage_dice": 0,
+      "damage_sides": 0
     },
     {
       "id": "witch_doctor",
@@ -338,7 +371,7 @@
       "cost": 250,
       "cost_lumber": 4,
       "building": "Mercenary Camp",
-      "health": 825,
+      "health": 745,
       "description": "Places wards for detection, stunning, and area healing.",
       "buffs": [
         "Healing Ward",
@@ -362,34 +395,128 @@
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 3,
+      "icon": "icons/witchdoctor.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "odoc",
+      "armor": 1,
+      "damage_dice": 0,
+      "damage_sides": 0
+    },
+    {
+      "id": "druid_of_the_talon",
+      "name": "Druid of the Talon",
+      "building": "Mercenary Camp",
+      "description": "",
+      "buffs": [],
+      "abilities": [
+        {
+          "name": "Faerie Fire",
+          "type": "Active",
+          "description": "Reduces the armor of a target enemy unit by ? and grants vision of it for ? (?) seconds.",
+          "from_base_game": true
+        },
+        {
+          "name": "Storm Crow Form",
+          "type": "Active",
+          "description": "Transforms into a Storm Crow, becoming a flying unit."
+        },
+        {
+          "name": "Cyclone",
+          "type": "Active",
+          "description": "Tosses a target enemy unit into the air, disabling it for 5.0 (?) seconds.\n\nHealth: 680",
+          "from_base_game": true
+        }
+      ],
+      "notes": "",
+      "icon": "icons/druidofthetalon.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "edot",
+      "health": 600,
+      "damage_dice": 0,
+      "damage_sides": 0,
+      "cost": 250,
+      "cost_lumber": 2
     },
     {
       "id": "zeppelin",
       "name": "Zeppelin",
-      "cost": 250,
-      "cost_lumber": 1,
-      "building": "Mercenary Camp",
-      "health": 575,
-      "description": "Flying transport that carries up to 8 friendly units.",
-      "buffs": [
-        "Flying Transport"
-      ],
+      "description": "",
+      "buffs": [],
       "abilities": [
         {
           "name": "Flying Air Transport",
           "type": "Active",
-          "description": "Loads targeted friendly land units and unloads them at a target location. Can transport up to 8 units."
+          "description": "Loads targeted friendly land units and unloads them at a target location. Can transport up to ? units.\n\nHealth: 575",
+          "from_base_game": true
         }
       ],
       "notes": "",
-      "icon": "screenshots/Shops/Mercenary_Camp/Icon.png",
-      "icon_index": 11,
+      "icon": "icons/zeppelin.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "nzep",
+      "building": "Goblin Laboratory",
+      "armor": 4,
+      "damage_dice": 0,
+      "damage_sides": 0,
+      "move_speed": 315,
+      "cost": 250,
+      "cost_lumber": 1
+    },
+    {
+      "id": "sapper",
+      "name": "Sapper",
+      "description": "Kaboom! - Causes a powerful area explosion, dealing 700 damage to units and buildings, but 525 damage to heroes. Works on land units and trees.\n\nHealth: 200",
+      "buffs": [],
+      "abilities": [
+        {
+          "name": "Kaboom!",
+          "type": "Active",
+          "description": "Causes a powerful area explosion, dealing 700 damage to units and buildings, but 525 damage to heroes. Works on land units and trees.\n\nHealth: 200"
+        }
+      ],
+      "notes": "",
+      "icon": "icons/sapper.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ngsp",
+      "building": "Goblin Laboratory",
+      "health": 200,
+      "damage_dice": 0,
+      "damage_sides": 0,
+      "cost": 250,
+      "cost_lumber": 0
+    },
+    {
+      "id": "shredder",
+      "name": "Shredder",
+      "description": "Destroy Trees - Allows to attack trees, effectively clearing them. Cuts a healthy tree down in 5 swings.\n\nHealth: 600",
+      "buffs": [],
+      "abilities": [
+        {
+          "name": "Destroy Trees",
+          "type": "Active",
+          "description": "Allows to attack trees, effectively clearing them. Cuts a healthy tree down in 5 swings.\n\nHealth: 600"
+        }
+      ],
+      "notes": "",
+      "icon": "icons/shredder.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ngir",
+      "building": "Goblin Laboratory",
+      "damage_dice": 0,
+      "damage_sides": 0,
+      "cost": 200,
+      "cost_lumber": 0,
+      "health": 600
     }
   ]
 }

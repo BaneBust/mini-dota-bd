@@ -6,6 +6,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Support"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 22,
       "str_growth": 2.7,
       "agi_base": 13,
@@ -285,51 +288,43 @@
         {
           "name": "Holy Light",
           "type": "active",
-          "description": "Heals a friendly living unit or deals damage to an undead unit. Healing pierces spell immunity.",
+          "description": "A holy light that can heal a friendly living unit or deal magic damage to an enemy undead unit. Healing pierces spell immunity.",
+          "cooldown": 5.5,
+          "range": 800,
+          "mana": 65,
           "levels": [
             {
               "rank": 1,
               "heal": 200,
-              "dmg_undead": 100,
-              "range": 800,
-              "mana": 65
+              "damage": 100
             },
             {
               "rank": 2,
-              "heal": 300,
-              "dmg_undead": 150,
-              "range": 800,
-              "mana": 70
+              "heal": 330,
+              "damage": 200
             },
             {
               "rank": 3,
-              "heal": 500,
-              "dmg_undead": 250,
-              "range": 800,
-              "mana": 75
+              "heal": 460,
+              "damage": 300
             },
             {
               "rank": 4,
-              "heal": 700,
-              "dmg_undead": 350,
-              "range": 800,
-              "mana": 80
+              "heal": 590,
+              "damage": 400
             },
             {
               "rank": 5,
-              "heal": 900,
-              "dmg_undead": 450,
-              "range": 800,
-              "mana": 85
+              "heal": 720,
+              "damage": 500
             },
             {
               "rank": 6,
-              "heal": 1100,
-              "dmg_undead": 550,
-              "range": 800,
-              "mana": 90
+              "heal": 850,
+              "damage": 600
             }
-          ]
+          ],
+          "icon": "icons/spell-holylight.png"
         },
         {
           "name": "Divine Shield",
@@ -339,31 +334,31 @@
             {
               "rank": 1,
               "duration": 2,
-              "cooldown": 20,
+              "cooldown": 13,
               "mana": 25
             },
             {
               "rank": 2,
               "duration": 3,
-              "cooldown": 19,
+              "cooldown": 14,
               "mana": 45
             },
             {
               "rank": 3,
               "duration": 4,
-              "cooldown": 18,
+              "cooldown": 15,
               "mana": 65
             },
             {
               "rank": 4,
               "duration": 5,
-              "cooldown": 17,
+              "cooldown": 15,
               "mana": 85
             },
             {
               "rank": 5,
               "duration": 6,
-              "cooldown": 16,
+              "cooldown": 15,
               "mana": 105
             },
             {
@@ -372,7 +367,8 @@
               "cooldown": 15,
               "mana": 125
             }
-          ]
+          ],
+          "icon": "icons/spell-divineshield.png"
         },
         {
           "name": "Devotion Aura",
@@ -382,60 +378,67 @@
           "levels": [
             {
               "rank": 1,
-              "armor_bonus": 2
+              "armor_bonus": 3
             },
             {
               "rank": 2,
-              "armor_bonus": 4
-            },
-            {
-              "rank": 3,
               "armor_bonus": 6
             },
             {
+              "rank": 3,
+              "armor_bonus": 9
+            },
+            {
               "rank": 4,
-              "armor_bonus": 8
+              "armor_bonus": 12
             },
             {
               "rank": 5,
-              "armor_bonus": 10
+              "armor_bonus": 15
             },
             {
               "rank": 6,
-              "armor_bonus": 15
+              "armor_bonus": 18
             }
-          ]
+          ],
+          "icon": "icons/spell-devotionaura.png"
         },
         {
           "name": "Resurrection",
           "type": "active",
-          "description": "Brings back the corpses of nearby units.",
+          "description": "Brings back to life the corpses of nearby units.\nCorpses last 88 seconds before disappearing.",
+          "area": 900,
           "levels": [
             {
               "rank": 1,
-              "units_revived": 5,
-              "cooldown": 240,
-              "mana": 125
+              "cooldown": 90,
+              "mana": 150,
+              "units_revived": 3
             },
             {
               "rank": 2,
-              "units_revived": 12,
-              "cooldown": 200,
-              "mana": 75
+              "cooldown": 60,
+              "mana": 100,
+              "units_revived": 3
             }
-          ]
+          ],
+          "icon": "icons/spell-resurrection.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Paladin/Spell-Icon.png"
+      "raw_code": "Hpal",
+      "icon": "icons/paladin.png",
+      "icon_index": null
     },
     {
       "id": "archmage",
       "name": "Archmage",
-      "spell_icon_sprite": "screenshots/Heros/Archmage/Spell-Icon.png",
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Jungler", "Summoner", "Pusher"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 14,
       "str_growth": 2.0,
       "agi_base": 17,
@@ -717,16 +720,71 @@
           "type": "active",
           "description": "Calls down waves of freezing ice shards that deal magic damage per 0.7 seconds to units in a target area. Friendly fire off.",
           "hotkey": "Q",
-          "cooldown": 5,
-          "range": 900,
+          "waves": 6,
+          "cast_time": 0.7,
           "levels": [
-            { "rank": 1, "damage_per_tick": 30, "aoe": 200, "mana": 75 },
-            { "rank": 2, "damage_per_tick": 50, "aoe": 205, "mana": 85 },
-            { "rank": 3, "damage_per_tick": 80, "aoe": 210, "mana": 95 },
-            { "rank": 4, "damage_per_tick": 120, "aoe": 215, "mana": 105 },
-            { "rank": 5, "damage_per_tick": 170, "aoe": 220, "mana": 115 },
-            { "rank": 6, "damage_per_tick": 225, "aoe": 225, "mana": 125 }
-          ]
+            {
+              "rank": 1,
+              "damage": 30,
+              "dmg_buildings": 15,
+              "aoe": 200,
+              "mana": 80,
+              "range": 800,
+              "cooldown": 6,
+              "cast_time": 0.7
+            },
+            {
+              "rank": 2,
+              "damage": 50,
+              "dmg_buildings": 22.5,
+              "aoe": 205,
+              "mana": 95,
+              "range": 810,
+              "cooldown": 6.5,
+              "cast_time": 0.7
+            },
+            {
+              "rank": 3,
+              "damage": 80,
+              "dmg_buildings": 32,
+              "aoe": 210,
+              "mana": 110,
+              "range": 820,
+              "cooldown": 7,
+              "cast_time": 0.7
+            },
+            {
+              "rank": 4,
+              "damage": 120,
+              "dmg_buildings": 42,
+              "aoe": 215,
+              "mana": 125,
+              "range": 830,
+              "cooldown": 7.5,
+              "cast_time": 0.7
+            },
+            {
+              "rank": 5,
+              "damage": 170,
+              "dmg_buildings": 51,
+              "aoe": 220,
+              "mana": 140,
+              "range": 840,
+              "cooldown": 8,
+              "cast_time": 0.7
+            },
+            {
+              "rank": 6,
+              "damage": 230,
+              "dmg_buildings": 57.5,
+              "aoe": 225,
+              "mana": 155,
+              "range": 850,
+              "cooldown": 8.5,
+              "cast_time": 0.7
+            }
+          ],
+          "icon": "icons/spell-blizzard.png"
         },
         {
           "name": "Summon Water Elemental",
@@ -734,15 +792,63 @@
           "description": "Summons a Water Elemental to fight for the hero.",
           "hotkey": "W",
           "mana": 125,
-          "range": 600,
           "levels": [
-            { "rank": 1, "hp": 520, "damage_min": 20, "damage_max": 28, "armor": 0, "cooldown": 20, "bounty": 20 },
-            { "rank": 2, "hp": 780, "damage_min": 36, "damage_max": 44, "armor": 0, "cooldown": 18, "bounty": 25 },
-            { "rank": 3, "hp": 1040, "damage_min": 56, "damage_max": 64, "armor": 0, "cooldown": 16, "bounty": 30 },
-            { "rank": 4, "hp": 1300, "damage_min": 68, "damage_max": 76, "armor": 0, "cooldown": 14, "bounty": 35 },
-            { "rank": 5, "hp": 1560, "damage_min": 80, "damage_max": 88, "armor": 0, "cooldown": 12, "bounty": 40 },
-            { "rank": 6, "hp": 1875, "damage_min": 80, "damage_max": 88, "armor": 3, "cooldown": 10, "bounty": 45 }
-          ]
+            {
+              "rank": 1,
+              "hp": 500,
+              "damage_min": 20,
+              "damage_max": 28,
+              "armor": 0,
+              "cooldown": 20,
+              "bounty": 20
+            },
+            {
+              "rank": 2,
+              "hp": 625,
+              "damage_min": 32,
+              "damage_max": 40,
+              "armor": 1,
+              "cooldown": 18,
+              "bounty": 25
+            },
+            {
+              "rank": 3,
+              "hp": 825,
+              "damage_min": 44,
+              "damage_max": 52,
+              "armor": 2,
+              "cooldown": 16,
+              "bounty": 30
+            },
+            {
+              "rank": 4,
+              "hp": 1100,
+              "damage_min": 56,
+              "damage_max": 64,
+              "armor": 3,
+              "cooldown": 14,
+              "bounty": 35
+            },
+            {
+              "rank": 5,
+              "hp": 1450,
+              "damage_min": 68,
+              "damage_max": 76,
+              "armor": 4,
+              "cooldown": 12,
+              "bounty": 40
+            },
+            {
+              "rank": 6,
+              "hp": 1875,
+              "damage_min": 80,
+              "damage_max": 88,
+              "armor": 5,
+              "cooldown": 10,
+              "bounty": 45
+            }
+          ],
+          "icon": "icons/spell-summonwaterelemental.png"
         },
         {
           "name": "Brilliance Aura",
@@ -751,28 +857,61 @@
           "hotkey": "E",
           "area": 900,
           "levels": [
-            { "rank": 1, "mana_regen": 0.5 },
-            { "rank": 2, "mana_regen": 1.0 },
-            { "rank": 3, "mana_regen": 1.5 },
-            { "rank": 4, "mana_regen": 2.0 },
-            { "rank": 5, "mana_regen": 2.5 },
-            { "rank": 6, "mana_regen": 3.0 }
-          ]
+            {
+              "rank": 1,
+              "mana_regen": 1.5
+            },
+            {
+              "rank": 2,
+              "mana_regen": 3
+            },
+            {
+              "rank": 3,
+              "mana_regen": 4.5
+            },
+            {
+              "rank": 4,
+              "mana_regen": 6
+            },
+            {
+              "rank": 5,
+              "mana_regen": 7.5
+            },
+            {
+              "rank": 6,
+              "mana_regen": 9
+            }
+          ],
+          "icon": "icons/spell-brillianceaura.png"
         },
         {
           "name": "Mass Teleport",
           "type": "active",
           "description": "Teleports player's nearby units, including the Archmage, to a friendly ground unit or structure.",
           "hotkey": "R",
-          "mana": 100,
-          "range": 600,
           "levels": [
-            { "rank": 1, "cast_delay": 2.0, "cooldown": 20 },
-            { "rank": 2, "cast_delay": 1.0, "cooldown": 10 }
-          ]
+            {
+              "rank": 1,
+              "cast_delay": 2.0,
+              "cooldown": 20,
+              "area": 600,
+              "mana": 100
+            },
+            {
+              "rank": 2,
+              "cast_delay": 1.2,
+              "cooldown": 10,
+              "area": 600,
+              "mana": 100
+            }
+          ],
+          "icon": "icons/spell-massteleport.png"
         }
       ],
-      "notes": null
+      "notes": null,
+      "raw_code": "Hamg",
+      "icon": "icons/archmage.png",
+      "icon_index": null
     },
     {
       "id": "mountain_king",
@@ -780,6 +919,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Tank", "Stun"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 24,
       "str_growth": 3.0,
       "agi_base": 11,
@@ -1061,14 +1203,58 @@
           "type": "active",
           "description": "Slams a magical hammer at an enemy unit, dealing magic damage and stunning the target.",
           "hotkey": "Q",
+          "cooldown": 9,
           "levels": [
-            { "rank": 1, "damage": 100, "stun_units": 4, "stun_heroes": 2, "range": 600 },
-            { "rank": 2, "damage": 175, "stun_units": 4, "stun_heroes": 4, "range": 620 },
-            { "rank": 3, "damage": 250, "stun_units": 6, "stun_heroes": 4, "range": 640 },
-            { "rank": 4, "damage": 325, "stun_units": 8, "stun_heroes": 5, "range": 660 },
-            { "rank": 5, "damage": 350, "stun_units": 8, "stun_heroes": 5, "range": 680 },
-            { "rank": 6, "damage": 370, "stun_units": 8, "stun_heroes": 5, "range": 700 }
-          ]
+            {
+              "rank": 1,
+              "damage": 100,
+              "stun_heroes": 2.5,
+              "stun_units": 4,
+              "range": 600,
+              "mana": 75
+            },
+            {
+              "rank": 2,
+              "damage": 150,
+              "stun_heroes": 2.6,
+              "stun_units": 4.2,
+              "range": 620,
+              "mana": 85
+            },
+            {
+              "rank": 3,
+              "damage": 200,
+              "stun_heroes": 2.7,
+              "stun_units": 4.4,
+              "range": 640,
+              "mana": 95
+            },
+            {
+              "rank": 4,
+              "damage": 255,
+              "stun_heroes": 2.8,
+              "stun_units": 4.6,
+              "range": 660,
+              "mana": 105
+            },
+            {
+              "rank": 5,
+              "damage": 310,
+              "stun_heroes": 2.9,
+              "stun_units": 4.8,
+              "range": 680,
+              "mana": 115
+            },
+            {
+              "rank": 6,
+              "damage": 370,
+              "stun_heroes": 3,
+              "stun_units": 5,
+              "range": 700,
+              "mana": 125
+            }
+          ],
+          "icon": "icons/spell-stormbolt.png"
         },
         {
           "name": "Thunder Clap",
@@ -1076,31 +1262,95 @@
           "description": "Slams the ground, dealing magic damage to nearby enemy units and slowing their movement and attack speed.",
           "hotkey": "W",
           "cooldown": 7,
-          "duration_units": 5,
           "duration_heroes": 3,
+          "duration_units": 5,
+          "mana": 90,
           "levels": [
-            { "rank": 1, "damage": 60,  "slow_pct": 45, "aoe": 300 },
-            { "rank": 2, "damage": 120, "slow_pct": 45, "aoe": 325 },
-            { "rank": 3, "damage": 180, "slow_pct": 50, "aoe": 350 },
-            { "rank": 4, "damage": 240, "slow_pct": 55, "aoe": 375 },
-            { "rank": 5, "damage": 300, "slow_pct": 55, "aoe": 400 },
-            { "rank": 6, "damage": 360, "slow_pct": 60, "aoe": 425 }
-          ]
+            {
+              "rank": 1,
+              "damage": 60,
+              "move_slow_pct": 45,
+              "attack_slow_pct": 45,
+              "area": 300
+            },
+            {
+              "rank": 2,
+              "damage": 115,
+              "area": 320,
+              "move_slow_pct": 48,
+              "attack_slow_pct": 48
+            },
+            {
+              "rank": 3,
+              "damage": 160,
+              "area": 340,
+              "move_slow_pct": 51,
+              "attack_slow_pct": 51
+            },
+            {
+              "rank": 4,
+              "damage": 210,
+              "area": 360,
+              "move_slow_pct": 54,
+              "attack_slow_pct": 54
+            },
+            {
+              "rank": 5,
+              "damage": 260,
+              "area": 380,
+              "move_slow_pct": 57,
+              "attack_slow_pct": 57
+            },
+            {
+              "rank": 6,
+              "damage": 310,
+              "move_slow_pct": 60,
+              "attack_slow_pct": 60,
+              "area": 400
+            }
+          ],
+          "icon": "icons/spell-thunderclap.png"
         },
         {
           "name": "Bash",
           "type": "passive",
           "description": "Gives a chance to stun and deal bonus magic damage on attack.",
           "hotkey": "E",
-          "stun_duration": 2,
+          "stun_heroes": 1,
+          "stun_units": 2,
           "levels": [
-            { "rank": 1, "chance_pct": 5,  "bonus_damage": 11 },
-            { "rank": 2, "chance_pct": 10, "bonus_damage": 22 },
-            { "rank": 3, "chance_pct": 15, "bonus_damage": 33 },
-            { "rank": 4, "chance_pct": 20, "bonus_damage": 44 },
-            { "rank": 5, "chance_pct": 25, "bonus_damage": 55 },
-            { "rank": 6, "chance_pct": 30, "bonus_damage": 66 }
-          ]
+            {
+              "rank": 1,
+              "chance_pct": 10,
+              "bonus_damage": 10
+            },
+            {
+              "rank": 2,
+              "chance_pct": 15,
+              "bonus_damage": 15
+            },
+            {
+              "rank": 3,
+              "chance_pct": 20,
+              "bonus_damage": 20
+            },
+            {
+              "rank": 4,
+              "chance_pct": 25,
+              "bonus_damage": 25
+            },
+            {
+              "rank": 5,
+              "chance_pct": 30,
+              "bonus_damage": 30
+            },
+            {
+              "rank": 6,
+              "chance_pct": 35,
+              "bonus_damage": 35
+            }
+          ],
+          "icon": "icons/spell-bash.png"
         },
         {
           "name": "Avatar",
@@ -1110,13 +1360,28 @@
           "cooldown": 180,
           "mana": 150,
           "levels": [
-            { "rank": 1, "bonus_hp": 500,  "bonus_damage": 15, "bonus_armor": 5,  "duration": 20 },
-            { "rank": 2, "bonus_hp": 1000, "bonus_damage": 30, "bonus_armor": 10, "duration": 30 }
-          ]
+            {
+              "rank": 1,
+              "bonus_hp": 400,
+              "bonus_damage": 15,
+              "bonus_armor": 4,
+              "duration": 45
+            },
+            {
+              "rank": 2,
+              "bonus_hp": 800,
+              "bonus_damage": 30,
+              "bonus_armor": 8,
+              "duration": 45
+            }
+          ],
+          "icon": "icons/spell-avatar.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Mountain_King/Spell-Icon.png"
+      "raw_code": "Hmkg",
+      "icon": "icons/mountainking.png",
+      "icon_index": null
     },
     {
       "id": "blood_mage",
@@ -1124,6 +1389,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Mage"],
+      "difficulty": 5,
+      "difficulty_max": 5,
       "str_base": 18,
       "str_growth": 2.0,
       "agi_base": 14,
@@ -1403,16 +1671,63 @@
         {
           "name": "Flame Strike",
           "type": "active",
-          "description": "Conjures a pillar of fire which deals magic damage to units in a target area over time. Duration 3s burn / 6s total.",
+          "description": "Conjures a pillar of fire which deals magic damage to units in a target area over time.",
           "hotkey": "Q",
+          "cooldown": 10,
+          "range": 800,
+          "pillar_duration": 3,
+          "fire_duration": 6,
           "levels": [
-            { "rank": 1, "pillar_damage": 150, "fire_damage_per_tick": 7.6,  "setup_delay": 0.75, "mana": 115 },
-            { "rank": 2, "pillar_damage": 280, "fire_damage_per_tick": 9.1,  "setup_delay": 0.60, "mana": 115 },
-            { "rank": 3, "pillar_damage": 420, "fire_damage_per_tick": 10.6, "setup_delay": 0.45, "mana": 125 },
-            { "rank": 4, "pillar_damage": 560, "fire_damage_per_tick": 12.1, "setup_delay": 0.30, "mana": 125 },
-            { "rank": 5, "pillar_damage": 700, "fire_damage_per_tick": 13.6, "setup_delay": 0.15, "mana": 135 },
-            { "rank": 6, "pillar_damage": 800, "fire_damage_per_tick": 14.4, "setup_delay": 0,    "mana": 135 }
-          ]
+            {
+              "rank": 1,
+              "pillar_damage": 150,
+              "fire_damage": 24,
+              "channel_time": 0.75,
+              "mana": 85,
+              "area": 200
+            },
+            {
+              "rank": 2,
+              "pillar_damage": 280,
+              "fire_damage": 48,
+              "channel_time": 0.6,
+              "mana": 95,
+              "area": 220
+            },
+            {
+              "rank": 3,
+              "pillar_damage": 410,
+              "fire_damage": 72,
+              "channel_time": 0.45,
+              "mana": 105,
+              "area": 240
+            },
+            {
+              "rank": 4,
+              "pillar_damage": 540,
+              "fire_damage": 96,
+              "channel_time": 0.3,
+              "mana": 115,
+              "area": 260
+            },
+            {
+              "rank": 5,
+              "pillar_damage": 670,
+              "fire_damage": 120,
+              "channel_time": 0.15,
+              "mana": 125,
+              "area": 280
+            },
+            {
+              "rank": 6,
+              "pillar_damage": 800,
+              "fire_damage": 144,
+              "channel_time": 0,
+              "mana": 135,
+              "area": 300
+            }
+          ],
+          "icon": "icons/spell-flamestrike.png"
         },
         {
           "name": "Banish",
@@ -1422,13 +1737,59 @@
           "move_slow_pct": 50,
           "magic_dmg_amp_pct": 66,
           "levels": [
-            { "rank": 1, "duration": 3.6, "range": 800 },
-            { "rank": 2, "duration": 3.9, "range": 820 },
-            { "rank": 3, "duration": 4.2, "range": 840 },
-            { "rank": 4, "duration": 4.5, "range": 860 },
-            { "rank": 5, "duration": 4.8, "range": 880 },
-            { "rank": 6, "duration": 5.1, "range": 900 }
-          ]
+            {
+              "rank": 1,
+              "duration_heroes": 3.6,
+              "range": 800,
+              "mana": 50,
+              "cooldown": 7,
+              "duration": 3.6
+            },
+            {
+              "rank": 2,
+              "duration_heroes": 3.9,
+              "range": 820,
+              "mana": 60,
+              "cooldown": 7,
+              "duration": 3.9
+            },
+            {
+              "rank": 3,
+              "duration_heroes": 4.2,
+              "range": 840,
+              "mana": 75,
+              "cooldown": 7,
+              "duration": 4.2
+            },
+            {
+              "rank": 4,
+              "duration_heroes": 4.5,
+              "duration_units": 21,
+              "range": 860,
+              "mana": 90,
+              "cooldown": 7,
+              "duration": 4.5
+            },
+            {
+              "rank": 5,
+              "duration_heroes": 4.8,
+              "duration_units": 24,
+              "range": 880,
+              "mana": 110,
+              "cooldown": 7,
+              "duration": 4.8
+            },
+            {
+              "rank": 6,
+              "duration_heroes": 5.1,
+              "duration_units": 27,
+              "range": 900,
+              "mana": 130,
+              "cooldown": 7,
+              "duration": 5.1
+            }
+          ],
+          "icon": "icons/spell-banish.png"
         },
         {
           "name": "Siphon Mana",
@@ -1436,38 +1797,109 @@
           "description": "Drains mana between the Blood Mage and a target. Can push the Blood Mage's mana over maximum.",
           "hotkey": "E",
           "cooldown": 8,
+          "mana": 25,
+          "duration": 6,
           "levels": [
-            { "rank": 1, "drain_per_sec": 50,  "transfer_per_sec": 80,  "range": 600 },
-            { "rank": 2, "drain_per_sec": 70,  "transfer_per_sec": 120, "range": 620 },
-            { "rank": 3, "drain_per_sec": 90,  "transfer_per_sec": 160, "range": 640 },
-            { "rank": 4, "drain_per_sec": 110, "transfer_per_sec": 200, "range": 660 },
-            { "rank": 5, "drain_per_sec": 130, "transfer_per_sec": 250, "range": 680 },
-            { "rank": 6, "drain_per_sec": 150, "transfer_per_sec": 300, "range": 700 }
-          ]
+            {
+              "rank": 1,
+              "drain_per_sec": 50,
+              "transfer_per_sec": 80,
+              "range": 600,
+              "area": 700,
+              "cooldown": 8,
+              "mana": 25
+            },
+            {
+              "rank": 2,
+              "drain_per_sec": 70,
+              "transfer_per_sec": 120,
+              "range": 620,
+              "area": 730,
+              "cooldown": 8,
+              "mana": 25
+            },
+            {
+              "rank": 3,
+              "drain_per_sec": 90,
+              "transfer_per_sec": 170,
+              "range": 640,
+              "area": 760,
+              "cooldown": 8,
+              "mana": 25
+            },
+            {
+              "rank": 4,
+              "drain_per_sec": 120,
+              "transfer_per_sec": 230,
+              "range": 660,
+              "area": 790,
+              "mana": 25,
+              "cooldown": 8
+            },
+            {
+              "rank": 5,
+              "drain_per_sec": 150,
+              "transfer_per_sec": 300,
+              "range": 680,
+              "area": 820,
+              "mana": 25,
+              "cooldown": 8
+            },
+            {
+              "rank": 6,
+              "drain_per_sec": 190,
+              "transfer_per_sec": 380,
+              "range": 700,
+              "area": 850,
+              "mana": 25,
+              "cooldown": 8
+            }
+          ],
+          "icon": "icons/spell-siphonmana.png"
         },
         {
           "name": "Phoenix",
           "type": "active",
           "description": "Summons a powerful Phoenix with Magic Immunity and Resistant Skin. Burns with intensity that damages itself. Creates an egg when it dies that hatches into a new Phoenix.",
           "hotkey": "R",
-          "cooldown": 120,
           "mana": 175,
           "levels": [
-            { "rank": 1, "summons": 1 },
-            { "rank": 2, "summons": 2 },
-            { "rank": 3, "summons": 3 }
-          ]
+            {
+              "rank": 1,
+              "summons": 1,
+              "cooldown": 180,
+              "mana": 175
+            },
+            {
+              "rank": 2,
+              "summons": 2,
+              "cooldown": 120,
+              "mana": 175
+            },
+            {
+              "rank": 3,
+              "summons": 3,
+              "cooldown": 120,
+              "mana": 175
+            }
+          ],
+          "icon": "icons/spell-phoenix.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Blood_Mage/Spell-Icon.png"
+      "raw_code": "Hblm",
+      "icon": "icons/bloodmage.png",
+      "icon_index": null
     },
     {
       "id": "blademaster",
       "name": "Blademaster",
       "lore_name": null,
-      "race": "Fel Orc",
+      "race": null,
       "primary_stat": "AGI",
+      "roles": ["Carry", "Jungler"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 18,
       "str_growth": 2.0,
       "agi_base": 22,
@@ -1751,34 +2183,102 @@
           "sprite_index": 0,
           "description": "Allows the Blademaster to become invisible, move through units and move faster. Breaks invisibility and deals bonus damage on next attack.",
           "transition_time": 0.6,
-          "cooldown": 10,
+          "cooldown": 2,
           "mana": 75,
           "levels": [
-            { "rank": 1, "bonus_dmg_pct": 20, "move_bonus_pct": 20, "duration": 24 },
-            { "rank": 2, "bonus_dmg_pct": 60, "move_bonus_pct": 30, "duration": 26 },
-            { "rank": 3, "bonus_dmg_pct": 100, "move_bonus_pct": 40, "duration": 28 },
-            { "rank": 4, "bonus_dmg_pct": 140, "move_bonus_pct": 50, "duration": 30 },
-            { "rank": 5, "bonus_dmg_pct": 180, "move_bonus_pct": 60, "duration": 32 },
-            { "rank": 6, "bonus_dmg_pct": 220, "move_bonus_pct": 70, "duration": 34 }
-          ]
+            {
+              "rank": 1,
+              "move_bonus_pct": 20,
+              "duration": 24,
+              "bonus_dmg": 40
+            },
+            {
+              "rank": 2,
+              "move_bonus_pct": 30,
+              "duration": 22,
+              "bonus_dmg": 70
+            },
+            {
+              "rank": 3,
+              "move_bonus_pct": 40,
+              "duration": 24,
+              "bonus_dmg": 100
+            },
+            {
+              "rank": 4,
+              "move_bonus_pct": 50,
+              "duration": 26,
+              "bonus_dmg": 130
+            },
+            {
+              "rank": 5,
+              "move_bonus_pct": 60,
+              "duration": 28,
+              "bonus_dmg": 160
+            },
+            {
+              "rank": 6,
+              "move_bonus_pct": 70,
+              "duration": 30,
+              "bonus_dmg": 190
+            }
+          ],
+          "icon": "icons/spell-windwalk.png"
         },
         {
           "name": "Mirror Image",
           "type": "active",
-          "hotkey": "W",
-          "sprite_index": 1,
           "description": "Creates illusions of the Blademaster. Illusions take extra damage and deal a percentage of the hero's original damage.",
-          "cooldown": 10,
-          "mana": 80,
+          "hotkey": "W",
           "dmg_taken_pct": 220,
+          "dmg_dealt_pct": 18,
+          "casting_delay": 0.5,
           "levels": [
-            { "rank": 1, "illusions": 1 },
-            { "rank": 2, "illusions": 2 },
-            { "rank": 3, "illusions": 3 },
-            { "rank": 4, "illusions": 4 },
-            { "rank": 5, "illusions": 5 },
-            { "rank": 6, "illusions": 6 }
-          ]
+            {
+              "rank": 1,
+              "illusions": 1,
+              "duration": 12,
+              "mana": 80,
+              "cooldown": 12
+            },
+            {
+              "rank": 2,
+              "illusions": 1,
+              "duration": 16,
+              "mana": 100,
+              "cooldown": 12
+            },
+            {
+              "rank": 3,
+              "illusions": 2,
+              "duration": 22,
+              "mana": 120,
+              "cooldown": 20
+            },
+            {
+              "rank": 4,
+              "illusions": 2,
+              "duration": 28,
+              "mana": 140,
+              "cooldown": 20
+            },
+            {
+              "rank": 5,
+              "illusions": 3,
+              "duration": 34,
+              "mana": 160,
+              "cooldown": 30
+            },
+            {
+              "rank": 6,
+              "illusions": 3,
+              "duration": 40,
+              "mana": 180,
+              "cooldown": 30
+            }
+          ],
+          "icon": "icons/spell-mirrorimage.png",
+          "sprite_index": 1
         },
         {
           "name": "Critical Strike",
@@ -1787,13 +2287,38 @@
           "sprite_index": 2,
           "description": "Gives a 15% chance to do bonus physical damage.",
           "levels": [
-            { "rank": 1, "chance_pct": 15, "multiplier_pct": 100 },
-            { "rank": 2, "chance_pct": 15, "multiplier_pct": 200 },
-            { "rank": 3, "chance_pct": 15, "multiplier_pct": 240 },
-            { "rank": 4, "chance_pct": 15, "multiplier_pct": 300 },
-            { "rank": 5, "chance_pct": 15, "multiplier_pct": 400 },
-            { "rank": 6, "chance_pct": 15, "multiplier_pct": 600 }
-          ]
+            {
+              "rank": 1,
+              "chance_pct": 15,
+              "multiplier_pct": 200
+            },
+            {
+              "rank": 2,
+              "chance_pct": 15,
+              "multiplier_pct": 220
+            },
+            {
+              "rank": 3,
+              "chance_pct": 15,
+              "multiplier_pct": 240
+            },
+            {
+              "rank": 4,
+              "chance_pct": 15,
+              "multiplier_pct": 260
+            },
+            {
+              "rank": 5,
+              "chance_pct": 15,
+              "multiplier_pct": 280
+            },
+            {
+              "rank": 6,
+              "chance_pct": 15,
+              "multiplier_pct": 300
+            }
+          ],
+          "icon": "icons/spell-criticalstrike.png"
         },
         {
           "name": "Bladestorm",
@@ -1802,14 +2327,33 @@
           "sprite_index": 3,
           "description": "Creates a tornado of destructive force around the Blademaster, granting him magic immunity. Deals universal damage to nearby enemy land units.",
           "cooldown": 120,
+          "duration": 7,
+          "mana": 200,
           "levels": [
-            { "rank": 1, "dmg_per_sec": 100, "area": 250 },
-            { "rank": 2, "dmg_per_sec": 210, "area": 250 }
-          ]
+            {
+              "rank": 1,
+              "dmg_per_sec": 140,
+              "area": 200,
+              "cooldown": 120,
+              "duration": 7,
+              "mana": 200
+            },
+            {
+              "rank": 2,
+              "dmg_per_sec": 210,
+              "area": 250,
+              "duration": 7,
+              "mana": 200,
+              "cooldown": 120
+            }
+          ],
+          "icon": "icons/spell-bladestorm.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Blademaster/Spell-Icon.png"
+      "raw_code": "Obla",
+      "icon": "icons/blademaster.png",
+      "icon_index": null
     },
     {
       "id": "far_seer",
@@ -1817,6 +2361,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Summoner", "Pusher", "Mage"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
       "agi_base": 18,
@@ -2099,46 +2646,161 @@
           "description": "Hurls a bolt of lightning at a target enemy that jumps to nearby enemies, dealing magic damage. Each jump deals 10% less damage.",
           "hotkey": "Q",
           "impact_delay": 0.25,
-          "chain_range": 500,
+          "cooldown": 9,
+          "range": 700,
+          "mana": 110,
+          "area": 500,
+          "damage_falloff_pct": 10,
           "levels": [
-            { "rank": 1, "damage": 100 },
-            { "rank": 2, "damage": 145 },
-            { "rank": 3, "damage": 195 },
-            { "rank": 4, "damage": 255 },
-            { "rank": 5, "damage": 325 },
-            { "rank": 6, "damage": 400 }
-          ]
+            {
+              "rank": 1,
+              "damage": 85,
+              "jumps": 4
+            },
+            {
+              "rank": 2,
+              "damage": 130,
+              "jumps": 5
+            },
+            {
+              "rank": 3,
+              "damage": 190,
+              "jumps": 6
+            },
+            {
+              "rank": 4,
+              "damage": 265,
+              "jumps": 7
+            },
+            {
+              "rank": 5,
+              "damage": 355,
+              "jumps": 8
+            },
+            {
+              "rank": 6,
+              "damage": 460,
+              "jumps": 9
+            }
+          ],
+          "icon": "icons/spell-chainlightning.png"
         },
         {
           "name": "Far Sight",
           "type": "active",
           "description": "Reveals the area of the map that it is cast upon. Also reveals invisible units.",
           "hotkey": "W",
-          "cooldown": 15,
           "mana": 0,
           "levels": [
-            { "rank": 1, "reveal_area": 900,  "duration": 8  },
-            { "rank": 2, "reveal_area": 1200, "duration": 10 },
-            { "rank": 3, "reveal_area": 1500, "duration": 10 },
-            { "rank": 4, "reveal_area": 1980, "duration": 12 },
-            { "rank": 5, "reveal_area": 2340, "duration": 12 },
-            { "rank": 6, "reveal_area": 2340, "duration": 13 }
-          ]
+            {
+              "rank": 1,
+              "area": 975,
+              "duration": 100,
+              "cooldown": 100
+            },
+            {
+              "rank": 2,
+              "area": 1050,
+              "duration": 120,
+              "cooldown": 90
+            },
+            {
+              "rank": 3,
+              "area": 1125,
+              "duration": 140,
+              "cooldown": 80
+            },
+            {
+              "rank": 4,
+              "area": 1200,
+              "duration": 160,
+              "cooldown": 70
+            },
+            {
+              "rank": 5,
+              "area": 1275,
+              "duration": 180,
+              "cooldown": 60
+            },
+            {
+              "rank": 6,
+              "area": 1350,
+              "duration": 200,
+              "cooldown": 50
+            }
+          ],
+          "icon": "icons/spell-farsight.png"
         },
         {
           "name": "Feral Spirit",
           "type": "active",
-          "description": "Summons Spirit Wolves to fight for the Far Seer.",
+          "description": "Summons Spirit Wolves to fight for the Far Seer.\nWolves have Critical Strike and Invisibility.",
           "hotkey": "E",
+          "cooldown": 20,
           "duration": 60,
           "levels": [
-            { "rank": 1, "wolves": 2, "hp": 500,  "damage_min": 12, "damage_max": 13, "armor": 0, "mana": 20 },
-            { "rank": 2, "wolves": 2, "hp": 600,  "damage_min": 12, "damage_max": 13, "armor": 0, "mana": 25 },
-            { "rank": 3, "wolves": 3, "hp": 700,  "damage_min": 12, "damage_max": 13, "armor": 0, "mana": 30 },
-            { "rank": 4, "wolves": 3, "hp": 800,  "damage_min": 12, "damage_max": 13, "armor": 0, "mana": 35 },
-            { "rank": 5, "wolves": 4, "hp": 900,  "damage_min": 12, "damage_max": 13, "armor": 0, "mana": 40 },
-            { "rank": 6, "wolves": 4, "hp": 1000, "damage_min": 12, "damage_max": 13, "armor": 5, "mana": 45 }
-          ]
+            {
+              "rank": 1,
+              "wolves": 2,
+              "hp": 500,
+              "damage_min": 11,
+              "damage_max": 12,
+              "armor": 0,
+              "mana": 85,
+              "bounty": 10
+            },
+            {
+              "rank": 2,
+              "wolves": 2,
+              "hp": 600,
+              "damage_min": 21,
+              "damage_max": 22,
+              "armor": 1,
+              "mana": 90,
+              "bounty": 15
+            },
+            {
+              "rank": 3,
+              "wolves": 3,
+              "hp": 700,
+              "damage_min": 31,
+              "damage_max": 32,
+              "armor": 2,
+              "mana": 95,
+              "bounty": 20
+            },
+            {
+              "rank": 4,
+              "wolves": 3,
+              "hp": 800,
+              "damage_min": 41,
+              "damage_max": 42,
+              "armor": 3,
+              "mana": 100,
+              "bounty": 25
+            },
+            {
+              "rank": 5,
+              "wolves": 4,
+              "hp": 900,
+              "damage_min": 51,
+              "damage_max": 52,
+              "armor": 4,
+              "mana": 105,
+              "bounty": 30
+            },
+            {
+              "rank": 6,
+              "wolves": 4,
+              "hp": 1000,
+              "damage_min": 61,
+              "damage_max": 62,
+              "armor": 5,
+              "mana": 110,
+              "bounty": 35
+            }
+          ],
+          "icon": "icons/spell-feralspirit.png"
         },
         {
           "name": "Earthquake",
@@ -2148,14 +2810,35 @@
           "cooldown": 90,
           "move_slow_pct": 75,
           "levels": [
-            { "rank": 1, "damage_per_sec": 80,  "duration": 20, "aoe": 250 },
-            { "rank": 2, "damage_per_sec": 120, "duration": 25, "aoe": 400 },
-            { "rank": 3, "damage_per_sec": 240, "duration": 30, "aoe": 400 }
-          ]
+            {
+              "rank": 1,
+              "damage_per_sec": 80,
+              "duration": 20,
+              "aoe": 250,
+              "mana": 125
+            },
+            {
+              "rank": 2,
+              "damage_per_sec": 120,
+              "duration": 25,
+              "aoe": 400,
+              "mana": 125
+            },
+            {
+              "rank": 3,
+              "damage_per_sec": 240,
+              "duration": 30,
+              "aoe": 400,
+              "mana": 125
+            }
+          ],
+          "icon": "icons/spell-earthquake.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Far_Seer/Spell-Icon.png"
+      "raw_code": "Ofar",
+      "icon": "icons/farseer.png",
+      "icon_index": null
     },
     {
       "id": "tauren_chieftain",
@@ -2163,6 +2846,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Tank", "Stun"],
+      "difficulty": 2,
+      "difficulty_max": 4,
       "str_base": 25,
       "str_growth": 3.2,
       "agi_base": 10,
@@ -2442,132 +3128,135 @@
         {
           "name": "Shockwave",
           "type": "active",
-          "description": "Sends a wave of force, causing magic damage to land units in a line.",
+          "description": "A wave of force that ripples out from the Hero, causing magic damage to land units in a line.",
+          "cooldown": 8,
+          "final_area": 125,
+          "distance": 800,
+          "range": 700,
+          "mana": 90,
           "levels": [
             {
               "rank": 1,
-              "dmg": 70,
-              "cooldown": 8,
-              "range": 700
+              "damage": 70
             },
             {
               "rank": 2,
-              "dmg": 130,
-              "cooldown": 8,
-              "range": 700
+              "damage": 130
             },
             {
               "rank": 3,
-              "dmg": 195,
-              "cooldown": 8,
-              "range": 700
+              "damage": 190
             },
             {
               "rank": 4,
-              "dmg": 255,
-              "cooldown": 8,
-              "range": 700
+              "damage": 250
             },
             {
               "rank": 5,
-              "dmg": 300,
-              "cooldown": 8,
-              "range": 700
+              "damage": 310
             },
             {
               "rank": 6,
-              "dmg": 370,
-              "cooldown": 8,
-              "range": 700
+              "damage": 370
             }
-          ]
+          ],
+          "icon": "icons/spell-shockwave.png"
         },
         {
           "name": "War Stomp",
           "type": "active",
           "description": "Slams the ground, dealing magic damage and stunning nearby enemy land units.",
+          "mana": 90,
           "levels": [
             {
               "rank": 1,
-              "dmg": 100,
-              "stun_duration": 2.0,
-              "area": 300,
-              "cooldown": 8
+              "damage": 90,
+              "stun_heroes": 2,
+              "stun_units": 3,
+              "area": 310,
+              "cooldown": 8.5
             },
             {
               "rank": 2,
-              "dmg": 175,
-              "stun_duration": 2.0,
-              "area": 300,
-              "cooldown": 8
+              "damage": 120,
+              "stun_heroes": 2.2,
+              "stun_units": 3.4,
+              "area": 315,
+              "cooldown": 8.5
             },
             {
               "rank": 3,
-              "dmg": 230,
-              "stun_duration": 2.5,
-              "area": 300,
-              "cooldown": 8
+              "damage": 150,
+              "stun_heroes": 2.4,
+              "stun_units": 3.8,
+              "area": 320,
+              "cooldown": 8.5
             },
             {
               "rank": 4,
-              "dmg": 280,
-              "stun_duration": 2.5,
-              "area": 300,
-              "cooldown": 8
+              "damage": 180,
+              "stun_heroes": 2.6,
+              "stun_units": 4.2,
+              "area": 325,
+              "cooldown": 8.5
             },
             {
               "rank": 5,
-              "dmg": 325,
-              "stun_duration": 3.0,
-              "area": 300,
-              "cooldown": 8
+              "damage": 210,
+              "stun_heroes": 2.8,
+              "stun_units": 4.6,
+              "area": 330,
+              "cooldown": 8.5
             },
             {
               "rank": 6,
-              "dmg": 240,
-              "stun_duration": 3.0,
-              "area": 150,
-              "cooldown": 8
+              "damage": 240,
+              "stun_heroes": 3,
+              "stun_units": 5,
+              "area": 335,
+              "cooldown": 8.5
             }
-          ]
+          ],
+          "icon": "icons/spell-warstomp.png"
         },
         {
           "name": "Endurance Aura",
           "type": "aura",
-          "description": "Increases movement speed and attack rate of nearby friendly units.",
+          "description": "Increases the movement speed and attack rate of nearby friendly units.",
           "area": 900,
           "levels": [
             {
               "rank": 1,
+              "move_bonus_pct": 5,
+              "attack_speed_pct": 5
+            },
+            {
+              "rank": 2,
+              "move_bonus_pct": 10,
+              "attack_speed_pct": 10
+            },
+            {
+              "rank": 3,
               "move_bonus_pct": 15,
               "attack_speed_pct": 15
             },
             {
-              "rank": 2,
+              "rank": 4,
               "move_bonus_pct": 20,
               "attack_speed_pct": 20
             },
             {
-              "rank": 3,
+              "rank": 5,
               "move_bonus_pct": 25,
               "attack_speed_pct": 25
             },
             {
-              "rank": 4,
-              "move_bonus_pct": 25,
-              "attack_speed_pct": 30
-            },
-            {
-              "rank": 5,
-              "move_bonus_pct": 30,
-              "attack_speed_pct": 35
-            },
-            {
               "rank": 6,
               "move_bonus_pct": 30,
-              "attack_speed_pct": 40
+              "attack_speed_pct": 30
             }
-          ]
+          ],
+          "icon": "icons/spell-enduranceaura.png"
         },
         {
           "name": "Reincarnation",
@@ -2582,13 +3271,17 @@
             {
               "rank": 2,
               "delay": 2.5,
-              "cooldown": 210
+              "cooldown": 210,
+              "cast_time": 1.5
             }
-          ]
+          ],
+          "icon": "icons/spell-reincarnation.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Tauren_Chieftain/Spell-Icon.png"
+      "raw_code": "Otch",
+      "icon": "icons/taurenchieftain.png",
+      "icon_index": null
     },
     {
       "id": "shadow_hunter",
@@ -2596,6 +3289,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Support", "Stun", "Summoner"],
+      "difficulty": 2,
+      "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
       "agi_base": 20,
@@ -2875,18 +3571,50 @@
         {
           "name": "Healing Wave",
           "type": "active",
-          "description": "Calls forth a wave of energy that heals a target and bounces to nearby friendlies. Each bounce restores 25% less hit points.",
+          "description": "Calls forth a wave of energy that heals a target and bounces to nearby friendlies.\n\nEach bounce restores 25% less hit points.",
           "hotkey": "Q",
           "cooldown": 9,
-          "bounce_range": 900,
+          "range": 700,
+          "heal_falloff_pct": 25,
           "levels": [
-            { "rank": 1, "heal": 135, "range": 700, "mana": 90  },
-            { "rank": 2, "heal": 215, "range": 700, "mana": 95  },
-            { "rank": 3, "heal": 315, "range": 700, "mana": 100 },
-            { "rank": 4, "heal": 415, "range": 700, "mana": 105 },
-            { "rank": 5, "heal": 515, "range": 700, "mana": 110 },
-            { "rank": 6, "heal": 615, "range": 700, "mana": 115 }
-          ]
+            {
+              "rank": 1,
+              "heal": 130,
+              "jumps": 3,
+              "mana": 90
+            },
+            {
+              "rank": 2,
+              "heal": 215,
+              "jumps": 4,
+              "mana": 95
+            },
+            {
+              "rank": 3,
+              "heal": 300,
+              "jumps": 5,
+              "mana": 100
+            },
+            {
+              "rank": 4,
+              "heal": 385,
+              "jumps": 6,
+              "mana": 105
+            },
+            {
+              "rank": 5,
+              "heal": 470,
+              "jumps": 7,
+              "mana": 110
+            },
+            {
+              "rank": 6,
+              "heal": 555,
+              "jumps": 8,
+              "mana": 115
+            }
+          ],
+          "icon": "icons/spell-healingwave.png"
         },
         {
           "name": "Hex",
@@ -2895,13 +3623,50 @@
           "hotkey": "W",
           "move_speed_reduced_to": 150,
           "levels": [
-            { "rank": 1, "duration": 1.0, "cooldown": 7  },
-            { "rank": 2, "duration": 1.5, "cooldown": 8  },
-            { "rank": 3, "duration": 2.0, "cooldown": 9  },
-            { "rank": 4, "duration": 2.5, "cooldown": 10 },
-            { "rank": 5, "duration": 3.0, "cooldown": 11 },
-            { "rank": 6, "duration": 3.5, "cooldown": 12 }
-          ]
+            {
+              "rank": 1,
+              "duration_heroes": 2.8,
+              "duration_units": 10,
+              "mana": 70,
+              "cooldown": 7
+            },
+            {
+              "rank": 2,
+              "duration_heroes": 3.4,
+              "duration_units": 12,
+              "mana": 75,
+              "cooldown": 8
+            },
+            {
+              "rank": 3,
+              "duration_heroes": 4.0,
+              "duration_units": 14,
+              "mana": 80,
+              "cooldown": 9
+            },
+            {
+              "rank": 4,
+              "duration_heroes": 4.6,
+              "duration_units": 16,
+              "mana": 85,
+              "cooldown": 10
+            },
+            {
+              "rank": 5,
+              "duration_heroes": 5.2,
+              "duration_units": 18,
+              "mana": 90,
+              "cooldown": 11
+            },
+            {
+              "rank": 6,
+              "duration_heroes": 5.8,
+              "duration_units": 20,
+              "mana": 95,
+              "cooldown": 12
+            }
+          ],
+          "icon": "icons/spell-hex.png"
         },
         {
           "name": "Serpent Ward",
@@ -2909,30 +3674,103 @@
           "description": "Summons an immobile serpentine ward to fight for the Shadow Hunter. Has magic immunity.",
           "hotkey": "E",
           "duration": 50,
+          "mana": 30,
           "levels": [
-            { "rank": 1, "hp": 90,  "damage_min": 13, "damage_max": 14, "armor": 0, "attack_speed": 1.2, "attack_range": 800, "bounty": 8  },
-            { "rank": 2, "hp": 130, "damage_min": 17, "damage_max": 18, "armor": 1, "attack_speed": 1.0, "attack_range": 820, "bounty": 12 },
-            { "rank": 3, "hp": 170, "damage_min": 21, "damage_max": 22, "armor": 2, "attack_speed": 0.8, "attack_range": 840, "bounty": 16 },
-            { "rank": 4, "hp": 210, "damage_min": 25, "damage_max": 26, "armor": 3, "attack_speed": 0.6, "attack_range": 860, "bounty": 20 },
-            { "rank": 5, "hp": 250, "damage_min": 29, "damage_max": 30, "armor": 4, "attack_speed": 0.4, "attack_range": 880, "bounty": 24 },
-            { "rank": 6, "hp": 290, "damage_min": 33, "damage_max": 34, "armor": 5, "attack_speed": 0.2, "attack_range": 900, "bounty": 28 }
-          ]
+            {
+              "rank": 1,
+              "hp": 90,
+              "damage_min": 13,
+              "damage_max": 16,
+              "armor": 0,
+              "attack_range": 800,
+              "bounty": 6,
+              "cooldown": 1.2,
+              "range": 500
+            },
+            {
+              "rank": 2,
+              "hp": 165,
+              "damage_min": 20,
+              "damage_max": 23,
+              "armor": 1,
+              "attack_range": 820,
+              "bounty": 10,
+              "cooldown": 1,
+              "range": 550
+            },
+            {
+              "rank": 3,
+              "hp": 200,
+              "damage_min": 27,
+              "damage_max": 30,
+              "armor": 2,
+              "attack_range": 840,
+              "bounty": 14,
+              "cooldown": 0.8,
+              "range": 600
+            },
+            {
+              "rank": 4,
+              "hp": 275,
+              "damage_min": 34,
+              "damage_max": 37,
+              "armor": 3,
+              "attack_range": 860,
+              "bounty": 18,
+              "cooldown": 0.6,
+              "range": 650
+            },
+            {
+              "rank": 5,
+              "hp": 315,
+              "damage_min": 41,
+              "damage_max": 44,
+              "armor": 4,
+              "attack_range": 880,
+              "bounty": 22,
+              "cooldown": 0.4,
+              "range": 700
+            },
+            {
+              "rank": 6,
+              "hp": 390,
+              "damage_min": 48,
+              "damage_max": 51,
+              "armor": 5,
+              "attack_range": 900,
+              "bounty": 26,
+              "cooldown": 0.2,
+              "range": 750
+            }
+          ],
+          "icon": "icons/spell-serpentward.png"
         },
         {
           "name": "Big Bad Voodoo",
           "type": "active",
-          "description": "Makes all friendly units invulnerable in an area around the Shadow Hunter. Does not affect heroes. Channeling spell — cancel invulnerability.",
+          "description": "Turns all friendly units invulnerable in an area around the Shadow Hunter, but does not affect himself. Channeling spells cancel invulnerability.",
           "hotkey": "R",
           "duration": 30,
-          "mana": 200,
+          "mana": 150,
           "levels": [
-            { "rank": 1, "cooldown": 180, "aoe": 800  },
-            { "rank": 2, "cooldown": 120, "aoe": 1200 }
-          ]
+            {
+              "rank": 1,
+              "cooldown": 180,
+              "area": 800
+            },
+            {
+              "rank": 2,
+              "cooldown": 120,
+              "area": 1200
+            }
+          ],
+          "icon": "icons/spell-bigbadvoodoo.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Shadow_Hunter/Spell-Icon.png"
+      "raw_code": "Oshd",
+      "icon": "icons/shadowhunter.png",
+      "icon_index": null
     },
     {
       "id": "death_knight",
@@ -2940,6 +3778,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Support", "Pusher", "Mage"],
+      "difficulty": 2,
+      "difficulty_max": 4,
       "str_base": 23,
       "str_growth": 2.7,
       "agi_base": 12,
@@ -3223,28 +4064,80 @@
           "hotkey": "Q",
           "cooldown": 9,
           "range": 800,
+          "mana": 75,
           "levels": [
-            { "rank": 1, "heal": 600,  "damage": 100 },
-            { "rank": 2, "heal": 800,  "damage": 140 },
-            { "rank": 3, "heal": 1000, "damage": 180 },
-            { "rank": 4, "heal": 1200, "damage": 220 },
-            { "rank": 5, "heal": 1400, "damage": 260 },
-            { "rank": 6, "heal": 1700, "damage": 320 }
-          ]
+            {
+              "rank": 1,
+              "heal": 200,
+              "damage": 100
+            },
+            {
+              "rank": 2,
+              "heal": 330,
+              "damage": 200
+            },
+            {
+              "rank": 3,
+              "heal": 460,
+              "damage": 300
+            },
+            {
+              "rank": 4,
+              "heal": 590,
+              "damage": 400
+            },
+            {
+              "rank": 5,
+              "heal": 720,
+              "damage": 500
+            },
+            {
+              "rank": 6,
+              "heal": 850,
+              "damage": 600
+            }
+          ],
+          "icon": "icons/spell-deathcoil.png"
         },
         {
           "name": "Death Pact",
           "type": "active",
           "description": "Kills a target friendly unit, converting a percentage of its hit points to the Death Knight's hit points. Can also be used on living units.",
           "hotkey": "W",
+          "mana": 50,
           "levels": [
-            { "rank": 1, "hp_convert_pct": 50, "cooldown": 40 },
-            { "rank": 2, "hp_convert_pct": 60, "cooldown": 35 },
-            { "rank": 3, "hp_convert_pct": 70, "cooldown": 30 },
-            { "rank": 4, "hp_convert_pct": 80, "cooldown": 25 },
-            { "rank": 5, "hp_convert_pct": 90, "cooldown": 20 },
-            { "rank": 6, "hp_convert_pct": 100, "cooldown": 15 }
-          ]
+            {
+              "rank": 1,
+              "hp_convert_pct": 0.6,
+              "cooldown": 40
+            },
+            {
+              "rank": 2,
+              "hp_convert_pct": 0.7,
+              "cooldown": 35
+            },
+            {
+              "rank": 3,
+              "hp_convert_pct": 0.8,
+              "cooldown": 30
+            },
+            {
+              "rank": 4,
+              "hp_convert_pct": 0.9,
+              "cooldown": 25
+            },
+            {
+              "rank": 5,
+              "hp_convert_pct": 1,
+              "cooldown": 20
+            },
+            {
+              "rank": 6,
+              "hp_convert_pct": 1.1,
+              "cooldown": 40
+            }
+          ],
+          "icon": "icons/spell-deathpact.png"
         },
         {
           "name": "Unholy Aura",
@@ -3253,13 +4146,38 @@
           "hotkey": "E",
           "area": 900,
           "levels": [
-            { "rank": 1, "move_speed_pct": 5,  "life_regen": 4  },
-            { "rank": 2, "move_speed_pct": 10, "life_regen": 8  },
-            { "rank": 3, "move_speed_pct": 15, "life_regen": 12 },
-            { "rank": 4, "move_speed_pct": 20, "life_regen": 16 },
-            { "rank": 5, "move_speed_pct": 25, "life_regen": 20 },
-            { "rank": 6, "move_speed_pct": 30, "life_regen": 24 }
-          ]
+            {
+              "rank": 1,
+              "move_speed_pct": 5,
+              "life_regen": 4
+            },
+            {
+              "rank": 2,
+              "move_speed_pct": 10,
+              "life_regen": 8
+            },
+            {
+              "rank": 3,
+              "move_speed_pct": 15,
+              "life_regen": 12
+            },
+            {
+              "rank": 4,
+              "move_speed_pct": 20,
+              "life_regen": 16
+            },
+            {
+              "rank": 5,
+              "move_speed_pct": 25,
+              "life_regen": 20
+            },
+            {
+              "rank": 6,
+              "move_speed_pct": 30,
+              "life_regen": 24
+            }
+          ],
+          "icon": "icons/spell-unholyaura.png"
         },
         {
           "name": "Animate Dead",
@@ -3269,13 +4187,30 @@
           "area": 900,
           "mana": 125,
           "levels": [
-            { "rank": 1, "raised_hp": 400, "raised_armor": 7, "duration": 60, "cooldown": 180 },
-            { "rank": 2, "raised_hp": 800, "raised_armor": 7, "duration": 80, "cooldown": 160 }
-          ]
+            {
+              "rank": 1,
+              "raised_hp": 200,
+              "raised_armor": 2,
+              "summons": 6,
+              "duration": 60,
+              "cooldown": 180
+            },
+            {
+              "rank": 2,
+              "raised_hp": 400,
+              "raised_armor": 4,
+              "summons": 12,
+              "duration": 80,
+              "cooldown": 160
+            }
+          ],
+          "icon": "icons/spell-animatedead.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Death_Knight/Spell-Icon.png"
+      "raw_code": "Udea",
+      "icon": "icons/deathknight.png",
+      "icon_index": null
     },
     {
       "id": "lich",
@@ -3283,6 +4218,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Carry", "Pusher", "Mage"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
       "agi_base": 14,
@@ -3566,44 +4504,182 @@
           "hotkey": "Q",
           "cooldown": 8,
           "range": 750,
+          "move_slow_pct": 50,
+          "attack_slow_pct": 25,
           "levels": [
-            { "rank": 1, "target_dmg": 125, "area_dmg": 50,  "mana": 120 },
-            { "rank": 2, "target_dmg": 200, "area_dmg": 100, "mana": 135 },
-            { "rank": 3, "target_dmg": 275, "area_dmg": 150, "mana": 145 },
-            { "rank": 4, "target_dmg": 350, "area_dmg": 200, "mana": 155 },
-            { "rank": 5, "target_dmg": 425, "area_dmg": 250, "mana": 165 },
-            { "rank": 6, "target_dmg": 500, "area_dmg": 300, "mana": 175 }
-          ]
+            {
+              "rank": 1,
+              "target_dmg": 125,
+              "area_dmg": 50,
+              "mana": 125,
+              "duration_heroes": 2,
+              "duration_units": 4,
+              "area": 200
+            },
+            {
+              "rank": 2,
+              "target_dmg": 200,
+              "area_dmg": 100,
+              "mana": 135,
+              "duration_heroes": 3,
+              "duration_units": 5,
+              "area": 210
+            },
+            {
+              "rank": 3,
+              "target_dmg": 275,
+              "area_dmg": 150,
+              "mana": 145,
+              "duration_heroes": 4,
+              "duration_units": 6,
+              "area": 220
+            },
+            {
+              "rank": 4,
+              "target_dmg": 350,
+              "area_dmg": 200,
+              "mana": 155,
+              "duration_heroes": 5,
+              "duration_units": 7,
+              "area": 230
+            },
+            {
+              "rank": 5,
+              "target_dmg": 425,
+              "area_dmg": 250,
+              "mana": 165,
+              "duration_heroes": 6,
+              "duration_units": 8,
+              "area": 240
+            },
+            {
+              "rank": 6,
+              "target_dmg": 500,
+              "area_dmg": 300,
+              "mana": 175,
+              "duration_heroes": 7,
+              "duration_units": 9,
+              "area": 250
+            }
+          ],
+          "icon": "icons/spell-frostnova.png"
         },
         {
           "name": "Frost Armor",
           "type": "active",
-          "description": "Creates a shield of frost around a target friendly unit. Adds armor and slows movement speed by 25% for melee attackers.",
+          "description": "Creates a shield of frost around a target friendly unit. The shield adds armor and slows movement by 50% and attack speed by 25% for melee attackers.",
           "hotkey": "W",
-          "cooldown": 2,
-          "move_slow_pct": 25,
+          "move_slow_pct": 50,
+          "attack_slow_pct": 25,
           "levels": [
-            { "rank": 1, "armor": 3,  "slow_duration": 2, "mana": 40 },
-            { "rank": 2, "armor": 6,  "slow_duration": 4, "mana": 45 },
-            { "rank": 3, "armor": 9,  "slow_duration": 5, "mana": 50 },
-            { "rank": 4, "armor": 12, "slow_duration": 5, "mana": 55 },
-            { "rank": 5, "armor": 15, "slow_duration": 5, "mana": 60 },
-            { "rank": 6, "armor": 18, "slow_duration": 5, "mana": 65 }
-          ]
+            {
+              "rank": 1,
+              "armor": 3,
+              "duration_heroes": 2,
+              "duration_units": 3,
+              "duration": 90,
+              "range": 800,
+              "mana": 40,
+              "cooldown": 2
+            },
+            {
+              "rank": 2,
+              "armor": 6,
+              "duration_heroes": 3,
+              "duration_units": 4,
+              "duration": 90,
+              "range": 800,
+              "mana": 45,
+              "cooldown": 2
+            },
+            {
+              "rank": 3,
+              "armor": 9,
+              "duration_heroes": 4,
+              "duration_units": 5,
+              "duration": 90,
+              "range": 800,
+              "mana": 50,
+              "cooldown": 2
+            },
+            {
+              "rank": 4,
+              "armor": 12,
+              "duration_heroes": 5,
+              "duration_units": 6,
+              "duration": 90,
+              "range": 800,
+              "mana": 55,
+              "cooldown": 2
+            },
+            {
+              "rank": 5,
+              "armor": 15,
+              "duration_heroes": 6,
+              "duration_units": 7,
+              "duration": 90,
+              "range": 800,
+              "mana": 60,
+              "cooldown": 2
+            },
+            {
+              "rank": 6,
+              "armor": 18,
+              "duration_heroes": 7,
+              "duration_units": 8,
+              "duration": 90,
+              "range": 800,
+              "mana": 65,
+              "cooldown": 2
+            }
+          ],
+          "icon": "icons/spell-frostarmor.png"
         },
         {
           "name": "Dark Ritual",
           "type": "active",
-          "description": "Sacrifices a target friendly unit to convert a percentage of its hit points into mana for the hero. Can also be used on living units.",
+          "description": "Sacrifices a target friendly unit to convert its hit points into mana for the hero. Can also be used on living units.",
           "hotkey": "E",
+          "mana": 25,
           "levels": [
-            { "rank": 1, "hp_to_mana_pct": 25, "cooldown": 45 },
-            { "rank": 2, "hp_to_mana_pct": 40, "cooldown": 40 },
-            { "rank": 3, "hp_to_mana_pct": 55, "cooldown": 35 },
-            { "rank": 4, "hp_to_mana_pct": 70, "cooldown": 30 },
-            { "rank": 5, "hp_to_mana_pct": 85, "cooldown": 25 },
-            { "rank": 6, "hp_to_mana_pct": 100, "cooldown": 20 }
-          ]
+            {
+              "rank": 1,
+              "hp_to_mana_pct": 25,
+              "range": 800,
+              "cooldown": 45
+            },
+            {
+              "rank": 2,
+              "hp_to_mana_pct": 40,
+              "range": 800,
+              "cooldown": 40
+            },
+            {
+              "rank": 3,
+              "hp_to_mana_pct": 55,
+              "range": 800,
+              "cooldown": 35
+            },
+            {
+              "rank": 4,
+              "hp_to_mana_pct": 70,
+              "range": 800,
+              "cooldown": 30
+            },
+            {
+              "rank": 5,
+              "hp_to_mana_pct": 85,
+              "range": 800,
+              "cooldown": 25
+            },
+            {
+              "rank": 6,
+              "hp_to_mana_pct": 100,
+              "range": 800,
+              "cooldown": 20
+            }
+          ],
+          "icon": "icons/spell-darkritual.png"
         },
         {
           "name": "Death and Decay",
@@ -3613,22 +4689,42 @@
           "cooldown": 150,
           "aoe": 200,
           "levels": [
-            { "rank": 1, "damage_pct_per_sec": 6,  "mana": 200 },
-            { "rank": 2, "damage_pct_per_sec": 8,  "mana": 350 },
-            { "rank": 3, "damage_pct_per_sec": 10, "mana": 500 }
-          ]
+            {
+              "rank": 1,
+              "damage_per_sec_pct": 6,
+              "mana": 350,
+              "area": 296
+            },
+            {
+              "rank": 2,
+              "damage_per_sec_pct": 8,
+              "mana": 350,
+              "area": 296
+            },
+            {
+              "rank": 3,
+              "damage_per_sec_pct": 10,
+              "mana": 500,
+              "area": 296
+            }
+          ],
+          "icon": "icons/spell-deathanddecay.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Lich/Spell-Icon.png"
+      "raw_code": "Ulic",
+      "icon": "icons/lich.png",
+      "icon_index": null
     },
     {
       "id": "dreadlord",
       "name": "Dreadlord",
-      "spell_icon_sprite": "screenshots/Heros/Dreadlord/Spell-Icon.png",
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Support", "Stun", "Mage"],
+      "difficulty": 2,
+      "difficulty_max": 4,
       "str_base": 20,
       "str_growth": 2.5,
       "agi_base": 16,
@@ -3909,18 +5005,44 @@
           "name": "Carrion Swarm",
           "type": "active",
           "hotkey": "Q",
-          "description": "Sends a horde of bats dealing magic damage. Units with Drunken Haze take 50% extra damage.",
-          "cooldown": 20,
+          "description": "Sends a horde of bats dealing magic damage.",
+          "cooldown": 10,
           "range": 700,
           "final_area": 300,
+          "mana": 100,
           "levels": [
-            { "rank": 1, "damage": 75 },
-            { "rank": 2, "damage": 155 },
-            { "rank": 3, "damage": 235 },
-            { "rank": 4, "damage": 315 },
-            { "rank": 5, "damage": 395 },
-            { "rank": 6, "damage": 475 }
-          ]
+            {
+              "rank": 1,
+              "damage": 75,
+              "range": 700
+            },
+            {
+              "rank": 2,
+              "damage": 155,
+              "range": 705
+            },
+            {
+              "rank": 3,
+              "damage": 235,
+              "range": 710
+            },
+            {
+              "rank": 4,
+              "damage": 315,
+              "range": 715
+            },
+            {
+              "rank": 5,
+              "damage": 395,
+              "range": 720
+            },
+            {
+              "rank": 6,
+              "damage": 475,
+              "range": 725
+            }
+          ],
+          "icon": "icons/spell-carrionswarm.png"
         },
         {
           "name": "Sleep",
@@ -3929,57 +5051,64 @@
           "levels": [
             {
               "rank": 1,
-              "duration": 2.6,
+              "duration_heroes": 2.6,
+              "duration_units": 2.9,
               "cooldown": 7,
-              "range": 800,
-              "mana": 50
-            },
-            {
-              "rank": 2,
-              "duration": 2.8,
-              "cooldown": 8,
-              "range": 800,
-              "mana": 55
-            },
-            {
-              "rank": 3,
-              "duration": 3.0,
-              "cooldown": 9,
-              "range": 800,
-              "mana": 60
-            },
-            {
-              "rank": 4,
-              "duration": 3.4,
-              "cooldown": 10,
-              "range": 800,
-              "mana": 65
-            },
-            {
-              "rank": 5,
-              "duration": 3.8,
-              "cooldown": 11,
               "range": 800,
               "mana": 70
             },
             {
-              "rank": 6,
-              "duration": 4.2,
-              "cooldown": 12,
+              "rank": 2,
+              "duration_heroes": 3.2,
+              "duration_units": 4,
+              "cooldown": 8,
               "range": 800,
               "mana": 75
+            },
+            {
+              "rank": 3,
+              "duration_heroes": 3.8,
+              "duration_units": 5.1,
+              "cooldown": 9,
+              "range": 800,
+              "mana": 80
+            },
+            {
+              "rank": 4,
+              "duration_heroes": 4.4,
+              "duration_units": 6.3,
+              "cooldown": 10,
+              "range": 800,
+              "mana": 85
+            },
+            {
+              "rank": 5,
+              "duration_heroes": 5,
+              "duration_units": 7.4,
+              "cooldown": 10.5,
+              "range": 800,
+              "mana": 90
+            },
+            {
+              "rank": 6,
+              "duration_heroes": 5.6,
+              "duration_units": 8.6,
+              "cooldown": 11,
+              "range": 800,
+              "mana": 95
             }
-          ]
+          ],
+          "icon": "icons/spell-sleep.png"
         },
         {
           "name": "Vampiric Aura",
           "type": "aura",
-          "description": "Nearby friendly melee units gain hit points when they attack a target.",
+          "description": "Nearby friendly melee units gain hit points when they hit enemy units.",
           "area": 900,
           "levels": [
             {
               "rank": 1,
-              "lifesteal_pct": 25
+              "lifesteal_pct": 20
             },
             {
               "rank": 2,
@@ -3987,37 +5116,58 @@
             },
             {
               "rank": 3,
-              "lifesteal_pct": 35
+              "lifesteal_pct": 40
             },
             {
               "rank": 4,
-              "lifesteal_pct": 45
+              "lifesteal_pct": 50
             },
             {
               "rank": 5,
-              "lifesteal_pct": 55
+              "lifesteal_pct": 60
             },
             {
               "rank": 6,
-              "lifesteal_pct": 65
+              "lifesteal_pct": 70
             }
-          ]
+          ],
+          "icon": "icons/spell-vampiricaura.png"
         },
         {
           "name": "Inferno",
           "type": "active",
           "hotkey": "R",
-          "description": "Summons an Infernal down from the sky, dealing universal damage and stunning nearby enemy land units. Infernal fights for the Dreadlord.",
-          "cooldown": 180,
-          "range": 900,
+          "description": "Calls an Infernal down from the sky, dealing universal damage and stunning enemy land units in an area. The Infernal fights for the Dreadlord.",
           "infernal_duration": 180,
           "levels": [
-            { "rank": 1, "impact_damage": 100, "stun_duration": 2 },
-            { "rank": 2, "impact_damage": 200, "stun_duration": 2 }
-          ]
+            {
+              "rank": 1,
+              "impact_damage": 100,
+              "stun_heroes": 2,
+              "stun_units": null,
+              "area": 250,
+              "range": 900,
+              "mana": 175,
+              "cooldown": 180
+            },
+            {
+              "rank": 2,
+              "impact_damage": 200,
+              "stun_heroes": 4,
+              "stun_units": 8,
+              "area": 350,
+              "range": 1100,
+              "mana": 175,
+              "cooldown": 90
+            }
+          ],
+          "icon": "icons/spell-inferno.png"
         }
       ],
-      "notes": ""
+      "notes": "",
+      "raw_code": "Udre",
+      "icon": "icons/dreadlord.png",
+      "icon_index": null
     },
     {
       "id": "crypt_lord",
@@ -4025,6 +5175,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Tank", "Stun", "Summoner", "Pusher"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 26,
       "str_growth": 3.2,
       "agi_base": 14,
@@ -4304,48 +5457,167 @@
         {
           "name": "Impale",
           "type": "active",
-          "description": "Enchants the Crypt Lord with massive claws, shooting spiked tendrils out in a line that damage and hurl enemy ground units into the air.",
+          "description": "Slams the ground with the Crypt Lord's massive claws, shooting spiked tendrils out in a straight line, dealing magic damage and hurling enemy ground units into the air in their wake.",
           "hotkey": "Q",
           "cooldown": 9,
           "range": 700,
           "mana": 90,
           "levels": [
-            { "rank": 1, "damage": 60,  "stun_duration": 1.5 },
-            { "rank": 2, "damage": 105, "stun_duration": 1.8 },
-            { "rank": 3, "damage": 150, "stun_duration": 2.1 },
-            { "rank": 4, "damage": 195, "stun_duration": 2.4 },
-            { "rank": 5, "damage": 240, "stun_duration": 2.7 },
-            { "rank": 6, "damage": 285, "stun_duration": 3.0 }
-          ]
+            {
+              "rank": 1,
+              "damage": 60,
+              "stun_heroes": 1.5,
+              "stun_units": 2,
+              "area": 250,
+              "mana": 90
+            },
+            {
+              "rank": 2,
+              "damage": 105,
+              "stun_heroes": 1.8,
+              "stun_units": 2.5,
+              "area": 250,
+              "mana": 90
+            },
+            {
+              "rank": 3,
+              "damage": 150,
+              "stun_heroes": 2.1,
+              "stun_units": 3,
+              "area": 250,
+              "mana": 90
+            },
+            {
+              "rank": 4,
+              "damage": 195,
+              "stun_heroes": 2.4,
+              "stun_units": 3.5,
+              "area": 250,
+              "mana": 90
+            },
+            {
+              "rank": 5,
+              "damage": 240,
+              "stun_heroes": 2.7,
+              "stun_units": 4,
+              "area": 250,
+              "mana": 90
+            },
+            {
+              "rank": 6,
+              "damage": 285,
+              "stun_heroes": 3,
+              "stun_units": 4.5,
+              "area": 250,
+              "mana": 90
+            }
+          ],
+          "icon": "icons/spell-impale.png"
         },
         {
           "name": "Spiked Carapace",
           "type": "passive",
-          "description": "The Crypt Lord forms barbed layers of chitinous armor that return magic damage to nearby melee attackers.",
+          "description": "The Crypt Lord forms barbed layers of chitinous armor that increase its defense and return magic damage to enemy melee attackers.",
           "hotkey": "W",
           "levels": [
-            { "rank": 1, "dmg_return_pct": 15, "bonus_armor": 3 },
-            { "rank": 2, "dmg_return_pct": 25, "bonus_armor": 4 },
-            { "rank": 3, "dmg_return_pct": 35, "bonus_armor": 5 },
-            { "rank": 4, "dmg_return_pct": 45, "bonus_armor": 5 },
-            { "rank": 5, "dmg_return_pct": 55, "bonus_armor": 5 },
-            { "rank": 6, "dmg_return_pct": 65, "bonus_armor": 5 }
-          ]
+            {
+              "rank": 1,
+              "dmg_return_pct": 15,
+              "bonus_armor": 3
+            },
+            {
+              "rank": 2,
+              "dmg_return_pct": 25,
+              "bonus_armor": 6
+            },
+            {
+              "rank": 3,
+              "dmg_return_pct": 35,
+              "bonus_armor": 9
+            },
+            {
+              "rank": 4,
+              "dmg_return_pct": 45,
+              "bonus_armor": 12
+            },
+            {
+              "rank": 5,
+              "dmg_return_pct": 55,
+              "bonus_armor": 15
+            },
+            {
+              "rank": 6,
+              "dmg_return_pct": 65,
+              "bonus_armor": 18
+            }
+          ],
+          "icon": "icons/spell-spikedcarapace.png"
         },
         {
           "name": "Carrion Beetles",
           "type": "active",
-          "description": "The Crypt Lord propagates 2 Carrion Beetles from each of its enemies. Beetles have Burrow and are permanent, but only a certain number can be active at a time.",
+          "description": "The Crypt Lord raises 2 Carrion Beetles from a target corpse to attack the Crypt Lord's enemies. Beetles have Burrow and are permanent, but only a certain number can be controlled at a time.",
           "hotkey": "E",
+          "cooldown": 9,
+          "range": 900,
           "mana": 50,
           "levels": [
-            { "rank": 1, "hp": 440, "damage_min": 8,  "damage_max": 27, "armor": 2, "max_beetles": 6  },
-            { "rank": 2, "hp": 520, "damage_min": 14, "damage_max": 32, "armor": 3, "max_beetles": 7  },
-            { "rank": 3, "hp": 600, "damage_min": 22, "damage_max": 40, "armor": 4, "max_beetles": 8  },
-            { "rank": 4, "hp": 680, "damage_min": 30, "damage_max": 47, "armor": 5, "max_beetles": 9  },
-            { "rank": 5, "hp": 760, "damage_min": 40, "damage_max": 54, "armor": 6, "max_beetles": 10 },
-            { "rank": 6, "hp": 840, "damage_min": 46, "damage_max": 54, "armor": 7, "max_beetles": 11 }
-          ]
+            {
+              "rank": 1,
+              "hp": 460,
+              "damage_min": 8,
+              "damage_max": 9,
+              "armor": 2,
+              "max_beetles": 6,
+              "bounty": 16
+            },
+            {
+              "rank": 2,
+              "hp": 560,
+              "damage_min": 15,
+              "damage_max": 18,
+              "armor": 3,
+              "max_beetles": 7,
+              "bounty": 20
+            },
+            {
+              "rank": 3,
+              "hp": 680,
+              "damage_min": 22,
+              "damage_max": 27,
+              "armor": 4,
+              "max_beetles": 8,
+              "bounty": 24
+            },
+            {
+              "rank": 4,
+              "hp": 810,
+              "damage_min": 29,
+              "damage_max": 36,
+              "armor": 5,
+              "max_beetles": 9,
+              "bounty": 28
+            },
+            {
+              "rank": 5,
+              "hp": 950,
+              "damage_min": 36,
+              "damage_max": 45,
+              "armor": 6,
+              "max_beetles": 10,
+              "bounty": 32
+            },
+            {
+              "rank": 6,
+              "hp": 1100,
+              "damage_min": 43,
+              "damage_max": 54,
+              "armor": 7,
+              "max_beetles": 11,
+              "bounty": 36
+            }
+          ],
+          "icon": "icons/spell-carrionbeetles.png"
         },
         {
           "name": "Locust Swarm",
@@ -4353,13 +5625,32 @@
           "description": "Releases a swarm of angry locusts that bite and tear at nearby enemies. Each hit restores hit points to the Crypt Lord.",
           "hotkey": "R",
           "levels": [
-            { "rank": 1, "heal_per_hit": 30, "locusts": 20, "duration": 30, "cooldown": 180 },
-            { "rank": 2, "heal_per_hit": 50, "locusts": 40, "duration": 40, "cooldown": 210 }
-          ]
+            {
+              "rank": 1,
+              "heal_per_hit": 30,
+              "locusts": 20,
+              "duration": 30,
+              "cooldown": 210,
+              "mana": 175,
+              "area": 1200
+            },
+            {
+              "rank": 2,
+              "heal_per_hit": 50,
+              "locusts": 40,
+              "duration": 60,
+              "cooldown": 210,
+              "mana": 175,
+              "area": 1200
+            }
+          ],
+          "icon": "icons/spell-locustswarm.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Crypt_Lord/Spell-Icon.png"
+      "raw_code": "Ucrl",
+      "icon": "icons/cryptlord.png",
+      "icon_index": null
     },
     {
       "id": "keeper_of_the_grove",
@@ -4367,6 +5658,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Support", "Stun", "Jungler", "Summoner", "Pusher"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 16,
       "str_growth": 2.0,
       "agi_base": 15,
@@ -4648,32 +5942,141 @@
           "type": "active",
           "description": "Causes the earth to burst from the ground, immobilizing and dealing magic damage to a target enemy unit.",
           "hotkey": "Q",
-          "cooldown": 8,
           "levels": [
-            { "rank": 1, "damage": 80,  "disable_duration": 2.5, "range": 600 },
-            { "rank": 2, "damage": 160, "disable_duration": 3.0, "range": 640 },
-            { "rank": 3, "damage": 240, "disable_duration": 3.5, "range": 680 },
-            { "rank": 4, "damage": 320, "disable_duration": 4.0, "range": 720 },
-            { "rank": 5, "damage": 400, "disable_duration": 4.5, "range": 760 },
-            { "rank": 6, "damage": 480, "disable_duration": 5.0, "range": 800 }
-          ]
+            {
+              "rank": 1,
+              "damage": 80,
+              "duration_heroes": 2.5,
+              "duration_units": 8,
+              "range": 600,
+              "mana": 75,
+              "cooldown": 8
+            },
+            {
+              "rank": 2,
+              "damage": 160,
+              "duration_heroes": 2.75,
+              "duration_units": 10,
+              "range": 640,
+              "mana": 85,
+              "cooldown": 8
+            },
+            {
+              "rank": 3,
+              "damage": 240,
+              "duration_heroes": 3,
+              "duration_units": 12,
+              "range": 680,
+              "mana": 95,
+              "cooldown": 8
+            },
+            {
+              "rank": 4,
+              "damage": 320,
+              "duration_heroes": 3.25,
+              "duration_units": 14,
+              "range": 720,
+              "mana": 105,
+              "cooldown": 8
+            },
+            {
+              "rank": 5,
+              "damage": 400,
+              "duration_heroes": 3.5,
+              "duration_units": 16,
+              "range": 760,
+              "mana": 115,
+              "cooldown": 8
+            },
+            {
+              "rank": 6,
+              "damage": 480,
+              "duration_heroes": 3.75,
+              "duration_units": 18,
+              "range": 800,
+              "mana": 125,
+              "cooldown": 8
+            }
+          ],
+          "icon": "icons/spell-entanglingroots.png"
         },
         {
           "name": "Force of Nature",
           "type": "active",
-          "description": "Causes trees to burst into Treants. Treants have Nature's Blessing and 41-43 damage.",
+          "description": "Converts an area of trees into Treants with Nature's Blessing.",
           "hotkey": "W",
           "cooldown": 20,
-          "treant_damage_min": 41,
-          "treant_damage_max": 43,
+          "range": 800,
+          "duration": 60,
           "levels": [
-            { "rank": 1, "treants": 5, "treant_hp": 400, "aoe": 150, "mana": 100 },
-            { "rank": 2, "treants": 5, "treant_hp": 500, "aoe": 165, "mana": 105 },
-            { "rank": 3, "treants": 5, "treant_hp": 600, "aoe": 180, "mana": 110 },
-            { "rank": 4, "treants": 5, "treant_hp": 700, "aoe": 195, "mana": 115 },
-            { "rank": 5, "treants": 5, "treant_hp": 800, "aoe": 210, "mana": 120 },
-            { "rank": 6, "treants": 5, "treant_hp": 900, "aoe": 225, "mana": 125 }
-          ]
+            {
+              "rank": 1,
+              "treants": 2,
+              "treant_hp": 450,
+              "damage_min": 15,
+              "damage_max": 17,
+              "armor": 5,
+              "area": 150,
+              "mana": 100,
+              "bounty": 10
+            },
+            {
+              "rank": 2,
+              "treants": 3,
+              "treant_hp": 550,
+              "damage_min": 24,
+              "damage_max": 26,
+              "armor": 6,
+              "area": 165,
+              "mana": 105,
+              "bounty": 15
+            },
+            {
+              "rank": 3,
+              "treants": 4,
+              "treant_hp": 700,
+              "damage_min": 33,
+              "damage_max": 35,
+              "armor": 7,
+              "area": 180,
+              "mana": 110,
+              "bounty": 20
+            },
+            {
+              "rank": 4,
+              "treants": 5,
+              "treant_hp": 800,
+              "damage_min": 42,
+              "damage_max": 44,
+              "armor": 8,
+              "area": 195,
+              "mana": 115,
+              "bounty": 25
+            },
+            {
+              "rank": 5,
+              "treants": 5,
+              "treant_hp": 950,
+              "damage_min": 51,
+              "damage_max": 53,
+              "armor": 9,
+              "area": 210,
+              "mana": 120,
+              "bounty": 30
+            },
+            {
+              "rank": 6,
+              "treants": 5,
+              "treant_hp": 1050,
+              "damage_min": 60,
+              "damage_max": 62,
+              "armor": 10,
+              "area": 225,
+              "mana": 125,
+              "bounty": 35
+            }
+          ],
+          "icon": "icons/spell-forceofnature.png"
         },
         {
           "name": "Thorns Aura",
@@ -4682,28 +6085,72 @@
           "hotkey": "E",
           "area": 900,
           "levels": [
-            { "rank": 1, "dmg_return_pct": 25 },
-            { "rank": 2, "dmg_return_pct": 35 },
-            { "rank": 3, "dmg_return_pct": 45 },
-            { "rank": 4, "dmg_return_pct": 55 },
-            { "rank": 5, "dmg_return_pct": 65 },
-            { "rank": 6, "dmg_return_pct": 75 }
-          ]
+            {
+              "rank": 1,
+              "dmg_return_pct": 25
+            },
+            {
+              "rank": 2,
+              "dmg_return_pct": 35
+            },
+            {
+              "rank": 3,
+              "dmg_return_pct": 45
+            },
+            {
+              "rank": 4,
+              "dmg_return_pct": 55
+            },
+            {
+              "rank": 5,
+              "dmg_return_pct": 65
+            },
+            {
+              "rank": 6,
+              "dmg_return_pct": 75
+            }
+          ],
+          "icon": "icons/spell-thornsaura.png"
         },
         {
           "name": "Tranquility",
           "type": "active",
-          "description": "Summons rains of healing energy to pour down in a large area, healing friendly allied units.",
+          "description": "Causes rains of healing energy to pour down in a large area, healing friendly allied units.",
           "hotkey": "R",
           "duration": 12,
           "levels": [
-            { "rank": 1, "heal_per_sec": 100, "aoe": 900  },
-            { "rank": 2, "heal_per_sec": 150, "aoe": 1200 }
-          ]
+            {
+              "rank": 1,
+              "heal_per_sec": 100,
+              "area": 900,
+              "cooldown": 100,
+              "duration": 12,
+              "mana": 125
+            },
+            {
+              "rank": 2,
+              "heal_per_sec": 150,
+              "area": 1200,
+              "cooldown": 60,
+              "duration": 12,
+              "mana": 125
+            },
+            {
+              "rank": 3,
+              "heal_per_sec": 200,
+              "area": 1200,
+              "cooldown": 60,
+              "duration": 12,
+              "mana": 125
+            }
+          ],
+          "icon": "icons/spell-tranquility.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Keeper_of_the_Grove/Spell-Icon.png"
+      "raw_code": "Ekee",
+      "icon": "icons/keeperofthegrove.png",
+      "icon_index": null
     },
     {
       "id": "priestess_of_the_moon",
@@ -4711,6 +6158,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "AGI",
+      "roles": ["Carry", "Jungler", "Summoner"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 18,
       "str_growth": 1.9,
       "agi_base": 19,
@@ -4995,13 +6445,74 @@
           "duration": 20,
           "cooldown": 40,
           "levels": [
-            { "rank": 1, "summon_count": 1, "owl_hp": 260, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12 },
-            { "rank": 2, "summon_count": 1, "owl_hp": 260, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12 },
-            { "rank": 3, "summon_count": 1, "owl_hp": 260, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12 },
-            { "rank": 4, "summon_count": 2, "owl_hp": 260, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12 },
-            { "rank": 5, "summon_count": 2, "owl_hp": 260, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12 },
-            { "rank": 6, "summon_count": 2, "owl_hp": 500, "owl_dmg_min": 10, "owl_dmg_max": 12, "owl_armor": 12, "owl_regen": 10 }
-          ]
+            {
+              "rank": 1,
+              "summon_count": 1,
+              "owl_hp": 260,
+              "owl_damage_min": 12,
+              "owl_damage_max": 16,
+              "owl_armor": 1,
+              "duration": 60,
+              "bounty": 10,
+              "mana": 50
+            },
+            {
+              "rank": 2,
+              "summon_count": 1,
+              "owl_hp": 320,
+              "owl_damage_min": 22,
+              "owl_damage_max": 26,
+              "owl_armor": 2,
+              "duration": 60,
+              "mana": 60,
+              "bounty": 15
+            },
+            {
+              "rank": 3,
+              "summon_count": 1,
+              "owl_hp": 380,
+              "owl_damage_min": 32,
+              "owl_damage_max": 36,
+              "owl_armor": 3,
+              "duration": 60,
+              "mana": 70,
+              "bounty": 20
+            },
+            {
+              "rank": 4,
+              "summon_count": 2,
+              "owl_hp": 440,
+              "owl_damage_min": 42,
+              "owl_damage_max": 46,
+              "owl_armor": 4,
+              "duration": 60,
+              "mana": 80,
+              "bounty": 25
+            },
+            {
+              "rank": 5,
+              "summon_count": 2,
+              "owl_hp": 500,
+              "owl_damage_min": 52,
+              "owl_damage_max": 56,
+              "owl_armor": 5,
+              "duration": 60,
+              "mana": 90,
+              "bounty": 30
+            },
+            {
+              "rank": 6,
+              "summon_count": 2,
+              "owl_hp": 560,
+              "owl_damage_min": 62,
+              "owl_damage_max": 66,
+              "owl_armor": 6,
+              "duration": 60,
+              "mana": 100,
+              "bounty": 35
+            }
+          ],
+          "icon": "icons/spell-scout.png"
         },
         {
           "name": "Searing Arrows",
@@ -5010,29 +6521,42 @@
           "levels": [
             {
               "rank": 1,
-              "bonus_dmg": 12
+              "bonus_dmg": 12,
+              "mana": 6,
+              "range": 600
             },
             {
               "rank": 2,
-              "bonus_dmg": 24
+              "bonus_dmg": 24,
+              "mana": 7,
+              "range": 700
             },
             {
               "rank": 3,
-              "bonus_dmg": 48
+              "bonus_dmg": 48,
+              "range": 750,
+              "mana": 8
             },
             {
               "rank": 4,
-              "bonus_dmg": 72
+              "bonus_dmg": 72,
+              "mana": 8,
+              "range": 800
             },
             {
               "rank": 5,
-              "bonus_dmg": 96
+              "bonus_dmg": 96,
+              "mana": 8,
+              "range": 850
             },
             {
               "rank": 6,
-              "bonus_dmg": 170
+              "bonus_dmg": 120,
+              "mana": 8,
+              "range": 850
             }
-          ]
+          ],
+          "icon": "icons/spell-searingarrows.png"
         },
         {
           "name": "Trueshot Aura",
@@ -5042,54 +6566,62 @@
           "levels": [
             {
               "rank": 1,
-              "bonus_dmg_pct": 2
+              "bonus_dmg_pct": 10
             },
             {
               "rank": 2,
-              "bonus_dmg_pct": 4
+              "bonus_dmg_pct": 16
             },
             {
               "rank": 3,
-              "bonus_dmg_pct": 6
+              "bonus_dmg_pct": 22
             },
             {
               "rank": 4,
-              "bonus_dmg_pct": 8
+              "bonus_dmg_pct": 28
             },
             {
               "rank": 5,
-              "bonus_dmg_pct": 10
+              "bonus_dmg_pct": 34
             },
             {
               "rank": 6,
               "bonus_dmg_pct": 40
             }
-          ]
+          ],
+          "icon": "icons/spell-trueshotaura.png"
         },
         {
           "name": "Starfall",
           "type": "active",
-          "description": "Calls down waves of meteors dealing universal damage to all enemy units. Pierces spell immunity.",
+          "description": "Calls down waves of meteors that deal universal damage to nearby enemy units every 1 second. Pierces spell immunity.",
           "levels": [
             {
               "rank": 1,
-              "dmg_per_wave": 100,
+              "dmg_units": 100,
+              "dmg_buildings": 45,
               "area": 1100,
               "cooldown": 120,
-              "mana": 150
+              "mana": 150,
+              "duration": 20
             },
             {
               "rank": 2,
-              "dmg_per_wave": 200,
+              "dmg_units": 200,
+              "dmg_buildings": 60,
               "area": 1500,
               "cooldown": 120,
-              "mana": 200
+              "mana": 150,
+              "duration": 20
             }
-          ]
+          ],
+          "icon": "icons/spell-starfall.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Priestess_of_the_Moon/Spell-Icon.png"
+      "raw_code": "Emoo",
+      "icon": "icons/priestessofthemoon.png",
+      "icon_index": null
     },
     {
       "id": "demon_hunter",
@@ -5097,6 +6629,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "AGI",
+      "roles": ["Carry", "Jungler", "Pusher"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 19,
       "str_growth": 2.4,
       "agi_base": 21,
@@ -5377,17 +6912,52 @@
           "name": "Mana Burn",
           "type": "active",
           "hotkey": "Q",
-          "description": "Sends a bolt of negative energy that burns a target enemy's mana. Burned mana combusts, dealing magic damage equal to the amount burned.",
-          "cooldown": 7,
-          "range": 500,
+          "description": "Sends a bolt of negative energy that burns a target enemy unit's mana.\n\nBurned mana combusts, dealing magic damage to the target equal to the amount of mana burned.",
           "levels": [
-            { "rank": 1, "mana_burned": 100, "mana": 50 },
-            { "rank": 2, "mana_burned": 150, "mana": 55 },
-            { "rank": 3, "mana_burned": 200, "mana": 60 },
-            { "rank": 4, "mana_burned": 250, "mana": 65 },
-            { "rank": 5, "mana_burned": 300, "mana": 70 },
-            { "rank": 6, "mana_burned": 350, "mana": 75 }
-          ]
+            {
+              "rank": 1,
+              "mana_burned": 50,
+              "mana": 50,
+              "range": 330,
+              "cooldown": 7
+            },
+            {
+              "rank": 2,
+              "mana_burned": 100,
+              "mana": 55,
+              "cooldown": 7,
+              "range": 330
+            },
+            {
+              "rank": 3,
+              "mana_burned": 150,
+              "mana": 60,
+              "cooldown": 6,
+              "range": 360
+            },
+            {
+              "rank": 4,
+              "mana_burned": 200,
+              "mana": 65,
+              "cooldown": 6,
+              "range": 390
+            },
+            {
+              "rank": 5,
+              "mana_burned": 250,
+              "mana": 70,
+              "range": 420,
+              "cooldown": 5
+            },
+            {
+              "rank": 6,
+              "mana_burned": 300,
+              "mana": 75,
+              "range": 450,
+              "cooldown": 5
+            }
+          ],
+          "icon": "icons/spell-manaburn.png"
         },
         {
           "name": "Immolation",
@@ -5395,15 +6965,46 @@
           "hotkey": "W",
           "description": "Engulfs the Demon Hunter in flames causing magic damage per 0.5s to nearby enemies. Drains mana until deactivated.",
           "activation_mana": 25,
-          "aoe": 370,
+          "mana": 10,
           "levels": [
-            { "rank": 1, "dmg_per_half_sec": 5, "mana_drain_per_sec": 5 },
-            { "rank": 2, "dmg_per_half_sec": 10, "mana_drain_per_sec": 6 },
-            { "rank": 3, "dmg_per_half_sec": 15, "mana_drain_per_sec": 7 },
-            { "rank": 4, "dmg_per_half_sec": 20, "mana_drain_per_sec": 8 },
-            { "rank": 5, "dmg_per_half_sec": 25, "mana_drain_per_sec": 10 },
-            { "rank": 6, "dmg_per_half_sec": 30, "mana_drain_per_sec": 12 }
-          ]
+            {
+              "rank": 1,
+              "dmg_per_half_sec": 5,
+              "mana_drain_per_sec": 5,
+              "area": 250
+            },
+            {
+              "rank": 2,
+              "dmg_per_half_sec": 10,
+              "mana_drain_per_sec": 6,
+              "area": 280
+            },
+            {
+              "rank": 3,
+              "dmg_per_half_sec": 15,
+              "mana_drain_per_sec": 7,
+              "area": 310
+            },
+            {
+              "rank": 4,
+              "dmg_per_half_sec": 20,
+              "mana_drain_per_sec": 8,
+              "area": 340
+            },
+            {
+              "rank": 5,
+              "dmg_per_half_sec": 25,
+              "mana_drain_per_sec": 10,
+              "area": 370
+            },
+            {
+              "rank": 6,
+              "dmg_per_half_sec": 30,
+              "mana_drain_per_sec": 12,
+              "area": 400
+            }
+          ],
+          "icon": "icons/spell-immolation.png"
         },
         {
           "name": "Evasion",
@@ -5416,30 +7017,31 @@
             },
             {
               "rank": 2,
-              "evasion_pct": 15
+              "evasion_pct": 18
             },
             {
               "rank": 3,
-              "evasion_pct": 20
-            },
-            {
-              "rank": 4,
               "evasion_pct": 25
             },
             {
+              "rank": 4,
+              "evasion_pct": 31
+            },
+            {
               "rank": 5,
-              "evasion_pct": 30
+              "evasion_pct": 36
             },
             {
               "rank": 6,
               "evasion_pct": 40
             }
-          ]
+          ],
+          "icon": "icons/spell-evasion.png"
         },
         {
           "name": "Metamorphosis",
           "type": "active",
-          "description": "Transforms the Demon Hunter into a powerful Demon with bonus hit points.",
+          "description": "Transforms the Demon Hunter into a powerful Demon with a ranged Chaos attack and bonus hit points.",
           "levels": [
             {
               "rank": 1,
@@ -5455,11 +7057,14 @@
               "duration": 45,
               "mana": 150
             }
-          ]
+          ],
+          "icon": "icons/spell-metamorphosis.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Demon_Hunter/Spell-Icon.png"
+      "raw_code": "Edem",
+      "icon": "icons/demonhunter.png",
+      "icon_index": null
     },
     {
       "id": "warden",
@@ -5467,6 +7072,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "AGI",
+      "roles": ["Carry", "Jungler", "Mage"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 18,
       "str_growth": 2.4,
       "agi_base": 20,
@@ -5746,17 +7354,53 @@
         {
           "name": "Fan of Knives",
           "type": "active",
-          "description": "The Warden releases a flurry of knives, causing enhanced physical damage to nearby enemies. Deals damage only to visible targets.",
+          "description": "The Warden hurls a flurry of knives, causing enhanced physical damage to nearby enemies. Deals damage only to visible targets.",
           "hotkey": "Q",
-          "aoe": 400,
           "levels": [
-            { "rank": 1, "damage": 70  },
-            { "rank": 2, "damage": 130 },
-            { "rank": 3, "damage": 200 },
-            { "rank": 4, "damage": 280 },
-            { "rank": 5, "damage": 380 },
-            { "rank": 6, "damage": 490 }
-          ]
+            {
+              "rank": 1,
+              "damage": 70,
+              "area": 400,
+              "mana": 100,
+              "cooldown": 9
+            },
+            {
+              "rank": 2,
+              "damage": 130,
+              "area": 400,
+              "mana": 105,
+              "cooldown": 9
+            },
+            {
+              "rank": 3,
+              "damage": 200,
+              "area": 450,
+              "mana": 110,
+              "cooldown": 9
+            },
+            {
+              "rank": 4,
+              "damage": 280,
+              "area": 450,
+              "mana": 115,
+              "cooldown": 9
+            },
+            {
+              "rank": 5,
+              "damage": 370,
+              "area": 475,
+              "mana": 120,
+              "cooldown": 9
+            },
+            {
+              "rank": 6,
+              "damage": 470,
+              "area": 475,
+              "mana": 125,
+              "cooldown": 9
+            }
+          ],
+          "icon": "icons/spell-fanofknives.png"
         },
         {
           "name": "Blink",
@@ -5764,44 +7408,129 @@
           "description": "Short distance teleportation that allows the Warden to move in and out of combat or dodge certain abilities.",
           "hotkey": "W",
           "levels": [
-            { "rank": 1, "mana": 50, "distance": 775,  "cooldown": 10  },
-            { "rank": 2, "mana": 45, "distance": 850,  "cooldown": 5   },
-            { "rank": 3, "mana": 40, "distance": 925,  "cooldown": 2.5 },
-            { "rank": 4, "mana": 35, "distance": 1000, "cooldown": 2   },
-            { "rank": 5, "mana": 30, "distance": 1075, "cooldown": 0.3 },
-            { "rank": 6, "mana": 25, "distance": 1150, "cooldown": 0.3 }
-          ]
+            {
+              "rank": 1,
+              "mana": 50,
+              "distance": 770,
+              "cooldown": 2.6
+            },
+            {
+              "rank": 2,
+              "mana": 45,
+              "distance": 845,
+              "cooldown": 2.6
+            },
+            {
+              "rank": 3,
+              "mana": 40,
+              "distance": 920,
+              "cooldown": 2.6
+            },
+            {
+              "rank": 4,
+              "mana": 35,
+              "distance": 995,
+              "cooldown": 1.3
+            },
+            {
+              "rank": 5,
+              "mana": 30,
+              "distance": 1065,
+              "cooldown": 0.7
+            },
+            {
+              "rank": 6,
+              "mana": 25,
+              "distance": 1125,
+              "cooldown": 0.4
+            }
+          ],
+          "icon": "icons/spell-blink.png"
         },
         {
           "name": "Shadow Strike",
           "type": "active",
           "description": "Hurls a poisoned dagger which deals initial enhanced damage and then deals magic damage over time. The poison slows the target's movement speed by 50% for 3 seconds.",
           "hotkey": "E",
+          "cooldown": 8,
           "duration": 15,
           "move_slow_pct": 50,
           "slow_duration": 3,
           "levels": [
-            { "rank": 1, "strike_dmg": 75,  "dot_dmg": 150, "mana": 75  },
-            { "rank": 2, "strike_dmg": 150, "dot_dmg": 200, "mana": 80  },
-            { "rank": 3, "strike_dmg": 200, "dot_dmg": 275, "mana": 85  },
-            { "rank": 4, "strike_dmg": 300, "dot_dmg": 350, "mana": 90  },
-            { "rank": 5, "strike_dmg": 375, "dot_dmg": 400, "mana": 95  },
-            { "rank": 6, "strike_dmg": 450, "dot_dmg": 450, "mana": 100 }
-          ]
+            {
+              "rank": 1,
+              "strike_dmg": 75,
+              "dot_dmg": 150,
+              "mana": 75,
+              "range": 350
+            },
+            {
+              "rank": 2,
+              "strike_dmg": 150,
+              "dot_dmg": 200,
+              "mana": 85,
+              "range": 350
+            },
+            {
+              "rank": 3,
+              "strike_dmg": 200,
+              "dot_dmg": 275,
+              "mana": 95,
+              "range": 350
+            },
+            {
+              "rank": 4,
+              "strike_dmg": 300,
+              "dot_dmg": 350,
+              "mana": 105,
+              "range": 350
+            },
+            {
+              "rank": 5,
+              "strike_dmg": 375,
+              "dot_dmg": 400,
+              "mana": 115,
+              "range": 350
+            },
+            {
+              "rank": 6,
+              "strike_dmg": 450,
+              "dot_dmg": 450,
+              "mana": 125,
+              "range": 350
+            }
+          ],
+          "icon": "icons/spell-shadowstrike.png"
         },
         {
           "name": "Vengeance",
           "type": "active",
           "description": "Summons an Avatar that summons up to 6 invulnerable spirits from nearby corpses to attack enemies. When the Avatar dies, the spirits vanish.",
           "hotkey": "R",
+          "spirits_per_avatar": 6,
           "levels": [
-            { "rank": 1, "avatars": 1, "cooldown": 180, "mana": 150 },
-            { "rank": 2, "avatars": 2, "cooldown": 120, "mana": 100 }
-          ]
+            {
+              "rank": 1,
+              "avatars": 1,
+              "cooldown": 180,
+              "mana": 200,
+              "duration": 180
+            },
+            {
+              "rank": 2,
+              "avatars": 2,
+              "cooldown": 90,
+              "mana": 100,
+              "duration": 180
+            }
+          ],
+          "icon": "icons/spell-vengeance.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Warden/Spell-Icon.png"
+      "raw_code": "Ewar",
+      "icon": "icons/warden.png",
+      "icon_index": null
     },
     {
       "id": "sea_witch",
@@ -5809,6 +7538,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Carry", "Pusher", "Mage"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
       "agi_base": 16,
@@ -6089,32 +7821,108 @@
           "name": "Forked Lightning",
           "type": "active",
           "hotkey": "Q",
-          "description": "Calls forth a cone of lightning dealing magic damage to multiple targets.",
-          "cooldown": 20,
-          "range": 900,
+          "description": "Calls forth a cone of lightning dealing magic damage.",
+          "cooldown": 11,
+          "distance": 900,
+          "mana": 110,
+          "area": 125,
           "levels": [
-            { "rank": 1, "damage": 100, "target_count": 3 },
-            { "rank": 2, "damage": 165, "target_count": 4 },
-            { "rank": 3, "damage": 225, "target_count": 5 },
-            { "rank": 4, "damage": 285, "target_count": 6 },
-            { "rank": 5, "damage": 345, "target_count": 7 },
-            { "rank": 6, "damage": 450, "target_count": 8 }
-          ]
+            {
+              "rank": 1,
+              "damage": 85,
+              "target_count": 3,
+              "final_area": 300,
+              "range": 600
+            },
+            {
+              "rank": 2,
+              "damage": 165,
+              "target_count": 4,
+              "final_area": 330,
+              "range": 620
+            },
+            {
+              "rank": 3,
+              "damage": 245,
+              "target_count": 5,
+              "final_area": 360,
+              "range": 640
+            },
+            {
+              "rank": 4,
+              "damage": 325,
+              "target_count": 6,
+              "final_area": 390,
+              "range": 660
+            },
+            {
+              "rank": 5,
+              "damage": 405,
+              "target_count": 7,
+              "final_area": 420,
+              "range": 680
+            },
+            {
+              "rank": 6,
+              "damage": 485,
+              "target_count": 8,
+              "final_area": 450,
+              "range": 700
+            }
+          ],
+          "icon": "icons/spell-forkedlightning.png"
         },
         {
           "name": "Frost Arrows",
           "type": "active",
           "hotkey": "W",
-          "description": "Adds a cold effect to each attack causing bonus physical damage and slowing a target. Unique — does not stack with other Unique effects.",
-          "slow_duration": 2,
+          "description": "Adds a cold effect to each attack, causing bonus physical damage and slowing a target enemy unit's attacks and movement.\n\nUnique — does not stack with other Unique effects.",
+          "mana": 10,
           "levels": [
-            { "rank": 1, "bonus_dmg": 11, "slow_pct": 30 },
-            { "rank": 2, "bonus_dmg": 15, "slow_pct": 40 },
-            { "rank": 3, "bonus_dmg": 30, "slow_pct": 50 },
-            { "rank": 4, "bonus_dmg": 50, "slow_pct": 60 },
-            { "rank": 5, "bonus_dmg": 60, "slow_pct": 70 },
-            { "rank": 6, "bonus_dmg": 80, "slow_pct": 75 }
-          ]
+            {
+              "rank": 1,
+              "bonus_dmg": 8,
+              "slow_pct": 30,
+              "duration": 1.5,
+              "range": 600
+            },
+            {
+              "rank": 2,
+              "bonus_dmg": 16,
+              "slow_pct": 36,
+              "duration": 1.75,
+              "range": 630
+            },
+            {
+              "rank": 3,
+              "bonus_dmg": 28,
+              "slow_pct": 42,
+              "duration": 2,
+              "range": 660
+            },
+            {
+              "rank": 4,
+              "bonus_dmg": 40,
+              "slow_pct": 48,
+              "duration": 2.25,
+              "range": 690
+            },
+            {
+              "rank": 5,
+              "bonus_dmg": 52,
+              "slow_pct": 54,
+              "duration": 2.5,
+              "range": 720
+            },
+            {
+              "rank": 6,
+              "bonus_dmg": 64,
+              "slow_pct": 60,
+              "duration": 2.75,
+              "range": 750
+            }
+          ],
+          "icon": "icons/spell-frostarrows.png"
         },
         {
           "name": "Mana Shield",
@@ -6123,29 +7931,42 @@
           "levels": [
             {
               "rank": 1,
-              "dmg_per_mana": 1.0
+              "dmg_per_mana": 1.0,
+              "cooldown": 0,
+              "mana": 10
             },
             {
               "rank": 2,
-              "dmg_per_mana": 2.0
+              "dmg_per_mana": 1.5,
+              "cooldown": 0,
+              "mana": 10
             },
             {
               "rank": 3,
-              "dmg_per_mana": 3.0
+              "dmg_per_mana": 2,
+              "cooldown": 0,
+              "mana": 10
             },
             {
               "rank": 4,
-              "dmg_per_mana": 4.0
+              "dmg_per_mana": 2.5,
+              "mana": 10,
+              "cooldown": 0
             },
             {
               "rank": 5,
-              "dmg_per_mana": 5.0
+              "dmg_per_mana": 3,
+              "mana": 10,
+              "cooldown": 0
             },
             {
               "rank": 6,
-              "dmg_per_mana": 6.0
+              "dmg_per_mana": 3.5,
+              "mana": 10,
+              "cooldown": 0
             }
-          ]
+          ],
+          "icon": "icons/spell-manashield.png"
         },
         {
           "name": "Tornado",
@@ -6156,13 +7977,32 @@
           "duration": 15,
           "move_slow_pct": 60,
           "levels": [
-            { "rank": 1, "dmg_per_sec": 100, "aoe": 700 },
-            { "rank": 2, "dmg_per_sec": 150, "aoe": 800 }
-          ]
+            {
+              "rank": 1,
+              "dmg_per_sec": 100,
+              "aoe": 700,
+              "mana": 175,
+              "cooldown": 100,
+              "duration": 20,
+              "range": 800
+            },
+            {
+              "rank": 2,
+              "dmg_per_sec": 150,
+              "aoe": 800,
+              "duration": 20,
+              "mana": 250,
+              "cooldown": 100,
+              "range": 800
+            }
+          ],
+          "icon": "icons/spell-tornado.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Sea_Witch/Spell-Icon.png"
+      "raw_code": "Nngs",
+      "icon": "icons/seawitch.png",
+      "icon_index": null
     },
     {
       "id": "dark_ranger",
@@ -6170,6 +8010,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "AGI",
+      "roles": ["Support", "Jungler", "Summoner", "Mage"],
+      "difficulty": 4,
+      "difficulty_max": 4,
       "str_base": 18,
       "str_growth": 1.9,
       "agi_base": 21,
@@ -6450,30 +8293,145 @@
           "name": "Silence",
           "type": "active",
           "hotkey": "Q",
-          "description": "Prevents all enemies in a target area from casting spells.",
-          "aoe": 500,
+          "description": "Stops all enemies in a target area from casting spells.",
           "levels": [
-            { "rank": 1, "duration": 3, "cooldown": 13 },
-            { "rank": 2, "duration": 4, "cooldown": 14 },
-            { "rank": 3, "duration": 5, "cooldown": 15 },
-            { "rank": 4, "duration": 6, "cooldown": 16 },
-            { "rank": 5, "duration": 7, "cooldown": 17 },
-            { "rank": 6, "duration": 8, "cooldown": 18 }
-          ]
+            {
+              "rank": 1,
+              "area": 200,
+              "duration_heroes": 6,
+              "duration_units": null,
+              "range": 900,
+              "mana": 60,
+              "cooldown": 13
+            },
+            {
+              "rank": 2,
+              "area": 225,
+              "duration_heroes": 7,
+              "duration_units": null,
+              "range": 900,
+              "mana": 65,
+              "cooldown": 14
+            },
+            {
+              "rank": 3,
+              "area": 250,
+              "duration_heroes": 8,
+              "duration_units": null,
+              "range": 950,
+              "mana": 70,
+              "cooldown": 15
+            },
+            {
+              "rank": 4,
+              "area": 275,
+              "duration_heroes": 9,
+              "duration_units": 28,
+              "range": 950,
+              "mana": 75,
+              "cooldown": 16
+            },
+            {
+              "rank": 5,
+              "area": 300,
+              "duration_heroes": 10,
+              "duration_units": 32,
+              "range": 1000,
+              "mana": 80,
+              "cooldown": 17
+            },
+            {
+              "rank": 6,
+              "area": 325,
+              "duration_heroes": 11,
+              "duration_units": 36,
+              "range": 1000,
+              "mana": 85,
+              "cooldown": 18
+            }
+          ],
+          "icon": "icons/spell-silence.png"
         },
         {
           "name": "Black Arrow",
           "type": "active",
           "hotkey": "W",
-          "description": "Adds extra physical damage to attacks. Units killed by Black Arrow rise as skeletons. Unique — does not stack with other Unique effects.",
+          "description": "Adds extra physical damage to attacks. Units killed while under the effect of Black Arrow will turn into skeletons. Unique — does not stack with other Unique effects.",
           "levels": [
-            { "rank": 1, "skeleton_hp": 405, "skeleton_dmg_min": 9, "skeleton_dmg_max": 10, "skeleton_armor": 3 },
-            { "rank": 2, "skeleton_hp": 500, "skeleton_dmg_min": 17, "skeleton_dmg_max": 22, "skeleton_armor": 3 },
-            { "rank": 3, "skeleton_hp": 600, "skeleton_dmg_min": 23, "skeleton_dmg_max": 29, "skeleton_armor": 3 },
-            { "rank": 4, "skeleton_hp": 750, "skeleton_dmg_min": 37, "skeleton_dmg_max": 44, "skeleton_armor": 4 },
-            { "rank": 5, "skeleton_hp": 950, "skeleton_dmg_min": 51, "skeleton_dmg_max": 57, "skeleton_armor": 5 },
-            { "rank": 6, "skeleton_hp": 1150, "skeleton_dmg_min": 61, "skeleton_dmg_max": 67, "skeleton_armor": 6 }
-          ]
+            {
+              "rank": 1,
+              "bonus_damage": 10,
+              "skeleton_hp": 405,
+              "skeleton_dmg_min": 9,
+              "skeleton_dmg_max": 10,
+              "skeleton_armor": 1,
+              "skeleton_duration": 80,
+              "range": 600,
+              "mana": 4,
+              "bounty": 10
+            },
+            {
+              "rank": 2,
+              "bonus_damage": 22,
+              "skeleton_hp": 560,
+              "skeleton_dmg_min": 16,
+              "skeleton_dmg_max": 19,
+              "skeleton_armor": 2,
+              "skeleton_duration": 80,
+              "range": 600,
+              "mana": 5,
+              "bounty": 15
+            },
+            {
+              "rank": 3,
+              "bonus_damage": 42,
+              "skeleton_hp": 755,
+              "skeleton_dmg_min": 24,
+              "skeleton_dmg_max": 29,
+              "skeleton_armor": 3,
+              "skeleton_duration": 80,
+              "range": 700,
+              "mana": 6,
+              "bounty": 20
+            },
+            {
+              "rank": 4,
+              "bonus_damage": 64,
+              "skeleton_hp": 990,
+              "skeleton_dmg_min": 33,
+              "skeleton_dmg_max": 40,
+              "skeleton_armor": 4,
+              "skeleton_duration": 80,
+              "range": 700,
+              "mana": 7,
+              "bounty": 25
+            },
+            {
+              "rank": 5,
+              "bonus_damage": 86,
+              "skeleton_hp": 1265,
+              "skeleton_dmg_min": 43,
+              "skeleton_dmg_max": 52,
+              "skeleton_armor": 5,
+              "skeleton_duration": 80,
+              "range": 800,
+              "mana": 8,
+              "bounty": 30
+            },
+            {
+              "rank": 6,
+              "bonus_damage": 108,
+              "skeleton_hp": 1580,
+              "skeleton_dmg_min": 54,
+              "skeleton_dmg_max": 65,
+              "skeleton_armor": 6,
+              "skeleton_duration": 80,
+              "range": 800,
+              "mana": 9,
+              "bounty": 35
+            }
+          ],
+          "icon": "icons/spell-blackarrow.png"
         },
         {
           "name": "Life Drain",
@@ -6483,13 +8441,56 @@
           "cooldown": 8,
           "vision": 320,
           "levels": [
-            { "rank": 1, "hp_per_sec": 7.5, "range": 600, "mana": 40 },
-            { "rank": 2, "hp_per_sec": 10, "range": 620, "mana": 50 },
-            { "rank": 3, "hp_per_sec": 15, "range": 640, "mana": 60 },
-            { "rank": 4, "hp_per_sec": 25, "range": 660, "mana": 70 },
-            { "rank": 5, "hp_per_sec": 35, "range": 680, "mana": 80 },
-            { "rank": 6, "hp_per_sec": 50, "range": 700, "mana": 90 }
-          ]
+            {
+              "rank": 1,
+              "hp_per_sec": 7.5,
+              "range": 600,
+              "mana": 30,
+              "area": 850,
+              "duration": 8
+            },
+            {
+              "rank": 2,
+              "hp_per_sec": 10,
+              "range": 620,
+              "mana": 40,
+              "duration": 9,
+              "area": 870
+            },
+            {
+              "rank": 3,
+              "hp_per_sec": 15,
+              "range": 640,
+              "mana": 50,
+              "duration": 10,
+              "area": 890
+            },
+            {
+              "rank": 4,
+              "hp_per_sec": 25,
+              "range": 660,
+              "mana": 60,
+              "duration": 11,
+              "area": 910
+            },
+            {
+              "rank": 5,
+              "hp_per_sec": 35,
+              "range": 680,
+              "mana": 70,
+              "duration": 12,
+              "area": 930
+            },
+            {
+              "rank": 6,
+              "hp_per_sec": 50,
+              "range": 700,
+              "mana": 80,
+              "duration": 13,
+              "area": 950
+            }
+          ],
+          "icon": "icons/spell-lifedrain.png"
         },
         {
           "name": "Charm",
@@ -6500,7 +8501,7 @@
               "rank": 1,
               "max_creep_level": 5,
               "cooldown": 45,
-              "mana": 150
+              "mana": 100
             },
             {
               "rank": 2,
@@ -6508,11 +8509,14 @@
               "cooldown": 30,
               "mana": 100
             }
-          ]
+          ],
+          "icon": "icons/spell-charm.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Dark_Ranger/Spell-Icon.png"
+      "raw_code": "Nbrn",
+      "icon": "icons/darkranger.png",
+      "icon_index": null
     },
     {
       "id": "brewmaster",
@@ -6520,6 +8524,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Carry"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 23,
       "str_growth": 3.0,
       "agi_base": 16,
@@ -6803,28 +8810,131 @@
           "description": "Breathes a cone of fire at enemy units dealing magic damage. Units with Drunken Haze ignite and take additional magic damage over time.",
           "final_area": 175,
           "levels": [
-            { "rank": 1, "initial_damage": 80, "drunken_burn_damage": 50, "range": 375 },
-            { "rank": 2, "initial_damage": 180, "drunken_burn_damage": 125, "range": 380 },
-            { "rank": 3, "initial_damage": 300, "drunken_burn_damage": 200, "range": 385 },
-            { "rank": 4, "initial_damage": 400, "drunken_burn_damage": 280, "range": 390 },
-            { "rank": 5, "initial_damage": 480, "drunken_burn_damage": 350, "range": 395 },
-            { "rank": 6, "initial_damage": 530, "drunken_burn_damage": 395, "range": 395 }
-          ]
+            {
+              "rank": 1,
+              "initial_damage": 80,
+              "drunken_burn_damage": 50,
+              "range": 375,
+              "mana": 45,
+              "cooldown": 10
+            },
+            {
+              "rank": 2,
+              "initial_damage": 130,
+              "drunken_burn_damage": 75,
+              "range": 385,
+              "mana": 50,
+              "cooldown": 10
+            },
+            {
+              "rank": 3,
+              "initial_damage": 180,
+              "drunken_burn_damage": 125,
+              "range": 395,
+              "mana": 55,
+              "cooldown": 10
+            },
+            {
+              "rank": 4,
+              "initial_damage": 255,
+              "drunken_burn_damage": 175,
+              "range": 405,
+              "mana": 60,
+              "cooldown": 10
+            },
+            {
+              "rank": 5,
+              "initial_damage": 315,
+              "drunken_burn_damage": 250,
+              "range": 415,
+              "mana": 65,
+              "cooldown": 10
+            },
+            {
+              "rank": 6,
+              "initial_damage": 385,
+              "drunken_burn_damage": 325,
+              "range": 425,
+              "mana": 70,
+              "cooldown": 10
+            }
+          ],
+          "icon": "icons/spell-breathoffire.png"
         },
         {
           "name": "Drunken Haze",
           "type": "active",
           "hotkey": "W",
-          "description": "Drenches enemy units in alcohol reducing movement speed and causing attacks to miss. When hit by Breath of Fire they ignite dealing magic damage over time.",
-          "cooldown": 12,
+          "description": "Drenches enemy units in alcohol, causing their movement speed to be reduced, and have a chance to miss on physical attacks. When units with Drunken Haze cast on them are hit by Breath of Fire, they will ignite and take burn magic damage over time.",
           "levels": [
-            { "rank": 1, "move_slow_pct": 30, "miss_chance_pct": 30 },
-            { "rank": 2, "move_slow_pct": 40, "miss_chance_pct": 40 },
-            { "rank": 3, "move_slow_pct": 50, "miss_chance_pct": 50 },
-            { "rank": 4, "move_slow_pct": 60, "miss_chance_pct": 60 },
-            { "rank": 5, "move_slow_pct": 70, "miss_chance_pct": 70 },
-            { "rank": 6, "move_slow_pct": 80, "miss_chance_pct": 80 }
-          ]
+            {
+              "rank": 1,
+              "move_slow_pct": 50,
+              "miss_chance_pct": 50,
+              "duration_heroes": 4,
+              "duration_units": 4,
+              "area": 200,
+              "range": 600,
+              "mana": 30,
+              "cooldown": 8
+            },
+            {
+              "rank": 2,
+              "move_slow_pct": 55,
+              "miss_chance_pct": 55,
+              "duration_heroes": 4.5,
+              "duration_units": 4.5,
+              "area": 200,
+              "range": 620,
+              "mana": 35,
+              "cooldown": 8
+            },
+            {
+              "rank": 3,
+              "move_slow_pct": 60,
+              "miss_chance_pct": 60,
+              "duration_heroes": 4.5,
+              "duration_units": 5,
+              "area": 200,
+              "range": 640,
+              "mana": 40,
+              "cooldown": 8
+            },
+            {
+              "rank": 4,
+              "move_slow_pct": 65,
+              "miss_chance_pct": 65,
+              "duration_heroes": 5.5,
+              "duration_units": 5.5,
+              "area": 200,
+              "range": 660,
+              "mana": 45,
+              "cooldown": 8
+            },
+            {
+              "rank": 5,
+              "move_slow_pct": 70,
+              "miss_chance_pct": 70,
+              "duration_heroes": 6,
+              "duration_units": 6,
+              "area": 200,
+              "range": 680,
+              "mana": 50,
+              "cooldown": 8
+            },
+            {
+              "rank": 6,
+              "move_slow_pct": 75,
+              "miss_chance_pct": 75,
+              "duration_heroes": 6.5,
+              "duration_units": 6.5,
+              "area": 200,
+              "range": 700,
+              "mana": 55,
+              "cooldown": 8
+            }
+          ],
+          "icon": "icons/spell-drunkenhaze.png"
         },
         {
           "name": "Drunken Brawler",
@@ -6861,7 +8971,8 @@
               "evasion_pct": 42,
               "crit_dmg_pct": 700
             }
-          ]
+          ],
+          "icon": "icons/spell-drunkenbrawler.png"
         },
         {
           "name": "Storm, Earth and Fire",
@@ -6870,14 +8981,26 @@
           "description": "Splits the Brewmaster into three elemental warriors for 30 seconds. If any survive until summoned time ends, the Brewmaster is reborn.",
           "cooldown": 180,
           "duration": 30,
+          "mana": 150,
           "levels": [
-            { "rank": 1, "panda_type": "Normal Pandas" },
-            { "rank": 2, "panda_type": "Greater Pandas" }
-          ]
+            {
+              "rank": 1,
+              "panda_type": "Normal Pandas",
+              "duration": 30
+            },
+            {
+              "rank": 2,
+              "panda_type": "Greater Pandas",
+              "duration": 30
+            }
+          ],
+          "icon": "icons/spell-stormearthandfire.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Brewmaster/Spell-Icon.png"
+      "raw_code": "Npbm",
+      "icon": "icons/brewmaster.png",
+      "icon_index": null
     },
     {
       "id": "firelord",
@@ -6885,6 +9008,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Carry", "Summoner", "Pusher"],
+      "difficulty": 1,
+      "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
       "agi_base": 20,
@@ -7166,14 +9292,47 @@
           "type": "active",
           "description": "Engulfs an enemy unit in magical flames which cause damage over time. Prevents spellcasting and reduces attack damage.",
           "hotkey": "Q",
+          "cooldown": 12,
+          "mana": 65,
           "levels": [
-            { "rank": 1, "dmg_reduction_pct": 35, "total_damage": 110, "duration": 5 },
-            { "rank": 2, "dmg_reduction_pct": 45, "total_damage": 165, "duration": 6 },
-            { "rank": 3, "dmg_reduction_pct": 55, "total_damage": 220, "duration": 7 },
-            { "rank": 4, "dmg_reduction_pct": 65, "total_damage": 295, "duration": 8 },
-            { "rank": 5, "dmg_reduction_pct": 70, "total_damage": 360, "duration": 8 },
-            { "rank": 6, "dmg_reduction_pct": 75, "total_damage": 440, "duration": 9 }
-          ]
+            {
+              "rank": 1,
+              "dmg_reduction_pct": 35,
+              "total_damage": 110,
+              "duration": 6.5
+            },
+            {
+              "rank": 2,
+              "dmg_reduction_pct": 45,
+              "total_damage": 165,
+              "duration": 7
+            },
+            {
+              "rank": 3,
+              "dmg_reduction_pct": 55,
+              "total_damage": 220,
+              "duration": 7.5
+            },
+            {
+              "rank": 4,
+              "dmg_reduction_pct": 65,
+              "total_damage": 295,
+              "duration": 8
+            },
+            {
+              "rank": 5,
+              "dmg_reduction_pct": 70,
+              "total_damage": 360,
+              "duration": 8.5
+            },
+            {
+              "rank": 6,
+              "dmg_reduction_pct": 75,
+              "total_damage": 440,
+              "duration": 6.5
+            }
+          ],
+          "icon": "icons/spell-soulburn.png"
         },
         {
           "name": "Summon Lava Spawn",
@@ -7182,13 +9341,80 @@
           "hotkey": "W",
           "duration": 70,
           "levels": [
-            { "rank": 1, "hp": 425,  "damage_min": 11, "damage_max": 27, "armor": 0, "max_spawns": 1, "mana": 20 },
-            { "rank": 2, "hp": 625,  "damage_min": 15, "damage_max": 35, "armor": 1, "max_spawns": 1, "mana": 25 },
-            { "rank": 3, "hp": 850,  "damage_min": 20, "damage_max": 45, "armor": 2, "max_spawns": 1, "mana": 30 },
-            { "rank": 4, "hp": 1000, "damage_min": 30, "damage_max": 55, "armor": 3, "max_spawns": 2, "mana": 35 },
-            { "rank": 5, "hp": 1150, "damage_min": 40, "damage_max": 65, "armor": 3, "max_spawns": 2, "mana": 40 },
-            { "rank": 6, "hp": 1300, "damage_min": 50, "damage_max": 85, "armor": 4, "max_spawns": 2, "mana": 45 }
-          ]
+            {
+              "rank": 1,
+              "hp": 425,
+              "damage_min": 11,
+              "damage_max": 27,
+              "armor": 0,
+              "max_spawns": 1,
+              "mana": 20,
+              "cooldown": 32,
+              "duration": 70,
+              "bounty": 10
+            },
+            {
+              "rank": 2,
+              "hp": 625,
+              "damage_min": 15,
+              "damage_max": 35,
+              "armor": 1,
+              "max_spawns": 1,
+              "mana": 25,
+              "cooldown": 32,
+              "duration": 70,
+              "bounty": 15
+            },
+            {
+              "rank": 3,
+              "hp": 850,
+              "damage_min": 20,
+              "damage_max": 45,
+              "armor": 2,
+              "max_spawns": 1,
+              "mana": 30,
+              "cooldown": 32,
+              "duration": 70,
+              "bounty": 20
+            },
+            {
+              "rank": 4,
+              "hp": 1000,
+              "damage_min": 30,
+              "damage_max": 55,
+              "armor": 3,
+              "max_spawns": 2,
+              "mana": 35,
+              "duration": 70,
+              "cooldown": 32,
+              "bounty": 25
+            },
+            {
+              "rank": 5,
+              "hp": 1150,
+              "damage_min": 40,
+              "damage_max": 65,
+              "armor": 3,
+              "max_spawns": 2,
+              "mana": 40,
+              "duration": 70,
+              "cooldown": 32,
+              "bounty": 30
+            },
+            {
+              "rank": 6,
+              "hp": 1300,
+              "damage_min": 50,
+              "damage_max": 85,
+              "armor": 4,
+              "max_spawns": 2,
+              "mana": 45,
+              "duration": 70,
+              "cooldown": 32,
+              "bounty": 35
+            }
+          ],
+          "icon": "icons/spell-summonlavaspawn.png"
         },
         {
           "name": "Incinerate",
@@ -7196,13 +9422,56 @@
           "description": "Each attack is enhanced with living flames that add physical damage. The flames persist, dealing bonus magic damage over time, tripling on the third hit. Unique — does not stack with other Unique effects. Incinerated units leave no corpses.",
           "hotkey": "E",
           "levels": [
-            { "rank": 1, "bonus_dmg": 1, "incinerate_dmg": 120, "duration": 2.0 },
-            { "rank": 2, "bonus_dmg": 2, "incinerate_dmg": 120, "duration": 2.5 },
-            { "rank": 3, "bonus_dmg": 3, "incinerate_dmg": 120, "duration": 3.0 },
-            { "rank": 4, "bonus_dmg": 4, "incinerate_dmg": 120, "duration": 3.0 },
-            { "rank": 5, "bonus_dmg": 5, "incinerate_dmg": 120, "duration": 3.0 },
-            { "rank": 6, "bonus_dmg": 6, "incinerate_dmg": 120, "duration": 3.5 }
-          ]
+            {
+              "rank": 1,
+              "bonus_dmg": 1,
+              "incinerate_dmg": 120,
+              "duration": 2.0,
+              "range": 550,
+              "mana": 4
+            },
+            {
+              "rank": 2,
+              "bonus_dmg": 2,
+              "incinerate_dmg": 120,
+              "duration": 2.3,
+              "range": 550,
+              "mana": 4
+            },
+            {
+              "rank": 3,
+              "bonus_dmg": 3,
+              "incinerate_dmg": 120,
+              "duration": 2.6,
+              "mana": 4,
+              "range": 550
+            },
+            {
+              "rank": 4,
+              "bonus_dmg": 4,
+              "incinerate_dmg": 120,
+              "duration": 2.9,
+              "mana": 4,
+              "range": 550
+            },
+            {
+              "rank": 5,
+              "bonus_dmg": 5,
+              "incinerate_dmg": 120,
+              "duration": 3.2,
+              "mana": 5,
+              "range": 550
+            },
+            {
+              "rank": 6,
+              "bonus_dmg": 6,
+              "incinerate_dmg": 120,
+              "duration": 3.5,
+              "mana": 5,
+              "range": 550
+            }
+          ],
+          "icon": "icons/spell-incinerate.png"
         },
         {
           "name": "Volcano",
@@ -7212,14 +9481,32 @@
           "duration": 15,
           "mana": 200,
           "stun_duration": 1,
+          "wave_interval": 5,
           "levels": [
-            { "rank": 1, "dmg_units": 125, "dmg_buildings": 125, "cooldown": 180 },
-            { "rank": 2, "dmg_units": 200, "dmg_buildings": 350, "cooldown": 150 }
-          ]
+            {
+              "rank": 1,
+              "dmg_units": 125,
+              "dmg_buildings": 125,
+              "cooldown": 150,
+              "duration": 15,
+              "mana": 200
+            },
+            {
+              "rank": 2,
+              "dmg_units": 200,
+              "dmg_buildings": 350,
+              "cooldown": 150,
+              "mana": 200,
+              "duration": 15
+            }
+          ],
+          "icon": "icons/spell-volcano.png"
         }
       ],
       "notes": null,
-      "spell_icon_sprite": "screenshots/Heros/Firelord/Spell-Icon.png"
+      "raw_code": "Nfir",
+      "icon": "icons/firelord.png",
+      "icon_index": null
     },
     {
       "id": "pit_lord",
@@ -7227,6 +9514,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Carry", "Tank"],
+      "difficulty": 4,
+      "difficulty_max": 4,
       "str_base": 28,
       "str_growth": 3.2,
       "agi_base": 16,
@@ -7507,6 +9797,8 @@
           "name": "Rain of Fire",
           "type": "active",
           "description": "Calls down waves of fire that deals magic damage per wave and burns enemies for 3 seconds.",
+          "burn_duration": 3,
+          "mana": 85,
           "levels": [
             {
               "rank": 1,
@@ -7515,7 +9807,8 @@
               "waves": 5,
               "area": 200,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             },
             {
               "rank": 2,
@@ -7524,7 +9817,8 @@
               "waves": 5,
               "area": 225,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             },
             {
               "rank": 3,
@@ -7533,7 +9827,8 @@
               "waves": 5,
               "area": 250,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             },
             {
               "rank": 4,
@@ -7542,7 +9837,8 @@
               "waves": 5,
               "area": 275,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             },
             {
               "rank": 5,
@@ -7551,7 +9847,8 @@
               "waves": 5,
               "area": 300,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             },
             {
               "rank": 6,
@@ -7560,9 +9857,11 @@
               "waves": 5,
               "area": 325,
               "cooldown": 8,
-              "range": 800
+              "range": 800,
+              "cast_time": 0.7
             }
-          ]
+          ],
+          "icon": "icons/spell-rainoffire.png"
         },
         {
           "name": "Howl of Terror",
@@ -7577,25 +9876,25 @@
             },
             {
               "rank": 2,
-              "area": 600,
+              "area": 560,
               "cooldown": 12,
               "mana": 80
             },
             {
               "rank": 3,
-              "area": 700,
+              "area": 620,
               "cooldown": 12,
               "mana": 85
             },
             {
               "rank": 4,
-              "area": 740,
+              "area": 680,
               "cooldown": 12,
               "mana": 90
             },
             {
               "rank": 5,
-              "area": 800,
+              "area": 740,
               "cooldown": 12,
               "mana": 95
             },
@@ -7605,7 +9904,8 @@
               "cooldown": 12,
               "mana": 100
             }
-          ]
+          ],
+          "icon": "icons/spell-howlofterror.png"
         },
         {
           "name": "Cleaving Attack",
@@ -7620,7 +9920,7 @@
             {
               "rank": 2,
               "splash_pct": 35,
-              "area": 250
+              "area": 260
             },
             {
               "rank": 3,
@@ -7630,7 +9930,7 @@
             {
               "rank": 4,
               "splash_pct": 65,
-              "area": 270
+              "area": 280
             },
             {
               "rank": 5,
@@ -7640,9 +9940,10 @@
             {
               "rank": 6,
               "splash_pct": 100,
-              "area": 290
+              "area": 300
             }
-          ]
+          ],
+          "icon": "icons/spell-cleavingattack.png"
         },
         {
           "name": "Doom",
@@ -7653,29 +9954,36 @@
               "rank": 1,
               "dmg_per_sec": 120,
               "duration": 120,
-              "cooldown": 180,
-              "mana": 150
+              "cooldown": 80,
+              "mana": 100,
+              "range": 650
             },
             {
               "rank": 2,
               "dmg_per_sec": 160,
               "duration": 160,
-              "cooldown": 180,
-              "mana": 100
+              "cooldown": 80,
+              "mana": 100,
+              "range": 650
             }
-          ]
+          ],
+          "icon": "icons/spell-doom.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Pit_Lord/Spell-Icon.png"
+      "raw_code": "Nplh",
+      "icon": "icons/pitlord.png",
+      "icon_index": null
     },
     {
       "id": "beastmaster",
       "name": "Beastmaster",
-      "spell_icon_sprite": "screenshots/Heros/Beastmaster/Spell-Icon.png",
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Tank", "Jungler", "Summoner", "Pusher"],
+      "difficulty": 4,
+      "difficulty_max": 4,
       "str_base": 24,
       "str_growth": 2.9,
       "agi_base": 14,
@@ -7956,75 +10264,251 @@
           "name": "Summon Bear",
           "type": "active",
           "hotkey": "Q",
-          "description": "Summons a powerful Bear to attack enemies. Bear gains Bash at rank 2 (25% chance, 25 bonus dmg, 2s stun).",
-          "summon_passive_rank2": "Bash — 25% chance: 25 bonus damage + 2s stun",
+          "description": "Summons a powerful bear to attack your enemies. Bear has Blink and Bash.",
+          "duration": 70,
           "levels": [
-            { "rank": 1, "hp": 600, "dmg_min": 19, "dmg_max": 21, "armor": 3, "cooldown": 30, "bounty": 20, "mana": 30 },
-            { "rank": 2, "hp": 700, "dmg_min": 25, "dmg_max": 29, "armor": 3, "cooldown": 28, "bounty": 25, "mana": 35 },
-            { "rank": 3, "hp": 840, "dmg_min": 33, "dmg_max": 38, "armor": 4, "cooldown": 26, "bounty": 30, "mana": 40 },
-            { "rank": 4, "hp": 1100, "dmg_min": 43, "dmg_max": 49, "armor": 4, "cooldown": 24, "bounty": 35, "mana": 45 },
-            { "rank": 5, "hp": 1300, "dmg_min": 54, "dmg_max": 60, "armor": 5, "cooldown": 22, "bounty": 40, "mana": 50 },
-            { "rank": 6, "hp": 1540, "dmg_min": 64, "dmg_max": 74, "armor": 6, "cooldown": 20, "bounty": 45, "mana": 110 }
-          ]
+            {
+              "rank": 1,
+              "hp": 600,
+              "dmg_min": 19,
+              "dmg_max": 21,
+              "armor": 1,
+              "cooldown": 30,
+              "bounty": 20,
+              "mana": 100
+            },
+            {
+              "rank": 2,
+              "hp": 900,
+              "dmg_min": 28,
+              "dmg_max": 30,
+              "armor": 2,
+              "cooldown": 28,
+              "bounty": 25,
+              "mana": 100
+            },
+            {
+              "rank": 3,
+              "hp": 1200,
+              "dmg_min": 38,
+              "dmg_max": 40,
+              "armor": 3,
+              "cooldown": 26,
+              "bounty": 30,
+              "mana": 105
+            },
+            {
+              "rank": 4,
+              "hp": 1500,
+              "dmg_min": 49,
+              "dmg_max": 51,
+              "armor": 4,
+              "cooldown": 24,
+              "bounty": 35,
+              "mana": 105
+            },
+            {
+              "rank": 5,
+              "hp": 1800,
+              "dmg_min": 61,
+              "dmg_max": 63,
+              "armor": 5,
+              "cooldown": 22,
+              "bounty": 40,
+              "mana": 110
+            },
+            {
+              "rank": 6,
+              "hp": 2100,
+              "dmg_min": 74,
+              "dmg_max": 76,
+              "armor": 6,
+              "cooldown": 20,
+              "bounty": 45,
+              "mana": 110
+            }
+          ],
+          "icon": "icons/spell-summonbear.png"
         },
         {
           "name": "Summon Quilbeast",
           "type": "active",
           "hotkey": "W",
-          "description": "Summons an agile Quilbeast to attack enemies. Has Quill Strike (AoE attacks). Gains Slam at rank 2 (40% attack speed +25% move speed for 10s).",
-          "summon_passive": "Quill Strike — AoE damage on attacks",
-          "summon_passive_rank2": "Slam — 40% attack rate + 25% move speed for 10s",
+          "description": "Summons an angry quilbeast to attack your enemies. Quilbeast has Frenzy and area effect damage.",
+          "duration": 70,
           "levels": [
-            { "rank": 1, "hp": 515, "dmg_min": 13, "dmg_max": 15, "armor": 3, "cooldown": 25, "bounty": 15, "mana": 15 },
-            { "rank": 2, "hp": 600, "dmg_min": 20, "dmg_max": 24, "armor": 3, "cooldown": 23, "bounty": 20, "mana": 20 },
-            { "rank": 3, "hp": 700, "dmg_min": 27, "dmg_max": 33, "armor": 3, "cooldown": 21, "bounty": 25, "mana": 25 },
-            { "rank": 4, "hp": 840, "dmg_min": 38, "dmg_max": 46, "armor": 4, "cooldown": 19, "bounty": 30, "mana": 30 },
-            { "rank": 5, "hp": 1050, "dmg_min": 55, "dmg_max": 65, "armor": 5, "cooldown": 17, "bounty": 35, "mana": 35 },
-            { "rank": 6, "hp": 1300, "dmg_min": 78, "dmg_max": 90, "armor": 6, "cooldown": 15, "bounty": 40, "mana": 40 }
-          ]
+            {
+              "rank": 1,
+              "hp": 515,
+              "dmg_min": 13,
+              "dmg_max": 15,
+              "armor": 1,
+              "cooldown": 25,
+              "bounty": 15,
+              "mana": 75
+            },
+            {
+              "rank": 2,
+              "hp": 600,
+              "dmg_min": 26,
+              "dmg_max": 30,
+              "armor": 2,
+              "cooldown": 23,
+              "bounty": 20,
+              "mana": 75
+            },
+            {
+              "rank": 3,
+              "hp": 700,
+              "dmg_min": 39,
+              "dmg_max": 45,
+              "armor": 3,
+              "cooldown": 21,
+              "bounty": 25,
+              "mana": 80
+            },
+            {
+              "rank": 4,
+              "hp": 840,
+              "dmg_min": 52,
+              "dmg_max": 60,
+              "armor": 4,
+              "cooldown": 19,
+              "bounty": 30,
+              "mana": 80
+            },
+            {
+              "rank": 5,
+              "hp": 1110,
+              "dmg_min": 65,
+              "dmg_max": 75,
+              "armor": 5,
+              "cooldown": 17,
+              "bounty": 35,
+              "mana": 85
+            },
+            {
+              "rank": 6,
+              "hp": 1410,
+              "dmg_min": 78,
+              "dmg_max": 90,
+              "armor": 6,
+              "cooldown": 15,
+              "bounty": 40,
+              "mana": 85
+            }
+          ],
+          "icon": "icons/spell-summonquilbeast.png"
         },
         {
           "name": "Summon Hawk",
           "type": "active",
           "hotkey": "E",
-          "description": "Summons a Thunder Hawk to spy on enemies. Hawk has Sight and Invisibility. Gains True Sight at rank 2 (reveals invisible units).",
-          "summon_passive_rank2": "True Sight — reveals nearby invisible units",
+          "description": "Summons a proud hawk to spy on your enemies. Hawk has True Sight and Invisibility.",
+          "duration": 70,
           "levels": [
-            { "rank": 1, "hp": 300, "dmg_min": 0, "dmg_max": 0, "armor": 2, "cooldown": 10, "bounty": 10, "mana": 10 },
-            { "rank": 2, "hp": 450, "dmg_min": 0, "dmg_max": 0, "armor": 2, "cooldown": 17, "bounty": 15, "mana": 11 },
-            { "rank": 3, "hp": 600, "dmg_min": 10, "dmg_max": 15, "armor": 3, "cooldown": 24, "bounty": 20, "mana": 11 },
-            { "rank": 4, "hp": 800, "dmg_min": 20, "dmg_max": 30, "armor": 4, "cooldown": 32, "bounty": 25, "mana": 11 },
-            { "rank": 5, "hp": 1100, "dmg_min": 40, "dmg_max": 55, "armor": 7, "cooldown": 39, "bounty": 30, "mana": 11 },
-            { "rank": 6, "hp": 1550, "dmg_min": 73, "dmg_max": 82, "armor": 11, "cooldown": 46, "bounty": 40, "mana": 11 }
-          ]
+            {
+              "rank": 1,
+              "hp": 300,
+              "dmg_min": 0,
+              "dmg_max": 0,
+              "armor": 0,
+              "cooldown": 30,
+              "bounty": 10,
+              "mana": 50
+            },
+            {
+              "rank": 2,
+              "hp": 450,
+              "dmg_min": 21,
+              "dmg_max": 25,
+              "armor": 3,
+              "cooldown": 28,
+              "bounty": 17,
+              "mana": 60
+            },
+            {
+              "rank": 3,
+              "hp": 650,
+              "dmg_min": 43,
+              "dmg_max": 52,
+              "armor": 5,
+              "cooldown": 26,
+              "bounty": 24,
+              "mana": 70
+            },
+            {
+              "rank": 4,
+              "hp": 900,
+              "dmg_min": 53,
+              "dmg_max": 62,
+              "armor": 7,
+              "cooldown": 24,
+              "bounty": 32,
+              "mana": 80
+            },
+            {
+              "rank": 5,
+              "hp": 1200,
+              "dmg_min": 63,
+              "dmg_max": 72,
+              "armor": 9,
+              "cooldown": 22,
+              "bounty": 39,
+              "mana": 90
+            },
+            {
+              "rank": 6,
+              "hp": 1550,
+              "dmg_min": 73,
+              "dmg_max": 82,
+              "armor": 11,
+              "cooldown": 20,
+              "bounty": 46,
+              "mana": 100
+            }
+          ],
+          "icon": "icons/spell-summonhawk.png"
         },
         {
           "name": "Stampede",
           "type": "active",
           "hotkey": "R",
-          "description": "Calls down hordes of rampaging thunder lizards to stomp the Beastmaster's enemies. Each exploding lizard deals universal damage.",
+          "description": "Calls down hordes of rampaging thunder lizards to explode upon the Beastmaster's enemies.\n\nEach exploding lizard deals universal damage.\n\nPierces spell immunity.",
           "area": 1000,
           "levels": [
             {
               "rank": 1,
               "dmg_per_lizard": 150,
               "lizard_area": 275,
+              "beasts_per_second": 2,
+              "collision_size": 55,
               "cooldown": 180,
               "duration": 30,
-              "mana": null
+              "range": 300,
+              "mana": 150,
+              "area": 1000
             },
             {
               "rank": 2,
               "dmg_per_lizard": 210,
               "lizard_area": 375,
+              "beasts_per_second": 3,
+              "collision_size": 55,
               "cooldown": 180,
               "duration": 30,
-              "mana": null
+              "range": 300,
+              "mana": 150,
+              "area": 1000
             }
-          ]
+          ],
+          "icon": "icons/spell-stampede.png"
         }
       ],
-      "notes": ""
+      "notes": "",
+      "raw_code": "Nbst",
+      "icon": "icons/beastmaster.png",
+      "icon_index": null
     },
     {
       "id": "tinker",
@@ -8032,6 +10516,9 @@
       "lore_name": null,
       "race": null,
       "primary_stat": "INT",
+      "roles": ["Tank", "Stun", "Jungler", "Pusher"],
+      "difficulty": 2,
+      "difficulty_max": 4,
       "str_base": 22,
       "str_growth": 2.4,
       "agi_base": 15,
@@ -8309,34 +10796,139 @@
       ],
       "abilities": [
         {
-          "name": "Goblin Factory",
+          "name": "Pocket Factory",
           "type": "active",
           "hotkey": "Q",
-          "description": "Creates a factory which automatically constructs Clockwork Goblins. Goblins deal bonus damage to mechanical units and explode on death.",
-          "cooldown": 30,
+          "description": "Creates a factory which automatically constructs Clockwerk Goblins.\n\nThese artificial Goblins, in addition to being potent attackers, explode upon death, causing damage to nearby enemy units.",
+          "spawn_interval": 2.6,
+          "cooldown": 35,
+          "duration": 40,
           "levels": [
-            { "rank": 1, "goblin_hp": 500, "explosion_dmg": 60, "bounty": 25 },
-            { "rank": 2, "goblin_hp": 600, "explosion_dmg": 110, "bounty": 30 },
-            { "rank": 3, "goblin_hp": 700, "explosion_dmg": 180, "bounty": 35 },
-            { "rank": 4, "goblin_hp": 850, "explosion_dmg": 280, "bounty": 40 },
-            { "rank": 5, "goblin_hp": 1000, "explosion_dmg": 400, "bounty": 45 },
-            { "rank": 6, "goblin_hp": 2300, "explosion_dmg": 2550, "bounty": 50 }
-          ]
+            {
+              "rank": 1,
+              "factory_hp": 600,
+              "factory_armor": 0,
+              "explosion_dmg": 60,
+              "bounty": 30,
+              "range": 500,
+              "mana": 125
+            },
+            {
+              "rank": 2,
+              "factory_hp": 900,
+              "factory_armor": 2,
+              "explosion_dmg": 110,
+              "bounty": 35,
+              "range": 500,
+              "mana": 135
+            },
+            {
+              "rank": 3,
+              "factory_hp": 1200,
+              "factory_armor": 4,
+              "explosion_dmg": 140,
+              "bounty": 40,
+              "range": 600,
+              "mana": 145
+            },
+            {
+              "rank": 4,
+              "factory_hp": 1500,
+              "factory_armor": 6,
+              "explosion_dmg": 170,
+              "bounty": 45,
+              "range": 600,
+              "mana": 155
+            },
+            {
+              "rank": 5,
+              "factory_hp": 1800,
+              "factory_armor": 8,
+              "explosion_dmg": 200,
+              "bounty": 50,
+              "range": 700,
+              "mana": 165
+            },
+            {
+              "rank": 6,
+              "factory_hp": 2100,
+              "factory_armor": 10,
+              "explosion_dmg": 230,
+              "bounty": 55,
+              "range": 700,
+              "mana": 175
+            }
+          ],
+          "icon": "icons/spell-goblinfactory.png"
         },
         {
           "name": "Cluster Rockets",
           "type": "active",
           "hotkey": "W",
-          "description": "Bombards an area with rockets dealing magic damage and stunning enemies. Also hits mechanicals and buildings.",
-          "cooldown": 6,
+          "description": "Bombards an area with rockets, dealing magic damage and stunning enemy ground and air units. Also hits mechanicals and buildings.",
           "levels": [
-            { "rank": 1, "damage": 120, "stun_duration": 1.0, "aoe": 225 },
-            { "rank": 2, "damage": 200, "stun_duration": 1.2, "aoe": 250 },
-            { "rank": 3, "damage": 280, "stun_duration": 1.3, "aoe": 270 },
-            { "rank": 4, "damage": 360, "stun_duration": 1.4, "aoe": 270 },
-            { "rank": 5, "damage": 440, "stun_duration": 1.5, "aoe": 270 },
-            { "rank": 6, "damage": 520, "stun_duration": 1.6, "aoe": 270 }
-          ]
+            {
+              "rank": 1,
+              "damage": 80,
+              "stun_heroes": 1.25,
+              "stun_units": 2.1,
+              "area": 225,
+              "range": 800,
+              "mana": 70,
+              "cooldown": 6
+            },
+            {
+              "rank": 2,
+              "damage": 120,
+              "stun_heroes": 1.4,
+              "stun_units": 2.4,
+              "area": 240,
+              "range": 800,
+              "mana": 75,
+              "cooldown": 6
+            },
+            {
+              "rank": 3,
+              "damage": 160,
+              "stun_heroes": 1.55,
+              "stun_units": 2.7,
+              "area": 255,
+              "range": 800,
+              "mana": 80,
+              "cooldown": 6
+            },
+            {
+              "rank": 4,
+              "damage": 200,
+              "stun_heroes": 1.7,
+              "stun_units": 3,
+              "area": 270,
+              "range": 800,
+              "mana": 85,
+              "cooldown": 6
+            },
+            {
+              "rank": 5,
+              "damage": 240,
+              "stun_heroes": 1.85,
+              "stun_units": 3.3,
+              "area": 285,
+              "range": 800,
+              "mana": 90,
+              "cooldown": 6
+            },
+            {
+              "rank": 6,
+              "damage": 280,
+              "stun_heroes": 2,
+              "stun_units": 3.6,
+              "area": 300,
+              "range": 800,
+              "mana": 95,
+              "cooldown": 6
+            }
+          ],
+          "icon": "icons/spell-clusterrockets.png"
         },
         {
           "name": "Engineering Upgrade",
@@ -8344,53 +10936,73 @@
           "description": "With every second level increases the Pocket Factory output and gives bonus damage to the Tinker.",
           "levels": [
             {
-              "rank": 1,
-              "dmg_bonus_pct": 7
+              "rank": 1
             },
             {
-              "rank": 2,
-              "dmg_bonus_pct": 14
+              "rank": 2
             },
             {
-              "rank": 3,
-              "dmg_bonus_pct": 21
+              "rank": 3
             },
             {
-              "rank": 4,
-              "dmg_bonus_pct": 28
+              "rank": 4
             },
             {
-              "rank": 5,
-              "dmg_bonus_pct": 42
+              "rank": 5
             },
             {
-              "rank": 6,
-              "dmg_bonus_pct": 42
+              "rank": 6
             }
-          ]
+          ],
+          "icon": "icons/spell-engineeringupgrade.png"
         },
         {
           "name": "Robo-Goblin",
           "type": "active",
           "hotkey": "R",
-          "description": "Transforms the Tinker into a Robo-Goblin. Increases collision size from 24 to 32, has Demolish (bonus damage to buildings). Provides bonus STR and armor.",
+          "description": "Transforms the Tinker into a Robo-Goblin, granting bonus strength and armor. Both bonuses scale with the Engineering Upgrade level. The Robo-Goblin is mechanical, which makes it immune to most stuns, most offensive spells and several beneficial ones, and it carries Demolish, increasing damage against buildings by 200%. Collision size increases from 24 to 32.",
           "mana": 25,
           "levels": [
-            { "rank": 1, "bonus_str": 1, "bonus_armor": 5 },
-            { "rank": 2, "bonus_str": 2, "bonus_armor": 10 }
-          ]
+            {
+              "rank": 1
+            },
+            {
+              "rank": 2
+            }
+          ],
+          "scaling": {
+            "caption": "Armor & Strength Scaling",
+            "title": "Armor & Strength Bonus",
+            "step_label": "Upgrade",
+            "steps": [0, 1, 2, 3, 4, 5, 6],
+            "rows": [
+              {
+                "rank": 1,
+                "values": [1, 2, 3, 4, 5, 6, 7]
+              },
+              {
+                "rank": 2,
+                "values": [2, 4, 6, 8, 10, 12, 14]
+              }
+            ]
+          },
+          "icon": "icons/spell-robogoblin.png"
         }
       ],
       "notes": "",
-      "spell_icon_sprite": "screenshots/Heros/Tinker/Spell-Icon.png"
+      "raw_code": "Ntin",
+      "icon": "icons/tinker.png",
+      "icon_index": null
     },
     {
       "id": "alchemist",
       "name": "Alchemist",
-      "spell_icon_sprite": "screenshots/Heros/Alchemist/Spell-icon.png",
       "lore_name": null,
       "race": null,
       "primary_stat": "STR",
+      "roles": ["Carry"],
+      "difficulty": 3,
+      "difficulty_max": 4,
       "str_base": 25,
       "str_growth": 3.3,
       "agi_base": 19,
@@ -8672,15 +11284,52 @@
           "type": "active",
           "description": "Sprays a flask of healing mist that heals units in a target area over multiple waves.",
           "hotkey": "Q",
-          "aoe": 300,
+          "cooldown": 6,
           "levels": [
-            { "rank": 1, "waves": 4, "heal_per_wave": 60,  "mana": 75  },
-            { "rank": 2, "waves": 4, "heal_per_wave": 100, "mana": 80  },
-            { "rank": 3, "waves": 4, "heal_per_wave": 140, "mana": 85  },
-            { "rank": 4, "waves": 5, "heal_per_wave": 180, "mana": 90  },
-            { "rank": 5, "waves": 5, "heal_per_wave": 210, "mana": 95  },
-            { "rank": 6, "waves": 5, "heal_per_wave": 240, "mana": 100 }
-          ]
+            {
+              "rank": 1,
+              "waves": 4,
+              "heal_per_wave": 60,
+              "mana": 75,
+              "area": 250
+            },
+            {
+              "rank": 2,
+              "waves": 4,
+              "heal_per_wave": 100,
+              "mana": 80,
+              "area": 260
+            },
+            {
+              "rank": 3,
+              "waves": 4,
+              "heal_per_wave": 140,
+              "mana": 85,
+              "area": 270
+            },
+            {
+              "rank": 4,
+              "waves": 5,
+              "heal_per_wave": 180,
+              "mana": 90,
+              "area": 280
+            },
+            {
+              "rank": 5,
+              "waves": 5,
+              "heal_per_wave": 210,
+              "mana": 95,
+              "area": 290
+            },
+            {
+              "rank": 6,
+              "waves": 5,
+              "heal_per_wave": 240,
+              "mana": 100,
+              "area": 300
+            }
+          ],
+          "icon": "icons/spell-healingspray.png"
         },
         {
           "name": "Chemical Rage",
@@ -8689,41 +11338,146 @@
           "hotkey": "W",
           "cooldown": 25,
           "levels": [
-            { "rank": 1, "move_bonus_pct": 25, "attack_bonus_pct": 25,  "duration": 18, "mana": 18 },
-            { "rank": 2, "move_bonus_pct": 35, "attack_bonus_pct": 50,  "duration": 18, "mana": 18 },
-            { "rank": 3, "move_bonus_pct": 45, "attack_bonus_pct": 75,  "duration": 19, "mana": 19 },
-            { "rank": 4, "move_bonus_pct": 55, "attack_bonus_pct": 100, "duration": 20, "mana": 20 },
-            { "rank": 5, "move_bonus_pct": 65, "attack_bonus_pct": 125, "duration": 20, "mana": 20 },
-            { "rank": 6, "move_bonus_pct": 75, "attack_bonus_pct": 150, "duration": 21, "mana": 20 }
-          ]
+            {
+              "rank": 1,
+              "move_bonus_pct": 25,
+              "attack_bonus_pct": 25,
+              "duration": 18,
+              "mana": 25,
+              "cooldown": 25
+            },
+            {
+              "rank": 2,
+              "move_bonus_pct": 35,
+              "attack_bonus_pct": 50,
+              "duration": 18,
+              "mana": 30,
+              "cooldown": 25
+            },
+            {
+              "rank": 3,
+              "move_bonus_pct": 45,
+              "attack_bonus_pct": 75,
+              "duration": 19,
+              "mana": 35,
+              "cooldown": 25
+            },
+            {
+              "rank": 4,
+              "move_bonus_pct": 55,
+              "attack_bonus_pct": 100,
+              "duration": 19,
+              "mana": 40,
+              "cooldown": 25
+            },
+            {
+              "rank": 5,
+              "move_bonus_pct": 65,
+              "attack_bonus_pct": 125,
+              "duration": 20,
+              "mana": 45,
+              "cooldown": 25
+            },
+            {
+              "rank": 6,
+              "move_bonus_pct": 75,
+              "attack_bonus_pct": 150,
+              "duration": 20,
+              "mana": 50,
+              "cooldown": 25
+            }
+          ],
+          "icon": "icons/spell-chemicalrage.png"
         },
         {
           "name": "Acid Bomb",
           "type": "active",
           "description": "Hurls a flask of acid at a target. The flask breaks upon impact, splashing a powerful acid on nearby hostile units. Decreases armor and deals magic damage (less to secondary targets).",
           "hotkey": "E",
-          "aoe": 300,
+          "cooldown": 12,
           "levels": [
-            { "rank": 1, "primary_dmg": 100,  "secondary_dmg": 50,  "armor_reduction": 3, "mana": 75  },
-            { "rank": 2, "primary_dmg": 200,  "secondary_dmg": 80,  "armor_reduction": 3, "mana": 80  },
-            { "rank": 3, "primary_dmg": 350,  "secondary_dmg": 120, "armor_reduction": 3, "mana": 85  },
-            { "rank": 4, "primary_dmg": 550,  "secondary_dmg": 190, "armor_reduction": 3, "mana": 90  },
-            { "rank": 5, "primary_dmg": 750,  "secondary_dmg": 270, "armor_reduction": 3, "mana": 95  },
-            { "rank": 6, "primary_dmg": 1000, "secondary_dmg": 380, "armor_reduction": 3, "mana": 100 }
-          ]
+            {
+              "rank": 1,
+              "primary_dmg": 100,
+              "secondary_dmg": 50,
+              "armor_reduction": 3,
+              "mana": 75,
+              "area": 200
+            },
+            {
+              "rank": 2,
+              "primary_dmg": 200,
+              "secondary_dmg": 80,
+              "armor_reduction": 3,
+              "mana": 80,
+              "area": 250
+            },
+            {
+              "rank": 3,
+              "primary_dmg": 350,
+              "secondary_dmg": 120,
+              "armor_reduction": 3,
+              "mana": 85,
+              "area": 300
+            },
+            {
+              "rank": 4,
+              "primary_dmg": 550,
+              "secondary_dmg": 190,
+              "armor_reduction": 3,
+              "mana": 90,
+              "area": 350
+            },
+            {
+              "rank": 5,
+              "primary_dmg": 750,
+              "secondary_dmg": 270,
+              "armor_reduction": 3,
+              "mana": 95,
+              "area": 400
+            },
+            {
+              "rank": 6,
+              "primary_dmg": 1000,
+              "secondary_dmg": 380,
+              "armor_reduction": 3,
+              "mana": 100,
+              "area": 450
+            }
+          ],
+          "icon": "icons/spell-acidbomb.png"
         },
         {
           "name": "Transmute",
           "type": "active",
           "description": "Instantly kills an enemy unit, transforming it into liquid gold added to your available gold. Only works on units with Resistant Skin or creeps up to a certain level.",
           "hotkey": "R",
+          "range": 650,
           "levels": [
-            { "rank": 1, "gold_pct": 50, "max_creep_level": 5,  "cooldown": 60, "mana": 150 },
-            { "rank": 2, "gold_pct": 60, "max_creep_level": 10, "cooldown": 45, "mana": 100 }
-          ]
+            {
+              "rank": 1,
+              "gold_pct": 50,
+              "max_creep_level": 5,
+              "cooldown": 60,
+              "mana": 100,
+              "range": 650
+            },
+            {
+              "rank": 2,
+              "gold_pct": 60,
+              "max_creep_level": 10,
+              "cooldown": 60,
+              "mana": 100,
+              "range": 650
+            }
+          ],
+          "icon": "icons/spell-transmute.png"
         }
       ],
-      "notes": null
+      "notes": null,
+      "raw_code": "Nalc",
+      "icon": "icons/alchemist.png",
+      "icon_index": null
     }
   ]
 }

@@ -1,432 +1,66 @@
 {
   "items": [
     {
-      "id": "mask_of_death",
-      "name": "Mask of Death",
-      "category": "Orb",
-      "cost": 1000,
-      "effect_type": "passive",
-      "unique": true,
-      "description": "Recovers 35% of the damage dealt as hit points.",
+      "id": "healing_salve",
+      "name": "Healing Salve",
+      "category": "Consumable",
+      "cost": 50,
+      "effect_type": "active",
+      "description": "Non-Combat Consumable\nHeals 500 HP over 40 seconds on a friendly unit.",
       "stats": {
-        "life_steal_pct": 35,
-        "bonus_dmg": 10
+        "hp_restore": 500,
+        "hp_restore_duration": 40,
+        "charges": 3
       },
-      "notes": "Stacks with Orb effects; does NOT stack with itself",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 3,
+      "notes": "The effect is dispelled if the target is attacked or damaged by an ability that does at least 20 damage (before the damage is modified).",
+      "icon": "icons/healingsalve.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 3,
+      "raw_code": "hslv",
+      "stock_max": 1,
+      "cost_lumber": 0
     },
     {
-      "id": "orb_of_corruption",
-      "name": "Orb of Corruption",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a hero when carried. Hero's attacks also become ranged. Reduces the armor of every enemy by 5 for 5 seconds.",
+      "id": "lesser_clarity_potion",
+      "name": "Lesser Clarity Potion",
+      "category": "Consumable",
+      "cost": 50,
+      "effect_type": "active",
+      "description": "Non-Combat Consumable\nRegenerates 250 mana over 30 seconds when used.",
       "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "armor_reduction": 5,
-        "armor_reduction_duration": 5
+        "mana_restore": 250,
+        "mana_restore_duration": 30,
+        "charges": 1
       },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 5,
+      "notes": "Non-combat only",
+      "icon": "icons/lesserclaritypotion.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 3,
+      "raw_code": "plcl",
+      "stock_max": 1,
+      "cost_lumber": 0
     },
     {
-      "id": "orb_of_darkness",
-      "name": "Orb of Darkness",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a Hero when carried. Hero's attacks become ranged. Creates a Dark Minion when it is the killing blow on an enemy unit. The Dark Minion lasts 80 seconds.",
-      "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "dark_minion_duration": 80
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "orb_of_fire",
-      "name": "Orb of Fire",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a Hero when carried. Hero's attacks become ranged and reduce the effectiveness of healing and regeneration on enemy units by 35% for 5 seconds. Grants the hero 35% splash damage in an area of 250.",
-      "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "heal_reduction_pct": 35,
-        "heal_reduction_duration": 5,
-        "splash_pct": 35,
-        "splash_aoe": 250
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "orb_of_frost",
-      "name": "Orb of Frost",
-      "category": "Orb",
-      "cost": 1000,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 6 bonus damage to the attack of a hero. Hero's attacks become ranged and slow the movement of an enemy by 25% for 1.5 seconds.",
-      "stats": {
-        "bonus_dmg": 6,
-        "ranged": true,
-        "slow_pct": 25,
-        "slow_duration": 1.5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "orb_of_lightning",
-      "name": "Orb of Lightning",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a Hero when carried. Hero's attacks become ranged and have a chance to dispel magic and immobilize the enemy for 3 seconds (slowly regains movement over 1.5 seconds). Deals 200 bonus damage to summoned units.",
-      "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "immobilize_duration": 3,
-        "bonus_dmg_summoned": 200
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "orb_of_slow",
-      "name": "Orb of Slow",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a Hero when carried. Hero's attacks become ranged and have a 15% chance to slow a target enemy's movement speed by 55% and attack rate by 25%.",
-      "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "proc_chance_pct": 15,
-        "slow_movement_pct": 55,
-        "slow_attack_rate_pct": 25
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "orb_of_venom",
-      "name": "Orb of Venom",
-      "category": "Orb",
-      "cost": 500,
-      "effect_type": "on_attack",
-      "unique": true,
-      "description": "Adds 5 bonus damage to the attack of a Hero when carried. Hero's attacks become ranged and poison enemy units, dealing 1.5 damage per second.",
-      "stats": {
-        "bonus_dmg": 5,
-        "ranged": true,
-        "poison_dps": 1.5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Orbs/Icon.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "belt_of_giant_strength",
-      "name": "Belt of Giant Strength +6",
-      "category": "Upgradable",
-      "cost": 400,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the strength of the hero by 6.",
-      "stats": {
-        "str": 6
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 5,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "boots_of_quelthalas",
-      "name": "Boots of Quel'Thalas +6",
-      "category": "Upgradable",
-      "cost": 400,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the agility of the hero by 6.",
-      "stats": {
-        "agi": 6
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "crown_of_kings",
-      "name": "Crown of Kings +5",
-      "category": "Upgradable",
-      "cost": 850,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the strength, agility and intelligence by 5.",
-      "stats": {
-        "str": 5,
-        "agi": 5,
-        "int": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 3,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "gloves_of_haste",
-      "name": "Gloves of Haste +20%",
-      "category": "Upgradable",
-      "cost": 375,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the attack speed of the hero by 20%.",
-      "stats": {
-        "attack_speed_pct": 20
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 8,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "helm_of_valor",
-      "name": "Helm of Valor +5",
-      "category": "Upgradable",
-      "cost": 700,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the strength and agility by 5.",
-      "stats": {
-        "str": 5,
-        "agi": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "hood_of_cunning",
-      "name": "Hood of Cunning +5",
-      "category": "Upgradable",
-      "cost": 540,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the agility and intelligence by 5.",
-      "stats": {
-        "agi": 5,
-        "int": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "medallion_of_courage",
-      "name": "Medallion of Courage +5",
-      "category": "Upgradable",
-      "cost": 550,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the strength and intelligence by 5.",
-      "stats": {
-        "str": 5,
-        "int": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "ring_of_regeneration",
-      "name": "Ring of Regeneration +6",
-      "category": "Upgradable",
-      "cost": 350,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the life regeneration of the hero by 6.",
-      "stats": {
-        "hp_regen": 6
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 9,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "ring_of_the_archmagi",
-      "name": "Ring of the Archmagi +3",
-      "category": "Upgradable",
-      "cost": 350,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the strength, agility and intelligence by 3.",
-      "stats": {
-        "str": 3,
-        "agi": 3,
-        "int": 3
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "robe_of_the_magi",
-      "name": "Robe of the Magi +6",
-      "category": "Upgradable",
-      "cost": 400,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the intelligence of the hero by 6.",
-      "stats": {
-        "int": 6
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "sobi_mask",
-      "name": "Sobi Mask 65%",
-      "category": "Upgradable",
-      "cost": 350,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the mana regeneration of the hero by 65%.",
-      "stats": {
-        "mana_regen_pct": 65
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 10,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "talisman_of_evasion",
-      "name": "Talisman of Evasion 9%",
-      "category": "Upgradable",
-      "cost": 350,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Gives the hero a 9% chance to evade physical attacks.",
-      "stats": {
-        "evasion_pct": 9
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 1/Icon.png",
-      "icon_index": 11,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "battle_standard",
-      "name": "Battle Standard",
-      "category": "Special",
-      "cost": 1200,
-      "cost_lumber": 1,
-      "effect_type": "aura+active",
-      "description": "Auras: Devotion (+5 armor), War Drums (+10% dmg), Brilliance (+1% mana regen), Endurance (+5% move & +5% attack rate), Thorns (10% reflect to melee), Unholy (+5% move & +1 life regen). Active: Increases movement speed of hero and nearby allies to maximum for 10 seconds.",
-      "stats": {
-        "aura_armor": 5,
-        "aura_dmg_pct": 10,
-        "aura_mana_regen_pct": 1,
-        "aura_move_pct": 5,
-        "aura_attack_rate_pct": 5,
-        "aura_thorns_pct": 10,
-        "aura_hp_regen": 1,
-        "active_duration": 10,
-        "active_cooldown": 180,
-        "active_aoe": 600
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "boots_of_speed",
-      "name": "Boots of Speed",
-      "category": "Special",
-      "cost": 200,
-      "effect_type": "passive",
-      "unique": false,
-      "stackable": false,
-      "description": "Increases the movement speed of the hero by 60.",
-      "stats": {
-        "move_speed": 60
-      },
-      "notes": "Non-Stackable Movement Speed",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 8,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "chicken",
-      "name": "Chicken",
-      "category": "Special",
+      "id": "scroll_of_speed",
+      "name": "Scroll of Speed",
+      "category": "Consumable",
       "cost": 100,
-      "effect_type": "unit",
-      "description": "Creates a fast unit (Animal Courier) that can carry items from the base.",
-      "stats": {},
+      "effect_type": "active",
+      "description": "Increases the movement speed of the hero and nearby allied units to the maximum movement speed.",
+      "stats": {
+        "duration": 10,
+        "aoe": 600,
+        "charges": 1
+      },
       "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 0,
+      "icon": "icons/scrollofspeed.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "shas",
+      "cost_lumber": 0
     },
     {
       "id": "dust_of_appearance",
@@ -434,37 +68,201 @@
       "category": "Consumable",
       "cost": 50,
       "effect_type": "active",
-      "description": "Reveals invisible units in an area for 20 seconds.",
+      "description": "Reveals enemy invisible units in an area around the Hero.",
       "stats": {
         "reveal_duration": 20,
         "aoe": 1000,
         "charges": 2
       },
-      "notes": "2 charges",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 3,
+      "notes": "",
+      "icon": "icons/dustofappearance.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "dust",
+      "cost_lumber": 0
     },
     {
-      "id": "flute_of_accuracy",
-      "name": "Flute of Accuracy",
-      "category": "Special",
-      "cost": 500,
-      "effect_type": "aura",
-      "description": "Auras: Devotion (+3 armor), Thorns (10% reflect to melee), Brilliance (mana regen), Endurance (+5% move & +5% attack rate), Unholy (+5% move & +1 life regen).",
+      "id": "health_stone",
+      "name": "Health Stone",
+      "category": "Consumable",
+      "cost": 250,
+      "effect_type": "active+passive",
+      "description": "Consume: Instantly restores 500 health.\nIncreases the life regeneration of the hero by 1.",
       "stats": {
-        "aura_armor": 3,
-        "aura_thorns_pct": 10,
-        "aura_move_pct": 5,
-        "aura_attack_rate_pct": 5,
-        "aura_hp_regen": 1
+        "instant_hp": 500,
+        "hp_regen": 1,
+        "charges": 1
+      },
+      "preview_note": "+1 HP Regeneration",
+      "notes": "",
+      "icon": "icons/healthstone.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "hlst",
+      "cost_lumber": 0
+    },
+    {
+      "id": "mana_stone",
+      "name": "Mana Stone",
+      "category": "Consumable",
+      "cost": 125,
+      "effect_type": "active+passive",
+      "description": "Consume: Instantly restores 250 mana.\nIncreases the mana regeneration of the hero by 25%.",
+      "stats": {
+        "instant_mana": 250,
+        "mana_regen_pct": 25,
+        "charges": 1
       },
       "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 4,
+      "icon": "icons/manastone.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "mnst",
+      "cost_lumber": 0
+    },
+    {
+      "id": "wand_of_illusion",
+      "name": "Wand of Illusion",
+      "category": "Consumable",
+      "cost": 75,
+      "effect_type": "active",
+      "description": "Active Illusion\nCreates an illusory double of the targeted unit.\nThe illusion deals no damage to enemy units, takes 2 times the damage from enemy attacks, and disappears after 60 seconds or when its hit points reach zero.",
+      "stats": {
+        "illusion_dmg_taken_pct": 200,
+        "illusion_duration": 60,
+        "charges": 1
+      },
+      "notes": "",
+      "icon": "icons/wandofillusion.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "will",
+      "cost_lumber": 0
+    },
+    {
+      "id": "potion_of_invisibility",
+      "name": "Potion of Invisibility",
+      "category": "Consumable",
+      "cost": 125,
+      "effect_type": "active",
+      "description": "Active Invisibility\nRenders the hero invisible for 120 seconds.\nAn invisible hero is untargetable by the enemy unless detected.\nInvisibility is lost if the hero attacks, uses a damage spell, or casts a fight spell.",
+      "stats": {
+        "invis_duration": 120,
+        "charges": 1
+      },
+      "notes": "Breaks on attack or spell cast",
+      "icon": "icons/potionofinvisibility.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "pinv",
+      "stock_max": 2,
+      "cost_lumber": 0
+    },
+    {
+      "id": "sentry_wards",
+      "name": "Sentry Wards",
+      "category": "Consumable",
+      "cost": 150,
+      "effect_type": "active",
+      "description": "Summons an invisible and magic immune ward that provides vision in an area and reveals invisible units.",
+      "stats": {
+        "detection_range": 1300,
+        "sight_range": 1200,
+        "charges": 2
+      },
+      "notes": "Ward is invisible and magic immune",
+      "icon": "icons/sentrywards.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "wswd",
+      "cost_lumber": 0
+    },
+    {
+      "id": "watcher_ward",
+      "name": "Watcher Ward",
+      "category": "Consumable",
+      "cost": 250,
+      "effect_type": "active",
+      "description": "Summons an invisible and invulnerable ward that provides vision in an area and reveals invisible units.",
+      "stats": {
+        "detection_range": 1300,
+        "sight_range": 1200,
+        "charges": 1
+      },
+      "notes": "Ward is invisible and invulnerable",
+      "icon": "icons/watcherward.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "I020",
+      "cost_lumber": 0
+    },
+    {
+      "id": "wand_of_the_wind",
+      "name": "Wand of the Wind",
+      "category": "Consumable",
+      "cost": 275,
+      "effect_type": "active",
+      "description": "Active Cyclone\nTosses a target enemy unit into the air, rendering it unable to attack, move or cast spells.\nLasts 5 seconds.",
+      "stats": {
+        "cyclone_duration": 5,
+        "range": 600,
+        "charges": 1
+      },
+      "notes": "",
+      "icon": "icons/wandofthewind.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "wcyc",
+      "cost_lumber": 0
+    },
+    {
+      "id": "scroll_of_resurrection",
+      "name": "Scroll of Resurrection",
+      "category": "Consumable",
+      "cost": 700,
+      "effect_type": "active",
+      "description": "Active Resurrection\nBrings 6 nearby allied dead units back to life.",
+      "stats": {
+        "units_resurrected": 6,
+        "aoe": 900,
+        "charges": 1
+      },
+      "notes": "Corpses last 60 seconds before disappearing. Buy only if you have a friendly mercenary unit.",
+      "icon": "icons/scrollofresurrection.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "srrc",
+      "cost_lumber": 0
+    },
+    {
+      "id": "chicken",
+      "name": "Chicken",
+      "category": "Special",
+      "cost": 100,
+      "effect_type": "unit",
+      "description": "Animal Courier\nCreates a unit that can carry items from the base.",
+      "stats": {
+        "inventory_slots": 6
+      },
+      "notes": "",
+      "icon": "icons/chicken.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "I002",
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
     },
     {
       "id": "flying_sheep",
@@ -472,16 +270,44 @@
       "category": "Special",
       "cost": 500,
       "effect_type": "unit",
-      "description": "Creates a fast flying unit (Flying Courier) with divine shield that can carry items for you.",
+      "description": "Flying Courier\nCreates a flying unit that can carry items for you.",
       "stats": {
+        "inventory_slots": 4,
         "flying": true,
         "divine_shield": true
       },
       "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 1,
+      "icon": "icons/flyingsheep.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "I001",
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
+    },
+    {
+      "id": "peasant",
+      "name": "Peasant",
+      "category": "Special",
+      "cost": 800,
+      "effect_type": "unit",
+      "description": "Repairing Worker\nSummons a Peasant to repair buildings.\nRestores 1000 hit points to towers or 500 hit points to the Base.",
+      "stats": {
+        "hp_restore_tower": 1000,
+        "hp_restore_base": 500
+      },
+      "notes": "Hotkey: P",
+      "icon": "icons/peasant.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "I000",
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
     },
     {
       "id": "mechanical_critter",
@@ -492,45 +318,37 @@
       "description": "Creates a player-controlled critter that can be used to scout enemies.",
       "stats": {},
       "notes": "Hotkey: E",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 3,
+      "icon": "icons/mechanicalcritter.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "mcri",
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
     },
     {
-      "id": "peasant",
-      "name": "Peasant",
-      "category": "Special",
-      "cost": 800,
-      "effect_type": "unit",
-      "description": "Summons a Peasant to repair buildings. Restores 1000 hit points to towers or 500 hit points to the Base.",
-      "stats": {
-        "hp_restore_tower": 1000,
-        "hp_restore_base": 500
-      },
-      "notes": "Hotkey: P",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "staff_of_teleportation",
-      "name": "Staff of Teleportation",
+      "id": "flute_of_accuracy",
+      "name": "Flute of Accuracy",
       "category": "Special",
       "cost": 500,
-      "effect_type": "active",
-      "description": "Increases the movement speed of the hero by 60 (non-stackable). Active Teleport: Teleports the hero to the targeted ally or structure.",
+      "effect_type": "aura",
+      "description": "Aura Characteristic\n- Devotion Aura 3 additional armor.\n- Thorns Aura 20% thorns against melee attackers.\n- Trueshot Aura 10% bonus damage to ranged units.\n- Unholy Aura 5% movement and 3 life regeneration.",
       "stats": {
-        "move_speed": 60,
-        "casting_delay": 3,
-        "cooldown": 30
+        "aura_armor": 3,
+        "aura_thorns_pct": 20,
+        "aura_dmg_ranged_pct": 10,
+        "aura_move_pct": 5,
+        "aura_hp_regen": 3
       },
       "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 11,
+      "icon": "icons/fluteofaccuracy.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "afac",
+      "cost_lumber": 0
     },
     {
       "id": "warsong_battle_drums",
@@ -538,18 +356,105 @@
       "category": "Special",
       "cost": 600,
       "effect_type": "aura",
-      "description": "Auras: War Drums (+10% dmg), Brilliance (mana regen), Endurance (+5% move & +5% attack rate), Thorns (reflect to melee), Unholy (+5% move & +1 life regen).",
+      "description": "Aura Characteristic\n- War Drums Aura 10% bonus damage.\n- Brilliance Aura 1.2 mana regeneration.\n- Vampiric Aura 10% life steal to melee units.\n- Endurance Aura 5% movement and 5% attack rate.",
       "stats": {
         "aura_dmg_pct": 10,
+        "aura_mana_regen": 1.2,
+        "aura_lifesteal_pct": 10,
         "aura_move_pct": 5,
-        "aura_attack_rate_pct": 5,
-        "aura_hp_regen": 1
+        "aura_attack_rate_pct": 5
       },
       "notes": "",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 5,
+      "icon": "icons/warsongbattledrums.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "war2",
+      "tags": [
+        "Lifesteal"
+      ],
+      "hide_shop_tag": true,
+      "cost_lumber": 0
+    },
+    {
+      "id": "battle_standard",
+      "name": "Battle Standard",
+      "category": "Special",
+      "cost": 1500,
+      "cost_lumber": 0,
+      "effect_type": "aura+active",
+      "description": "Aura Characteristic\n- Devotion Aura 3 additional armor.\n- War Drums Aura 10% bonus damage.\n- Brilliance Aura 1.2 mana regeneration.\n- Vampiric Aura 10% life steal to melee units.\n- Endurance Aura 5% move and 5% attack speed.\n- Thorns Aura 20% thorns against melee attackers.\n- Trueshot Aura 10% bonus damage to ranged units.\n- Unholy Aura 5% movement and 3 life regeneration.",
+      "stats": {
+        "active_duration": 10,
+        "active_cooldown": 180,
+        "active_aoe": 600,
+        "aura_armor": 3,
+        "aura_dmg_pct": 10,
+        "aura_mana_regen": 1.2,
+        "aura_lifesteal_pct": 10,
+        "aura_move_pct": 5,
+        "aura_attack_rate_pct": 5,
+        "aura_thorns_pct": 20,
+        "aura_dmg_ranged_pct": 10,
+        "aura_hp_regen": 3
+      },
+      "notes": "",
+      "icon": "icons/battlestandard.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "btst",
+      "uses": 1,
+      "tags": [
+        "Lifesteal"
+      ],
+      "hide_shop_tag": true
+    },
+    {
+      "id": "scepter_of_avarice",
+      "name": "Scepter of Avarice",
+      "category": "Special",
+      "cost": 600,
+      "effect_type": "active",
+      "description": "Kills a target unit instantly.\nCannot be used on units with Resistant Skin or creeps above level 6.\nBuy only to kill an enemy mercenary unit.",
+      "stats": {
+        "range": 600
+      },
+      "notes": "Use to kill enemy mercenaries",
+      "icon": "icons/scepterofavarice.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "scav",
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
+    },
+    {
+      "id": "boots_of_speed",
+      "name": "Boots of Speed",
+      "category": "Special",
+      "cost": 250,
+      "effect_type": "passive",
+      "unique": false,
+      "stackable": false,
+      "description": "Increases movement speed by 60.",
+      "stats": {
+        "move_speed": 60
+      },
+      "notes": "Non-Stackable Movement Speed",
+      "icon": "icons/bootsofspeed.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "bspd",
+      "stock_max": 1,
+      "hide_shop_tag": true,
+      "tags": [
+        "Movement Speed"
+      ],
+      "cost_lumber": 0
     },
     {
       "id": "boots_of_health",
@@ -559,17 +464,22 @@
       "cost_lumber": 1,
       "effect_type": "passive",
       "stackable": false,
-      "description": "Increases the movement speed of the hero by 60 (non-stackable). Increases the hit points of the hero by 200 and attack damage by 10.",
+      "description": "non-stackable",
       "stats": {
         "move_speed": 60,
         "hp": 200,
         "dmg": 10
       },
       "notes": "Non-Stackable Movement Speed",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 9,
+      "icon": "icons/bootsofhealth.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "wtlg",
+      "hide_shop_tag": true,
+      "tags": [
+        "Movement Speed"
+      ]
     },
     {
       "id": "boots_of_mana",
@@ -579,133 +489,897 @@
       "cost_lumber": 1,
       "effect_type": "passive",
       "stackable": false,
-      "description": "Increases the movement speed of the hero by 60 (non-stackable). Increases the mana of the hero by 200 and attack damage by 10.",
+      "description": "non-stackable",
       "stats": {
         "move_speed": 60,
         "mana": 200,
         "dmg": 10
       },
       "notes": "Non-Stackable Movement Speed",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 10,
+      "icon": "icons/bootsofmana.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "wolg",
+      "hide_shop_tag": true,
+      "tags": [
+        "Movement Speed"
+      ]
     },
     {
-      "id": "scepter_of_avarice",
-      "name": "Scepter of Avarice",
+      "id": "staff_of_teleportation",
+      "name": "Staff of Teleportation",
       "category": "Special",
       "cost": 600,
       "effect_type": "active",
-      "description": "Kills a target unit instantly. Cannot be used on units with Resistant Skin or creeps above level 6. Buy only to kill an enemy mercenary unit.",
+      "description": "Active Teleport\nTeleports the hero to the targeted ally or structure.\nIncreases movement speed by 60.",
       "stats": {
-        "range": 600
+        "move_speed": 60,
+        "casting_delay": 3,
+        "cooldown": 30
       },
-      "notes": "Use to kill enemy mercenaries",
-      "icon": "screenshots/Shops/Standart/Icon.png",
-      "icon_index": 7,
+      "notes": "",
+      "icon": "icons/staffofteleportation.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "stel",
+      "stock_max": 1,
+      "tags": [
+        "Active",
+        "Movement Speed"
+      ],
+      "hide_shop_tag": true,
+      "cost_lumber": 0
+    },
+    {
+      "id": "ring_of_the_archmagi",
+      "name": "Ring of the Archmagi +3",
+      "category": "Upgradable 1",
+      "cost": 350,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+3 All Attributes",
+      "stats": {
+        "agi": 3,
+        "str": 3,
+        "int": 3
+      },
+      "notes": "",
+      "icon": "icons/ringofthearchmagi3.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ram3",
+      "cost_lumber": 0
+    },
+    {
+      "id": "ring_of_regeneration",
+      "name": "Ring of Regeneration +5",
+      "category": "Upgradable 1",
+      "cost": 350,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 HP Regeneration",
+      "stats": {
+        "hp_regen": 5
+      },
+      "notes": "",
+      "icon": "icons/ringofregeneration5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "rlif",
+      "cost_lumber": 0
+    },
+    {
+      "id": "sobi_mask",
+      "name": "Sobi Mask 65%",
+      "category": "Upgradable 1",
+      "cost": 350,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+65% Mana Regeneration",
+      "stats": {
+        "mana_regen_pct": 65
+      },
+      "notes": "",
+      "icon": "icons/sobimask65.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "rwiz",
+      "cost_lumber": 0
+    },
+    {
+      "id": "gloves_of_haste",
+      "name": "Gloves of Haste +20%",
+      "category": "Upgradable 1",
+      "cost": 375,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+20% Attack Speed",
+      "stats": {
+        "attack_speed_pct": 20
+      },
+      "notes": "",
+      "icon": "icons/glovesofhaste20.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "gcel",
+      "cost_lumber": 0
+    },
+    {
+      "id": "boots_of_quelthalas",
+      "name": "Boots of Quel'Thalas +6",
+      "category": "Upgradable 1",
+      "cost": 400,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+6 Agility",
+      "stats": {
+        "agi": 6
+      },
+      "notes": "",
+      "icon": "icons/bootsofquelthalas6.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "belv",
+      "cost_lumber": 0
+    },
+    {
+      "id": "belt_of_giant_strength",
+      "name": "Belt of Giant Strength +6",
+      "category": "Upgradable 1",
+      "cost": 400,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+6 Strength",
+      "stats": {
+        "str": 6
+      },
+      "notes": "",
+      "icon": "icons/beltofgiantstrength6.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "bgst",
+      "cost_lumber": 0
+    },
+    {
+      "id": "robe_of_the_magi",
+      "name": "Robe of the Magi +6",
+      "category": "Upgradable 1",
+      "cost": 400,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+6 Intelligence",
+      "stats": {
+        "int": 6
+      },
+      "notes": "",
+      "icon": "icons/robeofthemagi6.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ciri",
+      "cost_lumber": 0
+    },
+    {
+      "id": "talisman_of_evasion",
+      "name": "Talisman of Evasion 10%",
+      "category": "Upgradable 1",
+      "cost": 400,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+10% Evasion",
+      "stats": {
+        "evasion_pct": 10
+      },
+      "notes": "",
+      "icon": "icons/talismanofevasion10.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "evtl",
+      "cost_lumber": 0
+    },
+    {
+      "id": "medallion_of_courage",
+      "name": "Medallion of Courage +5",
+      "category": "Upgradable 1",
+      "cost": 550,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 Strength\n+5 Intelligence",
+      "stats": {
+        "str": 5,
+        "int": 5
+      },
+      "notes": "",
+      "icon": "icons/medallionofcourage5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "mcou",
+      "cost_lumber": 0
+    },
+    {
+      "id": "hood_of_cunning",
+      "name": "Hood of Cunning +5",
+      "category": "Upgradable 1",
+      "cost": 550,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 Agility\n+5 Intelligence",
+      "stats": {
+        "agi": 5,
+        "int": 5
+      },
+      "notes": "",
+      "icon": "icons/hoodofcunning5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "hcun",
+      "cost_lumber": 0
+    },
+    {
+      "id": "helm_of_valor",
+      "name": "Helm of Valor +5",
+      "category": "Upgradable 1",
+      "cost": 700,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 Agility\n+5 Strength",
+      "stats": {
+        "agi": 5,
+        "str": 5
+      },
+      "notes": "",
+      "icon": "icons/helmofvalor5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "hval",
+      "cost_lumber": 0
+    },
+    {
+      "id": "crown_of_kings",
+      "name": "Crown of Kings +5",
+      "category": "Upgradable 1",
+      "cost": 850,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 All Attributes",
+      "stats": {
+        "agi": 5,
+        "str": 5,
+        "int": 5
+      },
+      "notes": "",
+      "icon": "icons/crownofkings5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ckng",
+      "uses": 1,
+      "cost_lumber": 0
+    },
+    {
+      "id": "ring_of_protection",
+      "name": "Ring of Protection +5",
+      "category": "Upgradable 2",
+      "cost": 400,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+5 Armor",
+      "stats": {
+        "armor": 5
+      },
+      "notes": "",
+      "icon": "icons/ringofprotection5.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "rde4",
+      "cost_lumber": 0
+    },
+    {
+      "id": "cloak_of_flames",
+      "name": "Cloak of Flames +10",
+      "category": "Upgradable 2",
+      "cost": 425,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "Permanent Immolation\nDeals 10 damage per second in an area of 260.",
+      "stats": {
+        "immolation_dps": 10,
+        "immolation_aoe": 260
+      },
+      "notes": "Does not stack with other Immolation effects.",
+      "icon": "icons/cloakofflames10.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "clfm",
+      "cost_lumber": 0
+    },
+    {
+      "id": "gem_of_health",
+      "name": "Gem of Health 250",
+      "category": "Upgradable 2",
+      "cost": 500,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+250 Hit Points",
+      "stats": {
+        "hp": 250
+      },
+      "notes": "",
+      "icon": "icons/gemofhealth250.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "prvt",
+      "cost_lumber": 0
+    },
+    {
+      "id": "pendant_of_mana",
+      "name": "Pendant of Mana 200",
+      "category": "Upgradable 2",
+      "cost": 500,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+200 Mana",
+      "stats": {
+        "mana": 200
+      },
+      "notes": "",
+      "icon": "icons/pendantofmana200.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "penr",
+      "cost_lumber": 0
+    },
+    {
+      "id": "runed_bracers",
+      "name": "Runed Bracers +10%",
+      "category": "Upgradable 2",
+      "icon": "icons/runedbracers10.png",
+      "icon_index": null,
+      "cost": 500,
+      "cost_lumber": 0,
+      "effect_type": "passive",
+      "stackable": false,
+      "description": "+10% Spell Resistance",
+      "stats": {
+        "spell_dmg_reduction_pct": 10
+      },
+      "notes": "Non-stackable",
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "brac",
+      "upgrade_tiers": 4
+    },
+    {
+      "id": "thunderlizard_diamond",
+      "name": "Thunderlizard Diamond 100",
+      "category": "Upgradable 2",
+      "cost": 800,
+      "upgrade_tiers": 4,
+      "effect_type": "active",
+      "description": "Active Chain Lightning\nCasts a bolt of lightning that deals 100 magic damage.\nJumps up to 5 times, each jump dealing 20% less damage.\nIncreases the mana of the hero by 40 per stack.",
+      "stats": {
+        "active_dmg": 100,
+        "active_jumps": 5,
+        "active_jump_reduction_pct": 20,
+        "active_cooldown": 19,
+        "active_range": 700,
+        "mana": 40
+      },
+      "notes": "",
+      "icon": "icons/thunderlizarddiamond100.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "thdm",
+      "tags": [
+        "Active"
+      ],
+      "stack_values": {
+        "active_jumps": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "active_jump_reduction_pct": [
+          20,
+          20,
+          20,
+          20
+        ]
+      },
+      "cost_lumber": 0
+    },
+    {
+      "id": "claws_of_attack",
+      "name": "Claws of Attack +15",
+      "category": "Upgradable 2",
+      "cost": 850,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+15 Damage",
+      "stats": {
+        "bonus_dmg": 15
+      },
+      "notes": "",
+      "icon": "icons/clawsofattack15.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "ratf",
+      "cost_lumber": 0
+    },
+    {
+      "id": "crown_of_the_deathlord",
+      "name": "Crown of the Deathlord 125",
+      "category": "Upgradable 2",
+      "cost": 1000,
+      "upgrade_tiers": 4,
+      "effect_type": "active",
+      "description": "Active Finger of Death\nFires a bolt of pain that deals 125 magic damage.",
+      "stats": {
+        "active_dmg": 125,
+        "active_cooldown": 18,
+        "active_range": 800,
+        "hp": 50
+      },
+      "notes": "",
+      "icon": "icons/crownofthedeathlord125.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "crdt",
+      "tags": [
+        "Active"
+      ],
+      "cost_lumber": 0
+    },
+    {
+      "id": "serathil",
+      "name": "Serathil +12",
+      "category": "Upgradable 2",
+      "cost": 1100,
+      "cost_lumber": 0,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "+12 Damage\n+12% Attack Speed",
+      "stats": {
+        "bonus_dmg": 12,
+        "attack_speed_pct": 12
+      },
+      "notes": "",
+      "icon": "icons/serathil12.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "srtl"
+    },
+    {
+      "id": "rusty_mining_pick",
+      "name": "Rusty Mining Pick +10",
+      "category": "Upgradable 2",
+      "cost": 1000,
+      "cost_lumber": 1,
+      "upgrade_tiers": 4,
+      "effect_type": "on_attack",
+      "description": "Passive Bash\nGives 5% chance to stun the target for 1 second.",
+      "stats": {
+        "bash_chance_pct": 5,
+        "bash_duration": 1,
+        "bash_bonus_dmg": 25,
+        "bonus_dmg": 10
+      },
+      "stack_values": {
+        "bash_bonus_dmg": [
+          25,
+          25,
+          25,
+          25
+        ]
+      },
+      "notes": "",
+      "icon": "icons/rustyminingpick10.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "rump"
+    },
+    {
+      "id": "sturdy_war_axe",
+      "name": "Sturdy War Axe +12",
+      "category": "Upgradable 2",
+      "cost": 1000,
+      "cost_lumber": 1,
+      "upgrade_tiers": 4,
+      "effect_type": "on_attack",
+      "description": "Passive Critical Strike\n3% chance to deal 2 times more total damage.\nIncreases the attack damage of the hero by 12 per stack.",
+      "stats": {
+        "crit_chance_pct": 3,
+        "crit_multiplier": 2,
+        "bonus_dmg": 12
+      },
+      "stack_values": {
+        "crit_multiplier": [
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      "notes": "",
+      "icon": "icons/sturdywaraxe12.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "stwa"
+    },
+    {
+      "id": "cleaving_axe",
+      "name": "Cleaving Axe +12",
+      "category": "Upgradable 2",
+      "cost": 1000,
+      "cost_lumber": 1,
+      "upgrade_tiers": 4,
+      "effect_type": "on_attack",
+      "description": "Cleaving Attack\nDeals 10% splash damage in an area of 255.",
+      "stats": {
+        "cleave_pct": 10,
+        "cleave_aoe": 255,
+        "bonus_dmg": 12
+      },
+      "notes": "",
+      "icon": "icons/cleavingaxe12.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "I023",
+      "stack_values": {
+        "cleave_aoe": [
+          255,
+          270,
+          285,
+          300
+        ]
+      }
+    },
+    {
+      "id": "amulet_of_spell_shield",
+      "name": "Amulet of Spell Shield 45",
+      "category": "Upgradable 2",
+      "cost": 1000,
+      "cost_lumber": 1,
+      "upgrade_tiers": 4,
+      "effect_type": "passive",
+      "description": "Passive Spell Block\nBlocks a negative spell once every 45 seconds.\nUpgrade reduces the cooldown by 10 seconds.",
+      "stats": {
+        "spell_block_cooldown": 45
+      },
+      "notes": "",
+      "icon": "icons/amuletofspellshield45.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "spsh",
+      "stack_values": {
+        "spell_block_cooldown": [
+          45,
+          35,
+          25,
+          15
+        ]
+      }
+    },
+    {
+      "id": "orb_of_slow",
+      "name": "Orb of Slow",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Unique Slow\nGives 15% chance to slow the target's movement by 50% and attack speed by 25% for 7 seconds.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "proc_chance_pct": 15,
+        "slow_movement_pct": 50,
+        "slow_attack_rate_pct": 25,
+        "slow_duration": 7
+      },
+      "notes": "",
+      "icon": "icons/orbofslow.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "oslo",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_darkness",
+      "name": "Orb of Darkness",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Creates a Dark Minion when it is the killing blow on an enemy unit.\nThe Dark Minion lasts 80 seconds.\nAdds 5 bonus damage to the attack of a Hero when carried.\nHero's attacks become ranged and can hit air units.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "dark_minion_duration": 80
+      },
+      "notes": "",
+      "icon": "icons/orbofdarkness.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "odef",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_fire",
+      "name": "Orb of Fire",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 30% for 8 seconds.\n\nSplash Damage\nDeals 30% splash damage in an area of 250.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "heal_reduction_pct": 30,
+        "heal_reduction_duration": 8,
+        "splash_pct": 30,
+        "splash_aoe": 250
+      },
+      "notes": "",
+      "icon": "icons/orboffire.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "ofr2",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_corruption",
+      "name": "Orb of Corruption",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Reduces the armor of every enemy by 4 for 5 seconds.\nAdds 5 bonus damage to the attack of a hero when carried.\nHero's attacks also become ranged and can hit air units.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "armor_reduction": 4,
+        "armor_reduction_duration": 5
+      },
+      "tags": [
+        "Corruption"
+      ],
+      "notes": "",
+      "icon": "icons/orbofcorruption.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "ocor",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_lightning",
+      "name": "Orb of Lightning",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Lightning Attack\nGives 10% chance to purge the target, removing buffs and slowing its movement for 3 seconds.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "immobilize_duration": 3,
+        "bonus_dmg_summoned": 200,
+        "proc_chance_pct": 10,
+        "slow_duration": 3
+      },
+      "notes": "",
+      "icon": "icons/orboflightning.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "oli2",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_venom",
+      "name": "Orb of Venom",
+      "category": "Orb",
+      "cost": 500,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Unique Poison\nDeals 14 poison damage per second for 8 seconds.",
+      "stats": {
+        "bonus_dmg": 5,
+        "ranged": true,
+        "poison_dps": 14,
+        "poison_duration": 8
+      },
+      "notes": "",
+      "icon": "icons/orbofvenom.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "oven",
+      "cost_lumber": 0
+    },
+    {
+      "id": "orb_of_frost",
+      "name": "Orb of Frost",
+      "category": "Orb",
+      "cost": 1000,
+      "effect_type": "on_attack",
+      "unique": true,
+      "description": "Frost Attack\nSlows the target's movement speed by 50% and attack speed by 25% for 1.5 seconds.",
+      "stats": {
+        "bonus_dmg": 6,
+        "ranged": true,
+        "slow_duration": 1.5,
+        "slow_movement_pct": 50,
+        "slow_attack_rate_pct": 25
+      },
+      "notes": "",
+      "icon": "icons/orboffrost.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "ofro",
+      "cost_lumber": 0
+    },
+    {
+      "id": "mask_of_death",
+      "name": "Mask of Death",
+      "category": "Orb",
+      "cost": 1000,
+      "effect_type": "on_attack",
+      "description": "Passive Lifesteal\nRecovers 35% of the damage dealt as hit points.",
+      "stats": {
+        "life_steal_pct": 35,
+        "bonus_dmg": 10
+      },
+      "notes": "Stacks with Orb effects; does NOT stack with itself",
+      "icon": "icons/maskofdeath.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "modt",
+      "tags": [
+        "Lifesteal"
+      ],
+      "hide_shop_tag": true,
+      "cost_lumber": 0
     },
     {
       "id": "frost_claw",
-      "name": "Frost Claw",
+      "name": "Frost Claws",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 0,
+      "icon": "icons/frostclaw.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 3,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "The hero's attacks become ranged when attacking an enemy unit and have a chance to dispel magic and slow the movement speed of the enemy by 25% for 5 seconds.",
+      "description": "Frost Attack\nSlows the target's movement speed by 50% and attack speed by 25% for 3 seconds.",
       "stats": {
         "ranged": true,
-        "slow_pct": 25,
-        "slow_duration": 5,
+        "slow_duration": 3,
+        "bonus_dmg": 30,
         "attack_speed_pct": 20,
-        "bonus_dmg": 30
+        "slow_movement_pct": 50,
+        "slow_attack_rate_pct": 25
       },
-      "notes": "Unique - Does not stack with other Unique effects",
+      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "I01Q"
     },
     {
       "id": "lightning_claws",
       "name": "Lightning Claws",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 1,
+      "icon": "icons/lightningclaws.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 3,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "The hero's attacks become ranged when attacking an enemy unit and have a chance to dispel magic and slow the movement speed of the enemy for 5 seconds. Deals 600 bonus damage to summoned units.",
+      "description": "Lightning Attack\nGives 15% chance to purge the target, removing buffs and slowing its movement for 3 seconds.\nDeals 400 bonus damage to summoned units.",
       "stats": {
         "ranged": true,
-        "slow_duration": 5,
-        "bonus_dmg_summoned": 600,
+        "slow_duration": 3,
+        "bonus_dmg_summoned": 400,
+        "bonus_dmg": 30,
         "attack_speed_pct": 20,
-        "bonus_dmg": 30
+        "proc_chance_pct": 15
       },
-      "notes": "Unique - Does not stack with other Unique effects",
+      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "shcw"
     },
     {
       "id": "firebrand_gauntlets",
-      "name": "Firebrand Gauntlets",
+      "name": "Firehand Gauntlets",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 2,
+      "icon": "icons/firebrandgauntlets.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 3,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "The hero's attacks become ranged and reduce the effectiveness of healing and regeneration on enemy units by 35% for 5 seconds. Grants the hero 35% splash damage in an area of 250.",
+      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 50% for 8 seconds.\n\nSplash Damage\nDeals 50% splash damage in an area of 250.",
       "stats": {
+        "bonus_dmg": 30,
         "ranged": true,
-        "heal_reduction_pct": 35,
-        "heal_reduction_duration": 5,
-        "splash_pct": 35,
+        "heal_reduction_pct": 50,
+        "heal_reduction_duration": 8,
+        "splash_pct": 50,
         "splash_aoe": 250,
         "attack_speed_pct": 20
       },
-      "notes": "Unique - Does not stack with other Unique effects",
+      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "frhg"
     },
     {
       "id": "corrupted_gauntlets",
       "name": "Corrupted Gauntlets",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 3,
+      "icon": "icons/corruptedgauntlets.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 3,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "The hero's attacks become ranged when attacking an enemy unit and reduce the armor of enemy units by 8 for 5 seconds.",
+      "description": "Corruption\nReduces the target's armor by 8 for 5 seconds.",
       "stats": {
         "ranged": true,
         "armor_reduction": 8,
         "armor_reduction_duration": 5,
-        "attack_speed_pct": 20,
-        "bonus_dmg": 30
+        "bonus_dmg": 30,
+        "attack_speed_pct": 20
       },
-      "notes": "Unique - Does not stack with other Unique effects",
+      "tags": [
+        "Corruption"
+      ],
+      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "rugt"
     },
     {
       "id": "trueshot_shield",
       "name": "Trueshot Shield",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 4,
+      "icon": "icons/trueshotshield.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 2,
       "effect_type": "aura",
-      "description": "Passive Trueshot Aura: Increases attack damage of ranged units by 22%.",
+      "description": "Trueshot Aura\nIncreases attack damage of ranged units by 22%.",
       "stats": {
         "aura_dmg_ranged_pct": 22,
         "armor": 8,
@@ -714,41 +1388,43 @@
       },
       "notes": "",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "shen"
     },
     {
       "id": "command_shield",
       "name": "Command Shield",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 5,
+      "icon": "icons/commandshield.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 2,
       "effect_type": "aura",
-      "description": "Passive Command Aura: Increases attack damage of friendly units by 22%.",
+      "description": "Command Aura\nIncreases attack damage of friendly units by 22%.",
       "stats": {
         "aura_dmg_pct": 22,
         "armor": 8,
         "mana": 200,
-        "hp": 500
+        "hp": 300
       },
       "notes": "",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "arsh"
     },
     {
       "id": "unholy_shield",
       "name": "Unholy Shield",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 6,
+      "icon": "icons/unholyshield.png",
+      "icon_index": null,
       "cost": 2500,
       "cost_lumber": 2,
       "effect_type": "aura+active",
-      "description": "Passive Unholy Aura: Grants 10% movement speed and +1 life regeneration. Active Unholy Energy: Increases the attack rate of a target unit by 75% (non-stackable with Unholy Energy). Duration: 60. Mana: 50.",
+      "description": "Unholy Aura\nGives 10% movement speed and 6 life regeneration.\n\nUnholy Frenzy (Active)\nIncreases the target's attack rate by 75% for 60 sec.\nStacks with the Necromancer's Unholy Frenzy.",
       "stats": {
         "aura_move_pct": 10,
-        "aura_hp_regen": 1,
+        "aura_hp_regen": 6,
         "active_attack_rate_pct": 75,
         "active_duration": 60,
         "active_mana": 50,
@@ -757,75 +1433,44 @@
       },
       "notes": "Active non-stackable with other Unholy Energy",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "hbth"
     },
     {
       "id": "vampiric_shield",
       "name": "Vampiric Shield",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 7,
+      "icon": "icons/vampiricshield.png",
+      "icon_index": null,
       "cost": 2500,
       "effect_type": "aura",
-      "description": "Passive Vampiric Aura: Grants life steal on attacks to melee units of 35%.",
+      "description": "Vampiric Aura\nGrants life steal on attacks to melee units of 35%.",
       "stats": {
         "aura_lifesteal_pct": 35,
         "armor": 8,
         "hp": 300,
-        "hp_regen": 6
+        "hp_regen": 8
       },
       "notes": "",
       "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "shield_of_the_deathlord",
-      "name": "Shield of the Deathlord",
-      "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 8,
-      "cost": 3000,
-      "cost_lumber": 3,
-      "effect_type": "passive",
-      "description": "Gives the hero a 20% chance to evade physical attacks. Engulfs the hero in fire which deals 40 damage per second to nearby enemy land units.",
-      "stats": {
-        "evasion_pct": 20,
-        "immolation_dps": 40,
-        "mana": 300,
-        "hp": 500
-      },
-      "notes": "",
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "runed_bracers",
-      "name": "Runed Bracers",
-      "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 9,
-      "cost": 1500,
-      "cost_lumber": 1,
-      "effect_type": "passive",
-      "stackable": false,
-      "description": "Reduces spell damage dealt to the hero by 33% (non-stackable).",
-      "stats": {
-        "spell_dmg_reduction_pct": 33,
-        "armor": 8
-      },
-      "notes": "Non-stackable",
-      "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "I01T",
+      "tags": [
+        "Lifesteal"
+      ],
+      "hide_shop_tag": true,
+      "cost_lumber": 0
     },
     {
       "id": "devotion_shield",
       "name": "Devotion Shield",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 10,
+      "hide_shop_tag": true,
+      "icon": "icons/devotionshield.png",
+      "icon_index": null,
       "cost": 2500,
       "effect_type": "aura",
-      "description": "Passive Devotion Aura: Increases the armor of nearby friendly units by 6.",
+      "description": "Devotion Aura\nIncreases the armor of nearby friendly units by 6.",
       "stats": {
         "aura_armor": 6,
         "armor": 8,
@@ -833,560 +1478,511 @@
       },
       "notes": "",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "shhn",
+      "tags": [
+        "Armor"
+      ],
+      "cost_lumber": 0
+    },
+    {
+      "id": "shield_of_the_deathlord",
+      "name": "Deathguard",
+      "category": "Advanced",
+      "icon": "icons/deathguard.png",
+      "icon_index": null,
+      "cost": 3000,
+      "cost_lumber": 3,
+      "effect_type": "passive",
+      "description": "Permanent Immolation\nDeals 40 damage per second in an area of 260.",
+      "stats": {
+        "evasion_pct": 20,
+        "hp": 500,
+        "mana": 300,
+        "immolation_dps": 40,
+        "immolation_aoe": 260
+      },
+      "notes": "Does not stack with other Immolation effects.",
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "shdt"
     },
     {
       "id": "voodoo_doll",
       "name": "Voodoo Doll",
       "category": "Advanced",
-      "icon": "screenshots/Shops/Advance/Icon.png",
-      "icon_index": 11,
+      "icon": "icons/voodoodoll.png",
+      "icon_index": null,
       "cost": 3000,
       "cost_lumber": 3,
       "effect_type": "active",
-      "description": "Active Hex: Transforms an enemy unit into a random critter, disabling special abilities.",
+      "description": "Hex (Active)\nTransforms an enemy unit into a random critter, disabling special abilities.",
       "stats": {
+        "active_duration": 5,
         "active_cooldown": 30,
-        "active_mana": 70
+        "active_range": 900,
+        "active_mana": 80
       },
       "notes": "",
       "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 3,
+      "raw_code": "vddl",
+      "uses": 1,
+      "tags": [
+        "Active"
+      ]
     },
     {
-      "id": "rusty_mining_pick",
-      "name": "Rusty Mining Pick +10",
-      "category": "Upgradable",
-      "cost": 1000,
-      "cost_lumber": 1,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Passive Bash: 5% chance to stun the target for 1 second and deal 3.5 bonus damage per stack. Increases the attack damage of the hero by 10 per stack.",
-      "stats": {
-        "bash_chance_pct": 5,
-        "bash_duration": 1,
-        "bash_bonus_dmg": 3.5,
-        "bonus_dmg": 10
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "sturdy_war_axe",
-      "name": "Sturdy War Axe +12",
-      "category": "Upgradable",
-      "cost": 1000,
-      "cost_lumber": 1,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Passive Critical Strike: 3% chance to deal 2 times more total damage. Increases the attack damage of the hero by 12 per stack.",
-      "stats": {
-        "crit_chance_pct": 3,
-        "crit_multiplier": 2,
-        "bonus_dmg": 12
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "serathil",
-      "name": "Serathil +12",
-      "category": "Upgradable",
+      "id": "staff_of_silence",
+      "name": "Staff of Silence",
+      "category": "Advanced",
       "cost": 900,
-      "cost_lumber": 1,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the attack speed of the hero by 12% and attack damage by 12 per stack.",
-      "stats": {
-        "attack_speed_pct": 12,
-        "bonus_dmg": 12
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "cleaving_axe",
-      "name": "Cleaving Axe +12",
-      "category": "Upgradable",
-      "cost": 1000,
-      "cost_lumber": 1,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Passive Cleaving Attack: Deals 10% of attack damage as cleave per stack in a radius of 255. Increases the attack damage of the hero by 12 per stack.",
-      "stats": {
-        "cleave_pct": 10,
-        "cleave_aoe": 255,
-        "bonus_dmg": 12
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 3,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "claws_of_attack",
-      "name": "Claws of Attack +15",
-      "category": "Upgradable",
-      "cost": 1000,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the attack damage of the hero by 15 per stack.",
-      "stats": {
-        "bonus_dmg": 15
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "ring_of_protection",
-      "name": "Ring of Protection +5",
-      "category": "Upgradable",
-      "cost": 400,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the armor of the hero by 5 per stack.",
-      "stats": {
-        "armor": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 5,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "gem_of_health",
-      "name": "Gem of Health 250",
-      "category": "Upgradable",
-      "cost": 500,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the hit points of the hero by 250 per stack.",
-      "stats": {
-        "hp": 250
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "pendant_of_mana",
-      "name": "Pendant of Mana 200",
-      "category": "Upgradable",
-      "cost": 500,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Increases the mana capacity of the hero by 200 per stack.",
-      "stats": {
-        "mana": 200
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "crown_of_the_deathlord",
-      "name": "Crown of the Deathlord",
-      "category": "Upgradable",
-      "cost": 1000,
-      "upgrade_tiers": 4,
       "effect_type": "active",
-      "description": "Active Finger of Death: Fires a bolt of pain that deals 125 magic damage. Increases the hit points of the hero by 50 per stack.",
+      "description": "Silence (Active)\nStops all enemies in a target area from casting spells.",
       "stats": {
-        "active_dmg": 125,
-        "active_dmg_type": "magic",
-        "active_cooldown": 10,
-        "active_range": 800,
-        "hp": 50
+        "silence_duration": 6,
+        "active_cooldown": 30,
+        "active_aoe": 225
       },
       "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 8,
+      "icon": "icons/staffofsilence.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "thunderlizard_diamond",
-      "name": "Thunderlizard Diamond 100",
-      "category": "Upgradable",
-      "cost": 800,
-      "upgrade_tiers": 4,
-      "effect_type": "active",
-      "description": "Active Chain Lightning: Casts a bolt of lightning that deals 100 magic damage. Jumps up to 5 times, each jump dealing 25% less damage. Increases the mana of the hero by 45 per stack.",
-      "stats": {
-        "active_dmg": 100,
-        "active_dmg_type": "magic",
-        "active_jumps": 5,
-        "active_jump_reduction_pct": 25,
-        "active_cooldown": 11,
-        "active_range": 700,
-        "mana": 45
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 9,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "cloak_of_flames",
-      "name": "Cloak of Flames +12",
-      "category": "Upgradable",
-      "cost": 450,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Permanent Immolation: Deals 6 damage every 0.5 seconds per stack in a radius of 300. Does not stack with other Immolation effects.",
-      "stats": {
-        "immolation_dmg": 6,
-        "immolation_interval": 0.5,
-        "immolation_aoe": 300
-      },
-      "notes": "Does not stack with other Immolation effects",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 10,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "amulet_of_spell_shield",
-      "name": "Amulet of Spell Shield +45",
-      "category": "Upgradable",
-      "cost": 1000,
-      "cost_lumber": 1,
-      "upgrade_tiers": 4,
-      "effect_type": "passive",
-      "description": "Passive Spell Block: Blocks a negative spell that an enemy casts on the hero. Cooldown: 45 seconds.",
-      "stats": {
-        "spell_block_cooldown": 45
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Upgradable 2/Icon.png",
-      "icon_index": 11,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "lesser_clarity_potion",
-      "name": "Lesser Clarity Potion",
-      "category": "Consumable",
-      "cost": 50,
-      "effect_type": "active",
-      "description": "Non-Combat Consumable: Regenerates 230 mana over 30 seconds when used.",
-      "stats": {
-        "mana_restore": 230,
-        "mana_restore_duration": 30,
-        "charges": 1
-      },
-      "notes": "Non-combat only",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "scroll_of_speed",
-      "name": "Scroll of Speed",
-      "category": "Consumable",
-      "cost": 120,
-      "effect_type": "active",
-      "description": "Active Speed Bonus: Increases the movement speed of the hero and nearby allied units to the maximum movement speed.",
-      "stats": {
-        "aoe": 600,
-        "charges": 1
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "health_stone",
-      "name": "Health Stone",
-      "category": "Consumable",
-      "cost": 225,
-      "effect_type": "active+passive",
-      "description": "Consumes: Instantly restores 500 hit points. While carried: increases the life regeneration of the hero by 1.",
-      "stats": {
-        "instant_hp": 500,
-        "hp_regen": 1,
-        "charges": 1
-      },
-      "notes": "Passive regen bonus while in inventory",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "mana_stone",
-      "name": "Mana Stone",
-      "category": "Consumable",
-      "cost": 150,
-      "effect_type": "active+passive",
-      "description": "Consumes: Instantly restores 250 mana. While carried: increases the mana regeneration of the hero by 25%.",
-      "stats": {
-        "instant_mana": 250,
-        "mana_regen_pct": 25,
-        "charges": 1
-      },
-      "notes": "Passive mana regen bonus while in inventory",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 5,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "wand_of_illusion",
-      "name": "Wand of Illusion",
-      "category": "Consumable",
-      "cost": 75,
-      "effect_type": "active",
-      "description": "Active Illusion: Creates an illusory double of the targeted unit. The illusion deals no damage to enemy units, takes 2 times the damage from enemy attacks, and disappears after 60 seconds or when its hit points reach zero.",
-      "stats": {
-        "illusion_dmg_pct": 0,
-        "illusion_dmg_taken_mult": 2,
-        "illusion_duration": 60,
-        "charges": 1
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "potion_of_invisibility",
-      "name": "Potion of Invisibility",
-      "category": "Consumable",
-      "cost": 125,
-      "effect_type": "active",
-      "description": "Active Invisibility: Renders the hero invisible for 120 seconds. An invisible hero is untargetable by the enemy unless detected. Invisibility is lost if the hero attacks, uses a damage spell, or casts a fight spell.",
-      "stats": {
-        "invis_duration": 120,
-        "charges": 1
-      },
-      "notes": "Breaks on attack or spell cast",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "sentry_wards",
-      "name": "Sentry Wards",
-      "category": "Consumable",
-      "cost": 150,
-      "effect_type": "active",
-      "description": "Active Sentry Ward: Summons an invisible and magic immune ward that provides vision in an area and reveals invisible units.",
-      "stats": {
-        "detection_range": 1300,
-        "sight_range": 1200,
-        "charges": 2
-      },
-      "notes": "Ward is invisible and magic immune",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 8,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "watcher_ward",
-      "name": "Watcher Ward",
-      "category": "Consumable",
-      "cost": 250,
-      "effect_type": "active",
-      "description": "Active Watcher Ward: Summons an invisible and invulnerable ward that provides vision in an area and reveals invisible units.",
-      "stats": {
-        "detection_range": 1300,
-        "sight_range": 1200,
-        "charges": 1
-      },
-      "notes": "Ward is invisible and invulnerable",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 9,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "wand_of_the_wind",
-      "name": "Wand of the Wind",
-      "category": "Consumable",
-      "cost": 275,
-      "effect_type": "active",
-      "description": "Active Cyclone: Tosses a target enemy unit into the air, rendering it unable to attack, move or cast spells for 5.5 seconds.",
-      "stats": {
-        "cyclone_duration": 5.5,
-        "charges": 1
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 10,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "scroll_of_resurrection",
-      "name": "Scroll of Resurrection",
-      "category": "Consumable",
-      "cost": 700,
-      "effect_type": "active",
-      "description": "Active Resurrection: Brings 6 nearby allied dead units back to life. Corpses last 60 seconds before disappearing. Buy only if you have a friendly mercenary unit.",
-      "stats": {
-        "units_resurrected": 6,
-        "aoe": 900,
-        "charges": 1
-      },
-      "notes": "Only useful with friendly mercenary unit",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 11,
-      "icon_cols": 4,
-      "icon_rows": 3
-    },
-    {
-      "id": "healing_salve",
-      "name": "Healing Salve",
-      "category": "Consumable",
-      "cost": 50,
-      "effect_type": "active",
-      "description": "Non-Combat Consumable: Regenerates a target unit's hit points by 500 over 40 seconds when used.",
-      "stats": {
-        "hp_restore": 500,
-        "hp_restore_duration": 40,
-        "charges": 8
-      },
-      "notes": "Non-combat only; 8 charges",
-      "icon": "screenshots/Shops/Consume/Icon.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 3
+      "icon_rows": 2,
+      "raw_code": "ssil",
+      "tags": [
+        "Active"
+      ],
+      "cost_lumber": 0
     },
     {
       "id": "killmaim",
       "name": "Killmaim",
-      "category": "Legendary",
+      "category": "Black Market",
       "cost": 4000,
       "cost_lumber": 4,
-      "effect_type": "passive",
+      "effect_type": "on_attack",
       "legendary": true,
-      "unique": true,
-      "description": "The hero recovers hit points equal to 50% of the attack damage dealt to enemy units. Increases the attack damage of the hero by 50.",
+      "description": "Passive Lifesteal\nRecovers 50% of the damage dealt as hit points.",
       "stats": {
         "life_steal_pct": 50,
         "bonus_dmg": 50
       },
-      "notes": "Legendary - drops on hero death. Non-Stackable with other Passive Lifesteal effects.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 0,
+      "notes": "Legendary - drops on hero death. Stacks with Orb effects. Non-Stackable with other Passive Lifesteal effects.",
+      "icon": "icons/killmaim.png",
+      "icon_index": null,
       "icon_cols": 3,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "klmm",
+      "tags": [
+        "Lifesteal"
+      ]
     },
     {
       "id": "maul_of_strength",
       "name": "Maul of Strength",
-      "category": "Legendary",
+      "category": "Black Market",
       "cost": 4000,
       "cost_lumber": 4,
-      "effect_type": "passive",
+      "effect_type": "on_attack",
       "legendary": true,
-      "description": "Passive Bash: Gives a 25% chance to stun the target for 1 second and deal 3.5 bonus damage. Increases the strength of the hero by 70 and attack damage by 40.",
+      "description": "Passive Bash\nGives 25% chance to stun the target for 1 second.",
       "stats": {
         "bash_chance_pct": 25,
         "bash_duration": 1,
-        "bash_bonus_dmg": 3.5,
-        "str": 70,
+        "bash_bonus_dmg": 25,
+        "str": 12,
         "bonus_dmg": 40
       },
       "notes": "Legendary - drops on hero death.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 1,
+      "icon": "icons/maulofstrength.png",
+      "icon_index": null,
       "icon_cols": 3,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "mlst"
     },
     {
       "id": "poisoned_blade",
       "name": "Poisoned Blade",
-      "category": "Legendary",
+      "category": "Black Market",
       "cost": 4000,
       "cost_lumber": 4,
       "effect_type": "on_attack",
       "legendary": true,
       "unique": true,
-      "description": "Unique Slow Poison: The hero's attacks become ranged, slowing the movement speed by 50% and attack rate by 50% for 8 seconds. Works with Searing Arrows, Slow and Lightning Attack. Increases the attack damage of the hero by 40.",
+      "description": "Slow Poison\nDeals 15 damage per second, slowing movement by 70% and attack speed by 50% for 8 seconds.",
       "stats": {
         "ranged": true,
-        "slow_movement_pct": 50,
+        "poison_dps": 15,
+        "slow_movement_pct": 70,
         "slow_attack_rate_pct": 50,
-        "slow_duration": 8,
+        "duration": 8,
         "bonus_dmg": 40
       },
-      "notes": "Legendary - drops on hero death. Unique - does not stack with other Unique effects.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 2,
+      "notes": "Legendary - drops on hero death. Orb effects do not stack. Unique - does not stack with other Unique effects.",
+      "icon": "icons/poisonedblade.png",
+      "icon_index": null,
       "icon_cols": 3,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "asbl"
     },
     {
       "id": "frostguard",
       "name": "Frostguard",
-      "category": "Legendary",
+      "category": "Black Market",
       "cost": 4000,
       "cost_lumber": 4,
       "effect_type": "on_attack",
       "legendary": true,
       "unique": true,
-      "description": "Unique Frost Attack: The hero's attacks become ranged and slow the movement speed by 50% and attack rate by 25% for 1 second. Increases the armor of the hero by 15 and attack damage by 45.",
+      "description": "Frost Attack\nSlows the target's movement speed by 50% and attack speed by 25% for 3 seconds.",
       "stats": {
         "ranged": true,
         "slow_movement_pct": 50,
         "slow_attack_rate_pct": 25,
-        "slow_duration": 1,
+        "slow_duration": 3,
         "armor": 15,
-        "bonus_dmg": 45
+        "bonus_dmg": 40
       },
-      "notes": "Legendary - drops on hero death. Unique - does not stack with other Unique effects.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 3,
+      "notes": "Legendary - drops on hero death. Orb effects do not stack. Unique - does not stack with other Unique effects.",
+      "icon": "icons/frostguard.png",
+      "icon_index": null,
       "icon_cols": 3,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "frgd"
     },
     {
       "id": "searing_blade",
       "name": "Searing Blade",
-      "category": "Legendary",
+      "category": "Black Market",
       "cost": 4000,
       "cost_lumber": 4,
-      "effect_type": "passive",
+      "effect_type": "on_attack",
       "legendary": true,
-      "unique": true,
-      "description": "Unique Critical Strike: Gives a 10% chance to do 200% damage on an attack. Increases the attack damage of the hero by 60.",
+      "description": "Critical Strike\nGives 20% chance to deal 200% damage on attack.",
       "stats": {
-        "crit_chance_pct": 10,
+        "crit_chance_pct": 20,
         "crit_multiplier": 2,
         "bonus_dmg": 60
       },
       "notes": "Legendary - drops on hero death.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 4,
+      "icon": "icons/searingblade.png",
+      "icon_index": null,
       "icon_cols": 3,
+      "icon_rows": 2,
+      "raw_code": "srbd"
+    },
+    {
+      "id": "corrupted_blade",
+      "name": "Corrupted Blade",
+      "category": "Black Market",
+      "cost": 4000,
+      "cost_lumber": 4,
+      "effect_type": "on_attack",
+      "legendary": true,
+      "unique": true,
+      "description": "Greater Corruption\nReduces the target's armor by 16 for 5 seconds.",
+      "stats": {
+        "ranged": true,
+        "armor_reduction": 16,
+        "armor_reduction_duration": 5,
+        "bonus_dmg": 50
+      },
+      "tags": [
+        "Corruption"
+      ],
+      "notes": "Legendary - drops on hero death. Orb effects do not stack. Unique - does not stack with other Unique effects.",
+      "icon": "icons/corruptedblade.png",
+      "icon_index": null,
+      "icon_cols": 3,
+      "icon_rows": 2,
+      "raw_code": "I01Z"
+    },
+    {
+      "id": "goblin_land_mines",
+      "name": "Goblin Land Mines",
+      "category": "Goblin Laboratory",
+      "cost": 500,
+      "effect_type": "active",
+      "description": "Places a hidden land mine at a target point.\nEnemy units that move over the mine activate it, destroying the mine and causing area of effect damage to nearby units.",
+      "stats": {
+        "charges": 3
+      },
+      "notes": "",
+      "icon": "icons/goblinlandmines.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "gobm",
+      "stock_max": 1,
+      "hide_shop_tag": true,
+      "tags": [
+        "Consumable"
+      ],
+      "cost_lumber": 0
+    },
+    {
+      "id": "reveal",
+      "name": "Reveal",
+      "category": "Goblin Laboratory",
+      "cost": 50,
+      "effect_type": "active",
+      "description": "Reveals an area of the map and detects invisible units for 8 seconds.",
+      "stats": {
+        "reveal_duration": 8
+      },
+      "notes": "",
+      "icon": "icons/reveal.png",
+      "icon_index": null,
+      "icon_cols": 4,
       "icon_rows": 2
+    },
+    {
+      "id": "staff_of_negation",
+      "name": "Staff of Negation",
+      "category": "Goblin Laboratory",
+      "cost": 1500,
+      "cost_lumber": 2,
+      "effect_type": "active",
+      "description": "Active Dispel\nDispels all magical effects in a target area.\n\nDeals 600 damage to summoned units.",
+      "stats": {
+        "active_dmg_summoned": 600,
+        "active_cooldown": 30,
+        "active_range": 600,
+        "active_aoe": 250
+      },
+      "notes": "",
+      "icon": "icons/staffofnegation.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "sneg",
+      "stock_max": 1,
+      "tags": [
+        "Active"
+      ]
+    },
+    {
+      "id": "cloak_of_shadows",
+      "name": "Cloak of Shadows",
+      "category": "Goblin Laboratory",
+      "cost": 100,
+      "effect_type": "active",
+      "description": "Active Shadow Meld\nProvides the Hero with invisibility when worn.\nAn invisible Hero is untargetable by the enemy unless detected.\nIf the Hero moves, attacks, uses an ability, or casts a spell, the invisibility effect is lost.",
+      "stats": {},
+      "notes": "Breaks on attack or spell cast",
+      "icon": "icons/cloakofshadows.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "clsd",
+      "cost_lumber": 0
+    },
+    {
+      "id": "gem_of_true_seeing",
+      "name": "Gem of True Seeing",
+      "category": "Goblin Laboratory",
+      "cost": 700,
+      "effect_type": "passive",
+      "description": "Passive True Sight\nDetects hidden and invisible units in a 1100 area.",
+      "stats": {
+        "true_sight_aoe": 1100
+      },
+      "notes": "Item drops when the hero dies",
+      "icon": "icons/gemoftrueseeing.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "gemt",
+      "cost_lumber": 0
+    },
+    {
+      "id": "dagger_of_escape",
+      "name": "Blink Dagger of Escape",
+      "category": "Goblin Laboratory",
+      "cost": 2500,
+      "effect_type": "passive+active",
+      "description": "Active Blink\nTeleports the hero a short distance of up to 900.",
+      "stats": {
+        "move_speed": 60,
+        "blink_range": 900,
+        "active_cooldown": 25
+      },
+      "notes": "",
+      "icon": "icons/blinkdaggerofescape.png",
+      "icon_index": null,
+      "icon_cols": 1,
+      "icon_rows": 1,
+      "raw_code": "desc",
+      "cost_lumber": 2,
+      "tags": [
+        "Active",
+        "Movement Speed"
+      ],
+      "hide_shop_tag": true
+    },
+    {
+      "id": "drake_egg",
+      "name": "Drake Egg",
+      "category": "Summon",
+      "cost": 550,
+      "effect_type": "active",
+      "description": "Summons a Blue Drake to fight for you.\nLasts 180 seconds.",
+      "stats": {
+        "summons": 1,
+        "summon_unit": "Blue Drake",
+        "duration": 180
+      },
+      "notes": "",
+      "icon": "icons/drakeegg.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "fgbd",
+      "cost_lumber": 0
+    },
+    {
+      "id": "stone_token",
+      "name": "Stone Token",
+      "category": "Summon",
+      "cost": 600,
+      "effect_type": "active",
+      "description": "Summons a Rock Golem to fight for you.\nLasts 180 seconds.",
+      "stats": {
+        "summons": 1,
+        "summon_unit": "Rock Golem",
+        "duration": 180
+      },
+      "notes": "",
+      "icon": "icons/stonetoken.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "fgrg",
+      "cost_lumber": 0
+    },
+    {
+      "id": "inferno_stone",
+      "name": "Inferno Stone",
+      "category": "Summon",
+      "cost": 700,
+      "effect_type": "active",
+      "description": "Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area.\nThe Infernal lasts 180 seconds.\nHas Permanent Immolation (15 dps), Spell Immunity, and Resistant Skin.",
+      "stats": {
+        "summons": 1,
+        "summon_unit": "Infernal",
+        "duration": 180,
+        "impact_dmg": 50,
+        "stun_duration": 4,
+        "immolation_dps": 15
+      },
+      "notes": "",
+      "icon": "icons/infernostone.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "infs",
+      "cost_lumber": 0
+    },
+    {
+      "id": "demonic_figurine",
+      "name": "Demonic Figurine",
+      "category": "Summon",
+      "cost": 700,
+      "effect_type": "active",
+      "description": "Summons a Doom Guard to fight for you.\nLasts 180 seconds.\nThe Doom Guard has: Doom Magic (removes all buffs in area), Dire Stomp (50 dmg + 2s stun), Cripple, Rain of Fire, Resistant Skin.",
+      "stats": {
+        "summons": 1,
+        "summon_unit": "Doom Guard",
+        "duration": 180
+      },
+      "notes": "",
+      "icon": "icons/demonicfigurine.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "fgdg",
+      "cost_lumber": 0
+    },
+    {
+      "id": "ice_shard",
+      "name": "Ice Shard",
+      "category": "Summon",
+      "cost": 400,
+      "effect_type": "active",
+      "description": "Summons an Ice Revenant to fight for you.\nThe Ice Revenant lasts 180 seconds.",
+      "stats": {
+        "summons": 1,
+        "summon_unit": "Ice Revenant",
+        "duration": 180
+      },
+      "notes": "",
+      "icon": "icons/iceshard.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "shar",
+      "cost_lumber": 0
+    },
+    {
+      "id": "ancestral_staff",
+      "name": "Ancestral Staff",
+      "category": "Summon",
+      "cost": 300,
+      "effect_type": "active",
+      "description": "Permanent\nSummons 2 Berserkers to fight for you.\nAlso grants the hero and friendly nearby units increased attack speed and movement speed.",
+      "stats": {
+        "summons": 2,
+        "summon_unit": "Berserker",
+        "aura": "Attack Rate + Movement Speed"
+      },
+      "notes": "",
+      "icon": "icons/ancestralstaff.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "axas",
+      "cost_lumber": 0
+    },
+    {
+      "id": "rod_of_necromancy",
+      "name": "Rod of Necromancy",
+      "category": "Summon",
+      "cost": 150,
+      "effect_type": "active",
+      "description": "Permanent\nCreates 2 Skeleton Warriors from a corpse.",
+      "stats": {
+        "summons": 2,
+        "summon_unit": "Skeleton Warrior",
+        "trigger": "on_corpse"
+      },
+      "notes": "",
+      "icon": "icons/rodofnecromancy.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "rnec",
+      "cost_lumber": 0
+    },
+    {
+      "id": "book_of_the_dead",
+      "name": "Book of the Dead",
+      "category": "Summon",
+      "cost": 300,
+      "effect_type": "active",
+      "description": "Summons 3 Skeleton Warriors and 3 Skeleton Archers to fight for you.\nLasts 120 seconds.",
+      "stats": {
+        "summons": 6,
+        "summon_unit": "Skeleton Warriors + Archers",
+        "duration": 120
+      },
+      "notes": "",
+      "icon": "icons/bookofthedead.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "fgsk",
+      "cost_lumber": 0
     },
     {
       "id": "bundle_of_lumber",
@@ -1399,10 +1995,12 @@
         "lumber_gain": 1
       },
       "notes": "",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 0,
+      "icon": "icons/bundleoflumber.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "lmbr",
+      "cost_lumber": 0
     },
     {
       "id": "gold_coins",
@@ -1415,42 +2013,50 @@
         "gold_gain": 300
       },
       "notes": "Convert 1 lumber into 300 gold",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 1,
+      "icon": "icons/goldcoins.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "gold",
+      "cost": 0
     },
     {
       "id": "tome_of_experience",
       "name": "Tome of Experience",
       "category": "Library",
-      "cost": 150,
+      "cost": 250,
       "effect_type": "active",
       "description": "Gives 100 experience to the Hero when used.",
       "stats": {
         "xp_gain": 100
       },
       "notes": "",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 2,
+      "icon": "icons/tomeofexperience.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "texp",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_power",
       "name": "Tome of Power",
       "category": "Library",
-      "cost": 900,
+      "cost": 1000,
       "effect_type": "active",
       "description": "Increases the level of the Hero by 1 when used.",
       "stats": {
         "level_gain": 1
       },
       "notes": "",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 3,
+      "icon": "icons/tomeofpower.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "tkno",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_agility",
@@ -1458,51 +2064,60 @@
       "category": "Library",
       "cost": 400,
       "effect_type": "active",
-      "description": "Permanently increases the agility of the Hero by 2 when used.",
+      "description": "Permanently increases the agility by 2.",
       "stats": {
         "agi": 2
       },
       "notes": "Permanent stat increase",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 4,
+      "icon": "icons/tomeofagility2.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "tdx2",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_strength",
       "name": "Tome of Strength +2",
       "category": "Library",
-      "cost": 400,
+      "cost": 420,
       "effect_type": "active",
-      "description": "Permanently increases the strength of the Hero by 2 when used.",
+      "description": "Permanently increases the strength by 2.",
       "stats": {
         "str": 2
       },
       "notes": "Permanent stat increase",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 5,
+      "icon": "icons/tomeofstrength2.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "tst2",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_intelligence",
       "name": "Tome of Intelligence +2",
       "category": "Library",
-      "cost": 350,
+      "cost": 250,
       "effect_type": "active",
-      "description": "Permanently increases the intelligence of the Hero by 2 when used.",
+      "description": "Permanently increases the intelligence by 2.",
       "stats": {
         "int": 2
       },
       "notes": "Permanent stat increase",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 6,
+      "icon": "icons/tomeofintelligence2.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "tin2",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_knowledge",
-      "name": "Tome of Knowledge",
+      "name": "Tome of Knowledge +1",
       "category": "Library",
       "cost": 400,
       "effect_type": "active",
@@ -1513,10 +2128,13 @@
         "int": 1
       },
       "notes": "Permanent stat increase",
-      "icon": "screenshots/Shops/Library/1-8.png",
-      "icon_index": 7,
+      "icon": "icons/tomeofknowledge1.png",
+      "icon_index": null,
       "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 2,
+      "raw_code": "tpow",
+      "stock_max": 5,
+      "cost_lumber": 0
     },
     {
       "id": "tome_of_retraining",
@@ -1524,337 +2142,16 @@
       "category": "Library",
       "cost": 200,
       "effect_type": "active",
-      "description": "Unlearns all of the hero's spells, allowing the hero to learn different skills. Only affects abilities that are not on cooldown.",
+      "description": "Unlearns all of the hero's spells, allowing the hero to learn different skills.\nOnly affects abilities that are not on cooldown.",
       "stats": {},
       "notes": "",
-      "icon": "screenshots/Shops/Library/9.png",
-      "icon_index": 0,
+      "icon": "icons/tomeofretraining.png",
+      "icon_index": null,
       "icon_cols": 1,
-      "icon_rows": 1
-    },
-    {
-      "id": "goblin_sapper",
-      "name": "Goblin Sapper",
-      "category": "Goblin Merchant",
-      "cost": 250,
-      "effect_type": "unit",
-      "description": "Hires a Goblin Sapper unit (200 HP). Kaboom!: Causes a powerful area explosion, dealing 100 damage to units and buildings, but only 3.25 damage to heroes. Works on land units and trees.",
-      "stats": {
-        "unit_hp": 200,
-        "kaboom_dmg": 100,
-        "kaboom_dmg_hero": 3.25
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "goblin_shredder",
-      "name": "Goblin Shredder",
-      "category": "Goblin Merchant",
-      "cost": 250,
-      "effect_type": "unit",
-      "description": "Hires a Goblin Shredder unit (600 HP). Destroy Trees: Allows to attack trees, effectively clearing them. Cuts a healthy tree down in 5 swings.",
-      "stats": {
-        "unit_hp": 600,
-        "tree_swings": 5
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "goblin_land_mines",
-      "name": "Goblin Land Mines",
-      "category": "Goblin Merchant",
-      "cost": 500,
-      "effect_type": "active",
-      "description": "Places a hidden land mine at a target point. Enemy units that move over the mine activate it, destroying the mine and causing area of effect damage to nearby units.",
-      "stats": {
-        "charges": 3
-      },
-      "notes": "3 charges",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "reveal",
-      "name": "Reveal",
-      "category": "Goblin Merchant",
-      "cost": 50,
-      "effect_type": "active",
-      "description": "Reveals an area of the map and detects invisible units for 8 seconds.",
-      "stats": {
-        "reveal_duration": 8
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 3,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "staff_of_negation",
-      "name": "Staff of Negation",
-      "category": "Goblin Merchant",
-      "cost": 2000,
-      "cost_lumber": 2,
-      "effect_type": "active",
-      "description": "Active Dispel: Dispels all magical effects in a target area. Deals 600 damage to summoned units.",
-      "stats": {
-        "active_dmg_summoned": 600,
-        "active_cooldown": 30,
-        "active_range": 600,
-        "active_aoe": 250
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "staff_of_silence",
-      "name": "Staff of Silence",
-      "category": "Goblin Merchant",
-      "cost": 900,
-      "effect_type": "active",
-      "description": "Active Silence: Stops all enemies in a target area from casting spells for 6 seconds.",
-      "stats": {
-        "silence_duration": 6,
-        "active_cooldown": 30,
-        "active_aoe": 225
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 5,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "cloak_of_shadows",
-      "name": "Cloak of Shadows",
-      "category": "Goblin Merchant",
-      "cost": 100,
-      "effect_type": "active",
-      "description": "Active Shadow Meld: Provides the hero with invisibility when activated. An invisible hero is untargetable by the enemy unless detected. Invisibility is lost if the hero attacks, uses a damage spell, or casts a spell.",
-      "stats": {},
-      "notes": "Breaks on attack or spell cast",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "gem_of_true_seeing",
-      "name": "Gem of True Seeing",
-      "category": "Goblin Merchant",
-      "cost": 700,
-      "effect_type": "passive",
-      "description": "Passive True Sight: Allows the hero to detect hidden or invisible units in the hero's line of sight when carried.",
-      "stats": {
-        "true_sight_aoe": 1100
-      },
-      "notes": "Item drops when the hero dies",
-      "icon": "screenshots/Shops/Goblin_Merchant/1-8.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "dagger_of_escape",
-      "name": "Dagger of Escape",
-      "category": "Goblin Merchant",
-      "cost": 2500,
-      "effect_type": "passive+active",
-      "description": "Increases the movement speed of the hero by 60. Active Blink: Teleports the hero a short distance of up to 900.",
-      "stats": {
-        "move_speed": 60,
-        "blink_range": 900,
-        "active_cooldown": 25
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Goblin_Merchant/9.png",
-      "icon_index": 0,
-      "icon_cols": 1,
-      "icon_rows": 1
-    },
-    {
-      "id": "corrupted_blade",
-      "name": "Corrupted Blade",
-      "category": "Legendary",
-      "cost": 4000,
-      "cost_lumber": 4,
-      "effect_type": "on_attack",
-      "legendary": true,
-      "unique": true,
-      "description": "Unique Corruption: The hero's attacks become ranged and reduce the armor of enemy units by 7.6 for 5 seconds. Increases the attack damage of the hero by 50.",
-      "stats": {
-        "ranged": true,
-        "armor_reduction": 7.6,
-        "armor_reduction_duration": 5,
-        "bonus_dmg": 50
-      },
-      "notes": "Legendary - drops on hero death. Unique - does not stack with other Unique effects.",
-      "icon": "screenshots/Shops/Shrin_of_Azshara/Icon.png",
-      "icon_index": 5,
-      "icon_cols": 3,
-      "icon_rows": 2
-    },
-    {
-      "id": "rod_of_necromancy",
-      "name": "Rod of Necromancy",
-      "category": "Summon",
-      "cost": 150,
-      "effect_type": "active",
-      "description": "Permanent: Creates 2 Skeleton Warriors from a corpse.",
-      "stats": {
-        "summons": 2,
-        "summon_unit": "Skeleton Warrior",
-        "duration": "permanent",
-        "trigger": "on_corpse"
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 6,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "ancestral_staff",
-      "name": "Ancestral Staff",
-      "category": "Summon",
-      "cost": 300,
-      "effect_type": "active",
-      "description": "Permanent: Summons 2 Berserkers to fight for you. Also grants the hero and friendly nearby units increased attack rate and movement speed.",
-      "stats": {
-        "summons": 2,
-        "summon_unit": "Berserker",
-        "duration": "permanent",
-        "aura": "attack rate + move speed"
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 5,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "book_of_the_dead",
-      "name": "Book of the Dead",
-      "category": "Summon",
-      "cost": 300,
-      "effect_type": "active",
-      "description": "Summons 3 Skeleton Warriors and 3 Skeleton Archers to fight for you. Lasts 120 seconds.",
-      "stats": {
-        "summons": 6,
-        "summon_unit": "Skeleton Warriors + Archers",
-        "duration": 120
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 7,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "ice_shard",
-      "name": "Ice Shard",
-      "category": "Summon",
-      "cost": 350,
-      "effect_type": "active",
-      "description": "Summons an Ice Revenant to fight for you. The Ice Revenant lasts 180 seconds.",
-      "stats": {
-        "summons": 1,
-        "summon_unit": "Ice Revenant",
-        "duration": 180
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 4,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "drake_egg",
-      "name": "Drake Egg",
-      "category": "Summon",
-      "cost": 550,
-      "effect_type": "active",
-      "description": "Summons a Blue Drake to fight for you. Lasts 180 seconds.",
-      "stats": {
-        "summons": 1,
-        "summon_unit": "Blue Drake",
-        "duration": 180
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 0,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "stone_token",
-      "name": "Stone Token",
-      "category": "Summon",
-      "cost": 600,
-      "effect_type": "active",
-      "description": "Summons a Rock Golem to fight for you. Lasts 180 seconds.",
-      "stats": {
-        "summons": 1,
-        "summon_unit": "Rock Golem",
-        "duration": 180
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 1,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "demonic_figurine",
-      "name": "Demonic Figurine",
-      "category": "Summon",
-      "cost": 700,
-      "effect_type": "active",
-      "description": "Summons a Doom Guard to fight for you. Lasts 180 seconds. The Doom Guard has: Doom Magic (removes all buffs in area), Dire Stomp (50 dmg + 2s stun), Cripple, Rain of Fire, Resistant Skin.",
-      "stats": {
-        "summons": 1,
-        "summon_unit": "Doom Guard",
-        "duration": 180
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 3,
-      "icon_cols": 4,
-      "icon_rows": 2
-    },
-    {
-      "id": "inferno_stone",
-      "name": "Inferno Stone",
-      "category": "Summon",
-      "cost": 700,
-      "effect_type": "active",
-      "description": "Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds. Has Permanent Immolation (15 dps), Spell Immunity, and Resistant Skin.",
-      "stats": {
-        "summons": 1,
-        "summon_unit": "Infernal",
-        "duration": 180,
-        "impact_dmg": 50,
-        "stun_duration": 4,
-        "immolation_dps": 15
-      },
-      "notes": "",
-      "icon": "screenshots/Shops/Summons/Icon.png",
-      "icon_index": 2,
-      "icon_cols": 4,
-      "icon_rows": 2
+      "icon_rows": 1,
+      "raw_code": "tret",
+      "stock_max": 1,
+      "cost_lumber": 0
     }
   ]
 }

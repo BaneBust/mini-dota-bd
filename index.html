@@ -4,15 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini-Dota WC3 — Build Database</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,500..700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=202">
 </head>
 <body>
   <header>
-    <h1>Mini-Dota WC3</h1>
+    <h1>Mini-Dota<span class="wordmark-sub">WC3</span></h1>
     <nav>
       <button class="nav-btn active" data-tab="heroes">Heroes</button>
       <button class="nav-btn" data-tab="items">Items</button>
-      <button class="nav-btn" data-tab="mercs">Mercs</button>
+      <button class="nav-btn" data-tab="mercs">Mercenaries</button>
+      <button class="nav-btn" data-tab="structures">Towers &amp; Bases</button>
+      <!-- Hidden, not deleted: app.js reads TAB_NAMES off these buttons and
+           clicks the Builds one by selector after a build is saved, so removing
+           them from the markup would throw. style.css hides the pair. -->
       <button class="nav-btn" data-tab="builds">Builds</button>
       <button class="nav-btn" data-tab="build-creator">Create Build</button>
     </nav>
@@ -29,6 +36,9 @@
           <option value="AGI">Agility</option>
           <option value="INT">Intelligence</option>
         </select>
+        <select id="hero-filter-role">
+          <option value="">All Roles</option>
+        </select>
       </div>
       <div id="hero-list" class="card-grid"></div>
     </section>
@@ -38,27 +48,40 @@
       <div class="search-bar">
         <input type="text" id="item-search" placeholder="Search items...">
         <select id="item-filter-cat">
-          <option value="">All Categories</option>
-          <option value="Orb">Orbs</option>
-          <option value="Upgradable">Upgradable</option>
-          <option value="Advanced">Advanced</option>
+          <option value="">All Shops</option>
+          <option value="Consumable">Consumables</option>
           <option value="Special">Special</option>
-          <option value="Consumable">Consumable</option>
-          <option value="Legendary">Legendary</option>
-          <option value="Library">Library</option>
-          <option value="Goblin Merchant">Goblin Merchant</option>
+          <option value="Upgradable">Upgradable</option>
+          <option value="Orb">Orbs</option>
+          <option value="Advanced">Advanced</option>
+          <option value="Black Market">Black Market</option>
+          <option value="Goblin Laboratory">Goblin Laboratory</option>
           <option value="Summon">Summons</option>
+          <option value="Library">Library</option>
         </select>
       </div>
-      <div id="item-list" class="card-grid"></div>
+      <div id="item-list"></div>
     </section>
 
-    <!-- MERCS TAB -->
+    <!-- MERCENARIES TAB -->
     <section id="tab-mercs" class="tab">
       <div class="search-bar">
-        <input type="text" id="merc-search" placeholder="Search mercs...">
+        <input type="text" id="merc-search" placeholder="Search mercenaries...">
       </div>
-      <div id="merc-list" class="card-grid"></div>
+      <div id="merc-list"></div>
+    </section>
+
+    <!-- TOWERS & BASES TAB -->
+    <section id="tab-structures" class="tab">
+      <div class="search-bar">
+        <input type="text" id="structure-search" placeholder="Search towers and bases...">
+        <select id="structure-filter-team">
+          <option value="">Both Teams</option>
+          <option value="Human">Human</option>
+          <option value="Undead">Undead</option>
+        </select>
+      </div>
+      <div id="structure-list"></div>
     </section>
 
     <!-- BUILDS TAB -->
@@ -90,9 +113,9 @@
           </div>
 
           <div id="bc-skillorder-section" class="form-row hidden">
-            <label class="phase-label" style="color:var(--gold-light); margin-bottom:10px;">Skill Order (Lvl 1–25)</label>
+            <label class="phase-label" style="color:var(--gold-light); margin-bottom:10px;">Skill Order (Level 1–25)</label>
             <div id="bc-skillorder-grid" class="skillorder-grid"></div>
-            <div class="skillorder-hint">Click = assign · click again = remove · max. 6 ranks per skill</div>
+            <div class="skillorder-hint">Click to assign · click again to remove · at most 6 ranks per skill</div>
           </div>
 
           <div class="form-row phase-section">
@@ -130,7 +153,7 @@
               <div class="item-slot empty" data-slot="5">+</div>
             </div>
             <div class="legendary-row">
-              <span class="legendary-row-label">⚔ Legendary Replacement (optional — which Endgame item does it replace?)</span>
+              <span class="legendary-row-label">Legendary Replacement (optional — which Endgame item does it replace?)</span>
               <div id="bc-slots-legendary" class="item-slots" data-phase="legendary">
                 <div class="item-slot legendary-slot empty" data-slot="0">—</div>
                 <div class="item-slot legendary-slot empty" data-slot="1">—</div>
@@ -168,6 +191,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=205"></script>
 </body>
 </html>

@@ -1,0 +1,379 @@
+{
+  "structures": [
+    {
+      "id": "outer_guard_tower",
+      "name": "Outer Guard Tower",
+      "team": "Human",
+      "kind": "Tower",
+      "tier": "Outer",
+      "count": 2,
+      "description": "The first tower on each Human lane. Cheapest to break and the one that opens the lane.",
+      "health": 2000,
+      "health_regen": 2,
+      "armor": 10,
+      "armor_type": "Fortified",
+      "damage": 80,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0.9,
+      "attack_range": 800,
+      "bounty": 400,
+      "bounty_lumber": 2,
+      "abilities": [
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/guardtower.png",
+      "raw_code": "hgtw"
+    },
+    {
+      "id": "middle_guard_tower",
+      "name": "Middle Guard Tower",
+      "team": "Human",
+      "kind": "Tower",
+      "tier": "Middle",
+      "count": 2,
+      "description": "The second tower on each Human lane. Same reach as the outer one, with more health and damage behind it.",
+      "health": 2500,
+      "health_regen": 2,
+      "armor": 10,
+      "armor_type": "Fortified",
+      "damage": 100,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0.9,
+      "attack_range": 800,
+      "bounty": 600,
+      "bounty_lumber": 2,
+      "abilities": [
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/guardtower.png",
+      "raw_code": "h003"
+    },
+    {
+      "id": "inner_arcane_tower",
+      "name": "Inner Arcane Tower",
+      "team": "Human",
+      "kind": "Tower",
+      "tier": "Inner",
+      "count": 2,
+      "description": "The last tower before the Castle. Hits harder than the lane towers but has to be walked into — its range is 200 shorter.",
+      "health": 3000,
+      "health_regen": 5,
+      "armor": 20,
+      "armor_type": "Fortified",
+      "damage": 120,
+      "attack_type": "Piercing",
+      "attack_cooldown": 1,
+      "attack_range": 600,
+      "bounty": 800,
+      "bounty_lumber": 4,
+      "abilities": [
+        {
+          "name": "Feedback",
+          "type": "Passive",
+          "description": "Every attack destroys 24 mana — 14 against a hero — and deals bonus damage equal to the mana destroyed. Deals 20 extra damage to summoned units."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/arcanetower.png",
+      "raw_code": "hatw"
+    },
+    {
+      "id": "side_guard_tower",
+      "name": "Side Guard Tower",
+      "team": "Human",
+      "kind": "Tower",
+      "tier": "Side",
+      "count": 4,
+      "description": "Stands at the corners of the Human base and cannot be attacked. Anything it reaches dies to one hit.",
+      "damage": 5000,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0.9,
+      "attack_range": 700,
+      "abilities": [
+        {
+          "name": "Invulnerable",
+          "type": "Passive",
+          "description": "Cannot be attacked or damaged."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Four per team, two above the top lane and two below the bottom one, flanking the base. It carries no health or armor figure here because nothing can bring it down.",
+      "icon": "icons/guardtower.png",
+      "raw_code": "h005"
+    },
+    {
+      "id": "castle",
+      "name": "Castle",
+      "team": "Human",
+      "kind": "Base",
+      "tier": "Base",
+      "count": 1,
+      "description": "The Human base. Destroy it and the Undead team wins the game.",
+      "health": 5000,
+      "health_regen": 5,
+      "armor": 30,
+      "armor_type": "Fortified",
+      "damage": 200,
+      "attack_type": "Piercing",
+      "attack_cooldown": 1,
+      "attack_range": 550,
+      "abilities": [
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/castle.png",
+      "raw_code": "hcas"
+    },
+    {
+      "id": "fountain_human",
+      "name": "Fountain",
+      "team": "Human",
+      "kind": "Fountain",
+      "tier": "Fountain",
+      "count": 1,
+      "description": "Stands behind the Human base among the shops. Refills health and mana of anything standing near it, and shoots back at whatever comes close.",
+      "damage": 300,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0,
+      "attack_range": 500,
+      "abilities": [
+        {
+          "name": "Healing Ward (Fountain)",
+          "type": "Aura",
+          "description": "Restores 3.5% of maximum hit points per second to units within 500 range."
+        },
+        {
+          "name": "Fountain of Mana",
+          "type": "Aura",
+          "description": "Restores 3.5% of maximum mana per second to units within 500 range."
+        },
+        {
+          "name": "Invulnerable",
+          "type": "Passive",
+          "description": "Cannot be attacked or damaged."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given.",
+      "icon": "icons/fountain.png",
+      "raw_code": "o00D"
+    },
+    {
+      "id": "outer_spirit_tower",
+      "name": "Outer Spirit Tower",
+      "team": "Undead",
+      "kind": "Tower",
+      "tier": "Outer",
+      "count": 2,
+      "description": "The first tower on each Undead lane. Cheapest to break and the one that opens the lane.",
+      "health": 2000,
+      "health_regen": 2,
+      "armor": 10,
+      "armor_type": "Fortified",
+      "damage": 80,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0.9,
+      "attack_range": 800,
+      "bounty": 400,
+      "bounty_lumber": 2,
+      "abilities": [
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/spirittower.png",
+      "raw_code": "uzg1"
+    },
+    {
+      "id": "middle_spirit_tower",
+      "name": "Middle Spirit Tower",
+      "team": "Undead",
+      "kind": "Tower",
+      "tier": "Middle",
+      "count": 2,
+      "description": "The second tower on each Undead lane. Same reach as the outer one, with more health and damage behind it.",
+      "health": 2500,
+      "health_regen": 2,
+      "armor": 10,
+      "armor_type": "Fortified",
+      "damage": 100,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0.9,
+      "attack_range": 800,
+      "bounty": 600,
+      "bounty_lumber": 2,
+      "abilities": [
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/spirittower.png",
+      "raw_code": "u006"
+    },
+    {
+      "id": "inner_nerubian_tower",
+      "name": "Inner Nerubian Tower",
+      "team": "Undead",
+      "kind": "Tower",
+      "tier": "Inner",
+      "count": 2,
+      "description": "The last tower before the Black Citadel. Its attack freezes whatever it hits, so walking off it costs more than the damage alone.",
+      "health": 3000,
+      "health_regen": 5,
+      "armor": 20,
+      "armor_type": "Fortified",
+      "damage": 120,
+      "attack_type": "Piercing",
+      "attack_cooldown": 1.15,
+      "attack_range": 600,
+      "bounty": 800,
+      "bounty_lumber": 4,
+      "abilities": [
+        {
+          "name": "Frost Attack",
+          "type": "Passive",
+          "description": "Attacks slow movement speed by 50% and attack speed by 25% for 5 seconds."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/frosttower.png",
+      "raw_code": "uzg2"
+    },
+    {
+      "id": "side_spirit_tower",
+      "name": "Side Spirit Tower",
+      "team": "Undead",
+      "kind": "Tower",
+      "tier": "Side",
+      "count": 4,
+      "description": "Stands at the corners of the Undead base and cannot be attacked. Anything it reaches dies to one hit.",
+      "damage": 5000,
+      "attack_type": "Piercing",
+      "attack_cooldown": 1,
+      "attack_range": 700,
+      "abilities": [
+        {
+          "name": "Invulnerable",
+          "type": "Passive",
+          "description": "Cannot be attacked or damaged."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Four per team, two above the top lane and two below the bottom one, flanking the base. It carries no health or armor figure here because nothing can bring it down.",
+      "icon": "icons/spirittower.png",
+      "raw_code": "u009"
+    },
+    {
+      "id": "black_citadel",
+      "name": "Black Citadel",
+      "team": "Undead",
+      "kind": "Base",
+      "tier": "Base",
+      "count": 1,
+      "description": "The Undead base. Destroy it and the Human team wins the game. Unlike the Castle, its attack also freezes.",
+      "health": 5000,
+      "health_regen": 5,
+      "armor": 30,
+      "armor_type": "Fortified",
+      "damage": 200,
+      "attack_type": "Piercing",
+      "attack_cooldown": 1,
+      "attack_range": 550,
+      "abilities": [
+        {
+          "name": "Frost Attack",
+          "type": "Passive",
+          "description": "Attacks slow movement speed by 50% and attack speed by 25% for 5 seconds."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "icon": "icons/blackcitadel.png",
+      "raw_code": "unp2"
+    },
+    {
+      "id": "fountain_undead",
+      "name": "Fountain",
+      "team": "Undead",
+      "kind": "Fountain",
+      "tier": "Fountain",
+      "count": 1,
+      "description": "Stands behind the Undead base among the shops. Refills health and mana of anything standing near it, and shoots back at whatever comes close.",
+      "damage": 300,
+      "attack_type": "Piercing",
+      "attack_cooldown": 0,
+      "attack_range": 500,
+      "abilities": [
+        {
+          "name": "Healing Ward (Fountain)",
+          "type": "Aura",
+          "description": "Restores 3.5% of maximum hit points per second to units within 500 range."
+        },
+        {
+          "name": "Fountain of Mana",
+          "type": "Aura",
+          "description": "Restores 3.5% of maximum mana per second to units within 500 range."
+        },
+        {
+          "name": "Invulnerable",
+          "type": "Passive",
+          "description": "Cannot be attacked or damaged."
+        },
+        {
+          "name": "Magic Sentry",
+          "type": "Passive",
+          "description": "Reveals invisible units within 900 range."
+        }
+      ],
+      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given.",
+      "icon": "icons/fountaindefiled.png",
+      "raw_code": "o00D"
+    }
+  ]
+}
