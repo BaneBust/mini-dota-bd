@@ -1,0 +1,257 @@
+/* PROPOZYCJA: kolorystyka i typografia First Blood Gaming.
+   Nakładka na style.css -- nadpisuje wyłącznie tokeny z :root plus kilka
+   miejsc, gdzie kolor albo krój był wpisany na sztywno. Nic tu nie kasuje
+   oryginału: wystarczy odpiąć <link>, żeby wrócić do złota.
+
+   Wartości nie są zgadywane -- zdjęte z firstbloodgaming.com: header i stopka
+   siedzą na czystej czerni, panele na #161616, akcent to #DD1C1C (hover
+   #D51B1B), menu leci Khand 600 uppercase, treść Poppins. */
+:root {
+  /* Ziemia pod strona schodzi z absolutnej czerni. #000000 dzialalo, dopoki
+     akcent byl czerwony -- czerwien niczego od tla nie potrzebuje. Zloto
+     potrzebuje: komentarz na gorze style.css opisuje dokladnie ten przypadek,
+     bo zloto na cieplym prawie-czarnym robi sie mulem, a to, co kaze mu wygladac
+     na zloto, to chlodny podklad. Stad ten nie jest ani czysta czernia, ani
+     lupkiem z oryginalu, tylko punktem miedzy nimi: na tyle podniesiony, zeby
+     panele #161616 mialy sie od czego odciac, i na tyle chlodny, zeby #ffcc00
+     zostalo zlotem. */
+  --bg: #0a0b0d;
+  --bg2: #161616;
+  --bg3: #1f1f1f;
+  --border: #2e2e2e;
+  --border-soft: #1f1f1f;
+
+  /* Akcent wraca do zlota. Czerwien FBG dziala u nich, bo ich strona nie
+     pokazuje niczego wlasnego -- to naglowki, przyciski i listy, ktore moga
+     miec dowolny kolor. Tutaj kazdy kafelek nosi ikone z gry, a te ikony maja
+     wlasne barwy i polowa z nich jest czerwona albo pomaranczowa: ognie, krew,
+     korzenie, skory. Akcent w tej samej rodzinie przestawal byc akcentem i
+     zaczynal byc jeszcze jednym czerwonym plamem w siatce. Zloto nie wystepuje
+     w zadnej ikonie jako duza plaszczyzna, wiec zaznacza, nie konkuruje -- i
+     jest kolorem, ktorym mapa i tak pisze cene, monete i slowo "Active".
+     Czern i typografia z FBG zostaja. */
+  --gold: #ffcc00;
+  --gold-light: #ffe07a;
+  --gold-dim: #a8862a;
+
+  /* Tekst zostaje przy cieplej bieli z oryginalu. Motyw probowal podniesc go do
+     #ffffff, bo FBG pisze biela -- ale FBG pisze biela na swoich wlasnych
+     panelach, a tutaj kazde miejsce, w ktorym ta biel wychodzila, okazywalo sie
+     tym samym problemem: nazwa karty, pole wyszukiwania z lista sklepow, tytul
+     rozwinietego przedmiotu. Wszystkie stoja na ciemnym, cieplym tle obok
+     ikonek z gry i przy #ffffff swiecily mocniej niz cokolwiek dookola. Zamiast
+     odkrecac to selektor po selektorze, biel zostaje tam, gdzie naprawde jest
+     potrzebna: w pasku menu, nizej. */
+  --text: #d8d2c4;
+  --text-soft: #b3ac9d;
+  --text-dim: #8b8578;
+
+  /* Kolory statystyk i faz zostaja: to dane z mapy, nie dekoracja motywu. */
+  --red: #8b2020;
+
+  /* Khand nie wchodzi w --display, tylko dostaje wlasny token na pasek. Probowal
+     tu byc krojem naglowkowym calej strony i za kazdym razem przegrywal z tym,
+     do czego naglowki na tej stronie sluza: nazwa karty, tytul sekcji, tytul
+     przedmiotu i nazwa umiejetnosci to etykiety, ktore sie czyta, czesto dlugie
+     i w wersji mieszanej -- a Khand jest kondensowany, ma niska wysokosc x i
+     najwezsze male litery. W pasku robi dokladnie to, do czego jest: kilka
+     krotkich slow w capsach. FBG uzywa go zreszta tak samo -- ich tresc leci
+     Poppinsem, Khand siedzi w menu. */
+  --display: 'Archivo', system-ui, 'Segoe UI', sans-serif;
+  --nav: 'Khand', 'Archivo', system-ui, sans-serif;
+  --body: 'Poppins', system-ui, sans-serif;
+}
+
+/* Khand ma bardzo niską wysokość x -- w tym samym rozmiarze co Archivo czyta
+   się o klasę mniejszy. Stąd 16px zamiast 15px i zero dodatkowego światła
+   między literami: krój jest kondensowany i sam trzyma litery ciasno, a
+   letter-spacing z oryginału rozbijał go na pojedyncze znaki. */
+.nav-btn {
+  font-family: var(--nav);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+/* U nich nieaktywna pozycja menu jest biała, nie przygaszona -- pasek czyta się
+   jako rząd równorzędnych wejść, a nie jako jedno aktywne i reszta w cieniu. */
+.nav-btn { color: #fff; }
+.nav-btn:hover { color: var(--gold); }
+
+/* Header na czystej czerni, tak jak ich .header. Złota nitka pod spodem była
+   wpisana w style.css na sztywno (rgba 255,204,0), więc trzeba ją nadpisać
+   ręcznie -- inaczej zostałby złoty pasek nad czerwonym motywem. */
+header {
+  background: #000;
+  border-bottom: 1px solid var(--border);
+  /* 2px zamiast 1px i alfa 0.55 zamiast 0.35. Ta sama grubosc co przy zlocie
+     wygladala tu cienzej, bo ciemna czerwien na czerni ma ulamek kontrastu
+     ktory zolto na lupku mialo za darmo: przy 0.35 linia schodzila do jakiegos
+     #4d0a0a i czytala sie jak brud na krawedzi, nie jak kreska. Grubsza i
+     jasniejsza wraca do tej wagi, ktora pasek mial przedtem. */
+  /* Zloto na czerni ma kontrast, ktorego ciemna czerwien nie miala, wiec ta
+     sama kreska nie potrzebuje juz 0.55 zeby byc widoczna. Grubosc zostaje na
+     2px -- o to chodzilo w tamtej poprawce -- a alfa schodzi do 0.30, zeby
+     pasek nie swiecil mocniej niz aktywna zakladka nad nim. */
+  box-shadow: inset 0 -2px 0 rgba(255,204,0,0.30);
+}
+
+/* Podkreslenie aktywnej zakladki tak samo: 3px zamiast 2px. Rekompensata w
+   dolnym paddingu, ktora tu kiedys stala, juz nie ma czego rekompensowac:
+   wysokosc paska trzyma --header-h na naglowku, a zakladka rozciaga sie w nia
+   i centruje napis. Zostawiony padding-bottom podnosil napisy o polowe swojej
+   wartosci i menu siedzialo przy gornej krawedzi. */
+.nav-btn { border-bottom-width: 3px; }
+/* Ten sam znos do gory co w style.css, tylko wiekszy: Khand ma pod baseline
+   wychodnie z devanagari, wiec pustego miejsca pod wersalikami jest wiecej niz
+   w Archivo, a podkreslenie ma tu 3px zamiast 2px. Zmierzone 2.6px ponad osia
+   paska, wiec padding u gory idzie na 5px zamiast 2px. */
+.nav-btn { padding-top: 5px; }
+
+/* Wordmark: u nich nazwa jest w capsach i to ona jest czerwona, nie dopisek. */
+header h1 { font-family: var(--nav); font-size: 22px; letter-spacing: 0.01em; }
+header h1 .wordmark-sub { color: var(--gold); }
+
+/* body zostaje na 14px z oryginalu -- motyw go nie rusza. Bylo tu scinane do
+   13px, zeby zrekompensowac to, ze Poppins jest szerszy od IBM Plex Sans i
+   wiersz robi sie dluzszy, ale ta kompensacja kosztowala wiecej niz dawala:
+   opis przedmiotu po rozwinieciu to goly <p>, wiec dziedziczy rozmiar stad,
+   a podpis na kafelku ma wlasne, jawne 13.5px i nie ruszyl sie razem z nim.
+   Wychodzilo 13px w detalu przeciwko 13.5px na kafelku -- rozwiniety widok
+   drobniejszy od kafelka, z ktorego sie go otwiera, gdy w oryginale bylo 14
+   przeciwko 13.5. Dluzszy wiersz kosztuje tylko odrobine wiecej ucietego tekstu
+   na kafelku, ktory i tak jest przyciety do dwoch linii. */
+
+/* Ich karty nie mają zaokrągleń i siedzą na cieniejszej ramce niż nasze. */
+.card { border-radius: 0; }
+.search-bar input, .search-bar select { border-radius: 0; }
+
+/* Khand ma metryki kroju z devanagari -- gigantyczne wychodnie gorne i dolne,
+   pod znaki diakrytyczne, ktorych lacinka nigdy nie uzyje. Przy line-height
+   normal to puste miejsce liczy sie do wysokosci wiersza: pasek juz od tego nie
+   rosnie, bo wysokosc jest ustalona z gory, ale pudelko napisu owszem, a to ono
+   jest centrowane w zakladce -- niesymetryczne wychodnie zsuwaja wiec wersaliki
+   z osi paska. Twarda jedynka zdejmuje to swiatlo i sadza napis na srodku. */
+header h1, .nav-btn { line-height: 1; }
+
+/* Khand jest krojem kondensowanym i nie ma osi szerokosci -- nie da sie
+   rozciagnac samych liter, nie deformujac ich. Jedyne, co daje naraz wyzsze i
+   szersze znaki, to wiekszy stopien: 19px zamiast 16px podnosi wysokosc wersaliki
+   i w tej samej proporcji poszerza kazda litere. Do tego 0.02em swiatla -- przy
+   tak ciasnym krojui w capsach same litery rosna szybciej niz odstepy miedzy
+   nimi, wiec bez tego slowo robi sie zbite mimo wiekszego stopnia. */
+.nav-btn { font-size: 19px; letter-spacing: 0.02em; }
+
+/* Wordmark musi urosnac razem z menu, inaczej przestaje je prowadzic: przy 22px
+   obok 19px nazwa strony i pozycja menu waza prawie tyle samo i pasek czyta sie
+   jako piec rownorzednych napisow. Padding u gory z tego samego powodu co przy
+   .nav-btn -- wychodnie Khanda pod baseline sa puste w capsach i podnosza slowo
+   nad os paska. Przy 25px ten znos to 2.9px, wiec padding idzie na 6px. */
+header h1 { font-size: 25px; padding-top: 6px; }
+
+/* Chipy wracaja do IBM Plex Sans. Motyw przestawia --body na Poppinsa i w
+   zdaniach to dziala, ale chip to nie zdanie: szesc do dziesieciu wersalikow
+   przy 10px, w pudelku szerokim na tyle co slowo. Poppins jest krojem o duzych,
+   okraglych literach i szerokim rytmie -- w tej skali to jest dokladnie to,
+   czego chip nie ma jak pomiescic, wiec slowo robi sie zbite i zaczyna dotykac
+   ramki. IBM Plex Sans jest wezszy i ma mocniejsze zakonczenia, wiec przy 10px
+   caps trzyma sie ostro.
+   Zmiana kroju nie rusza wysrodkowania: text-box w style.css przycina wiersz do
+   wysokosci wersalika samego fontu, wiec kazdy krój siedzi w chipie tak samo. */
+.card-tag { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+
+/* Pasek wyszukiwania tez oddaje czysta biel. Ta sama sprawa co nazwy na
+   kartach: --text w motywie idzie na #ffffff, bo FBG pisze biela, ale te dwa
+   pola stoja na wlasnym, jasniejszym tle (--bg2) w otoczeniu czerni, wiec biala
+   nazwa sklepu swiecila mocniej niz cokolwiek dookola. Rozwinieta lista jest
+   najgorszym przypadkiem: dziesiec bialych wierszy jeden pod drugim.
+   `option` dostaje regule osobno -- popup selecta rysuje przegladarka i nie
+   dziedziczy koloru z samego <select>. */
+/* Popup selecta rysuje przegladarka i nie dziedziczy koloru z <select>, wiec
+   lista sklepow potrzebuje wlasnej reguly nawet teraz, gdy --text jest juz
+   dobry. */
+.search-bar select option { color: var(--text); background: var(--bg2); }
+
+/* Liczby w boxach statow sa dokladnie tym, czym byly w oryginale: IBM Plex Sans
+   przy 15px. Zmiana kroju na Poppinsa podnosila je o piata czesc przy tym samym
+   keglu, ale samo zbicie kegla tego nie cofa -- daje ta sama wysokosc cyfry
+   przy cienszej kresce i wezszym rysunku, czyli liczbe, ktora czyta sie
+   mniejsza niz przedtem. Jedyny sposob dostac to, co bylo, to wziac to, co
+   bylo: kroj i rozmiar razem. Dotyczy wylacznie .stat-value. */
+.stat-value { font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; }
+
+/* Atrybut na karcie herosa tez wraca do IBM Plex Sans. Trzeci raz to samo
+   rozpoznanie co przy chipach i liczbach w boxach: Poppins radzi sobie w
+   zdaniach, ale to nie jest zdanie -- to jedno slowo wersalikami przy 10px, z
+   rozstrzelonymi literami, na pasku karty szerokim na jakies sto pikseli.
+   "INTELLIGENCE" ma tam trzynascie znakow i Poppins, kroj o duzych, okraglych
+   literach, wypycha je na cala dostepna szerokosc. IBM Plex Sans jest wezszy i
+   ma mocniejsze zakonczenia, wiec ten sam napis miesci sie z zapasem i przy
+   10px trzyma ksztalt. */
+.hero-attr { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+
+/* Cena na kafelku podnosi sie z 12px ze style.css na 13px. Poppins ma niska wysokosc x i przy rownych 12px cena czytala sie
+   mniejsza niz reszta paska, na ktorym stoi. Pol piksela wystarczy, zeby
+   wrocila na swoje miejsce -- caly piksel wyzej zaczynal konkurowac z nazwa
+   przedmiotu pod spodem.
+   Regula siedzi w motywie, nie w style.css, wiec zwykla strona (index.html)
+   zostaje przy swoim 12px, a odpiecie <link> do tego pliku cofa i to razem z
+   cala reszta motywu.
+   Wysokosc linii dopisana wprost: `normal` liczy sie ze stopnia, wiec sam
+   pol piksela podnioslby pasek ceny o 0.77px i z nim caly kafelek. 18.4px to
+   tyle, ile daje `normal` przy 12px -- kafelek nie drgnie. */
+.card-cost { font-size: 13px; line-height: 18.4px; }
+
+/* ...ale moneta ma zostac tam, gdzie byla. Glif siedzi w jednym stringu z
+   liczba (app.js sklada "moneta spacja liczba"), wiec sam z siebie urosl razem
+   z cena z 16.49 na 17.16px szerokosci -- a podnoszony byl napis, nie ikona.
+   Uchwytem jest .price-icon -- element, ktory app.js zaklada na kazdy glif
+   waluty. Wczesniej stalo tu ::first-letter i to byl blad: siegalo wylacznie
+   pierwszej ikony, wiec na przedmiocie placonym zlotem i drewnem moneta byla
+   poprawiona, a kloda zostawala nietknieta. */
+.card-cost .price-icon {
+  font-size: 12px;
+  vertical-align: 0.5px;
+}
+
+/* Grubosc ceny zostaje przy 600 ze style.css i nie ma tu zadnej reguly.
+   Przedzial byl przejechany w obie strony: 500 i 700 to jedyne sasiednie
+   odmiany, jakie Poppins w ogole ma (wisi jako piec osobnych plikow, bez osi
+   zmiennej -- Google Fonts na `wght@100..900` odpowiada "400: Font family not
+   found"), a wartosci posrednie robilismy wlosowym obrysem `-webkit-text-stroke`
+   na wadze 500: 0.08px ~ 550, 0.12px ~ 575, 0.14px ~ 585, 0.16px ~ 590.
+   Kazda z nich czytala sie za cienko, wiec zostaje czysta szescsetka.
+   Zapis zachowany, bo to jedyny sposob dostac tu polstopnia bez zmiany kroju. */
+
+/* Cena przy tytule o stopien lzejsza: 600 zamiast 700 ze style.css.
+   Posrednie 650 bylo probowane obrysem 0.22px (Poppins nie ma takiej odmiany,
+   wiec wpisanie liczby nic by nie dalo) i odpadlo -- zostaje czysta
+   szescsetka, ta sama, ktora ma teraz cena na kafelku. */
+.detail-price { font-weight: 600; }
+
+/* Ta sama korekta w rozwinieciu, tylko wieksza: przy tekscie 19px moneta
+   siega 16px nad baseline i 4px pod nia (srodek 6px), a cyfry od 15px nad
+   baseline do baseline (srodek 7.5px) -- roznica to poltora piksela i tam
+   widac ja golym okiem. Regula lapie obie ikony naraz, wiec zloto i drewno
+   stoja na tej samej wysokosci. */
+.detail-price .price-icon { vertical-align: 1.5px; }
+
+/* Jedynka zostaje poppinsowa -- ten goly slupek z ledwie zaznaczonym daszkiem
+   jest tu wersja wybrana, nie przeoczeniem. Poppins nie ma dla tej cyfry zadnego
+   wariantu alternatywnego (ani ss01, ani salt), wiec font-feature-settings nic
+   by tu nie dalo; jedyne, co moze ruszyc pojedynczy znak, to podstawienie
+   drugiego kroju przez @font-face z `unicode-range: U+0031` -- a to zmienia
+   szerokosc cyfry i rozjezdza ceny wzgledem siebie. */
+/* Cena przy tytule podniesiona o 0.6px, zeby stala z nim w jednej linii.
+   .detail-title jest flexem z `align-items: baseline`, wiec cena i tytul
+   siedza na wspolnej linii bazowej -- a to nie to samo, co wspolny srodek:
+   tytul ma 25px i same wersaliki, cena 19px, wiec przy rownej baseline srodek
+   ceny wypada nizej. Zmierzone: srodek tytulu na 264.28, srodek ceny na
+   264.88, czyli 0.6px roznicy.
+   Przesuniecie idzie przez position/top, a nie vertical-align, bo cena jest
+   dzieckiem flexa i vertical-align nic by na niej nie zrobilo. `relative` nie
+   rusza ukladu, wiec nic obok nie drga. */
+.detail-price {
+  position: relative;
+  top: -0.6px;
+}
+
