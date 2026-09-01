@@ -27,9 +27,9 @@
       "category": "Consumable",
       "cost": 50,
       "effect_type": "active",
-      "description": "Non-Combat Consumable\nRegenerates 250 mana over 30 seconds when used.",
+      "description": "Non-Combat Consumable\nRegenerates 200 mana over 30 seconds when used.",
       "stats": {
-        "mana_restore": 250,
+        "mana_restore": 200,
         "mana_restore_duration": 30,
         "charges": 1
       },
@@ -115,6 +115,7 @@
         "mana_regen_pct": 25,
         "charges": 1
       },
+      "preview_note": "+25% Mana Regeneration",
       "notes": "",
       "icon": "icons/manastone.png",
       "icon_index": null,
@@ -135,7 +136,7 @@
         "illusion_duration": 60,
         "charges": 1
       },
-      "notes": "",
+      "notes": "Illusions show the lifesteal effect of Mask of Death and Killmaim without gaining it.",
       "icon": "icons/wandofillusion.png",
       "icon_index": null,
       "icon_cols": 4,
@@ -457,21 +458,22 @@
       "cost_lumber": 0
     },
     {
-      "id": "boots_of_health",
-      "name": "Boots of Health",
+      "id": "boots_of_strength",
+      "name": "Boots of Strength",
       "category": "Special",
       "cost": 600,
       "cost_lumber": 1,
-      "effect_type": "passive",
+      "effect_type": "passive+active",
       "stackable": false,
-      "description": "non-stackable",
+      "description": "Switch Active Bonus\nThe form sold in the shop. Using the boots turns them into Boots of Intelligence, and using them again into Boots of Agility. The movement speed and the damage stay through every form, only the attribute bonus changes.",
       "stats": {
+        "str": 5,
+        "hp": 75,
         "move_speed": 60,
-        "hp": 200,
-        "dmg": 10
+        "dmg": 5
       },
       "notes": "Non-Stackable Movement Speed",
-      "icon": "icons/bootsofhealth.png",
+      "icon": "icons/bootsofstrength.png",
       "icon_index": null,
       "icon_cols": 4,
       "icon_rows": 3,
@@ -482,21 +484,22 @@
       ]
     },
     {
-      "id": "boots_of_mana",
-      "name": "Boots of Mana",
+      "id": "boots_of_intelligence",
+      "name": "Boots of Intelligence",
       "category": "Special",
       "cost": 600,
       "cost_lumber": 1,
-      "effect_type": "passive",
+      "effect_type": "passive+active",
       "stackable": false,
-      "description": "non-stackable",
+      "description": "Switch Active Bonus\nThe second form, reached by using the Boots of Strength. Using them again turns them into Boots of Agility. The movement speed and the damage stay through every form, only the attribute bonus changes.",
       "stats": {
+        "int": 5,
+        "mana": 100,
         "move_speed": 60,
-        "mana": 200,
-        "dmg": 10
+        "dmg": 5
       },
       "notes": "Non-Stackable Movement Speed",
-      "icon": "icons/bootsofmana.png",
+      "icon": "icons/bootsofintelligence.png",
       "icon_index": null,
       "icon_cols": 4,
       "icon_rows": 3,
@@ -505,6 +508,48 @@
       "tags": [
         "Movement Speed"
       ]
+    },
+    {
+      "id": "boots_of_agility",
+      "name": "Boots of Agility",
+      "category": "Special",
+      "cost": 600,
+      "cost_lumber": 1,
+      "effect_type": "passive+active",
+      "stackable": false,
+      "description": "Switch Active Bonus\nThe third form, reached by using the Boots of Strength twice. Using them again turns them back into Boots of Strength. The movement speed and the damage stay through every form, only the attribute bonus changes.",
+      "stats": {
+        "agi": 5,
+        "armor": 2,
+        "move_speed": 60,
+        "dmg": 5
+      },
+      "notes": "Non-Stackable Movement Speed",
+      "icon": "icons/bootsofagility.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 3,
+      "raw_code": "I02H",
+      "hide_shop_tag": true,
+      "tags": [
+        "Movement Speed"
+      ]
+    },
+    {
+      "id": "cloak_of_shadows",
+      "name": "Cloak of Shadows",
+      "category": "Special",
+      "cost": 100,
+      "effect_type": "active",
+      "description": "Active Shadow Meld\nProvides the Hero with invisibility when worn.\nAn invisible Hero is untargetable by the enemy unless detected.\nIf the Hero moves, attacks, uses an ability, or casts a spell, the invisibility effect is lost.",
+      "stats": {},
+      "notes": "Breaks on attack or spell cast",
+      "icon": "icons/cloakofshadows.png",
+      "icon_index": null,
+      "icon_cols": 4,
+      "icon_rows": 2,
+      "raw_code": "clsd",
+      "cost_lumber": 0
     },
     {
       "id": "staff_of_teleportation",
@@ -902,6 +947,12 @@
           20,
           20,
           20
+        ],
+        "active_cooldown": [
+          19,
+          18,
+          17,
+          16
         ]
       },
       "cost_lumber": 0
@@ -1043,7 +1094,7 @@
         "cleave_aoe": 255,
         "bonus_dmg": 12
       },
-      "notes": "",
+      "notes": "Illusions do not benefit from it.",
       "icon": "icons/cleavingaxe12.png",
       "icon_index": null,
       "icon_cols": 4,
@@ -1096,7 +1147,9 @@
       "stats": {
         "bonus_dmg": 5,
         "ranged": true,
-        "proc_chance_pct": 15,
+        "chance_heroes_pct": 15,
+        "chance_units_pct": 20,
+        "chance_summons_pct": 35,
         "slow_movement_pct": 50,
         "slow_attack_rate_pct": 25,
         "slow_duration": 7
@@ -1137,11 +1190,11 @@
       "cost": 500,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 30% for 8 seconds.\n\nSplash Damage\nDeals 30% splash damage in an area of 250.",
+      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 35% for 8 seconds.\n\nSplash Damage\nDeals 30% splash damage in an area of 250.",
       "stats": {
         "bonus_dmg": 5,
         "ranged": true,
-        "heal_reduction_pct": 30,
+        "heal_reduction_pct": 35,
         "heal_reduction_duration": 8,
         "splash_pct": 30,
         "splash_aoe": 250
@@ -1190,9 +1243,10 @@
       "stats": {
         "bonus_dmg": 5,
         "ranged": true,
-        "immobilize_duration": 3,
-        "bonus_dmg_summoned": 200,
-        "proc_chance_pct": 10,
+        "bonus_dmg_summoned": 150,
+        "chance_heroes_pct": 10,
+        "chance_units_pct": 25,
+        "chance_summons_pct": 25,
         "slow_duration": 3
       },
       "notes": "",
@@ -1259,7 +1313,7 @@
         "life_steal_pct": 35,
         "bonus_dmg": 10
       },
-      "notes": "Stacks with Orb effects; does NOT stack with itself",
+      "notes": "Stacks with Orb effects; does NOT stack with itself. Illusions do not benefit from it.",
       "icon": "icons/maskofdeath.png",
       "icon_index": null,
       "icon_cols": 4,
@@ -1312,7 +1366,9 @@
         "bonus_dmg_summoned": 400,
         "bonus_dmg": 30,
         "attack_speed_pct": 20,
-        "proc_chance_pct": 15
+        "chance_heroes_pct": 15,
+        "chance_units_pct": 30,
+        "chance_summons_pct": 30
       },
       "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
       "icon_cols": 4,
@@ -1329,17 +1385,17 @@
       "cost_lumber": 3,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 50% for 8 seconds.\n\nSplash Damage\nDeals 50% splash damage in an area of 250.",
+      "description": "Heal Reduction\nReduces the target's healing and regeneration effectiveness by 55% for 8 seconds.\n\nSplash Damage\nDeals 50% splash damage in an area of 250.",
       "stats": {
         "bonus_dmg": 30,
         "ranged": true,
-        "heal_reduction_pct": 50,
+        "heal_reduction_pct": 55,
         "heal_reduction_duration": 8,
         "splash_pct": 50,
         "splash_aoe": 250,
         "attack_speed_pct": 20
       },
-      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects.",
+      "notes": "Orb effects do not stack. Unique - does not stack with other Unique effects. Illusions do not benefit from it.",
       "icon_cols": 4,
       "icon_rows": 3,
       "raw_code": "frhg"
@@ -1568,7 +1624,7 @@
         "life_steal_pct": 50,
         "bonus_dmg": 50
       },
-      "notes": "Legendary - drops on hero death. Stacks with Orb effects. Non-Stackable with other Passive Lifesteal effects.",
+      "notes": "Legendary - drops on hero death. Stacks with Orb effects. Non-Stackable with other Passive Lifesteal effects. Illusions do not benefit from it.",
       "icon": "icons/killmaim.png",
       "icon_index": null,
       "icon_cols": 3,
@@ -1763,22 +1819,6 @@
       ]
     },
     {
-      "id": "cloak_of_shadows",
-      "name": "Cloak of Shadows",
-      "category": "Goblin Laboratory",
-      "cost": 100,
-      "effect_type": "active",
-      "description": "Active Shadow Meld\nProvides the Hero with invisibility when worn.\nAn invisible Hero is untargetable by the enemy unless detected.\nIf the Hero moves, attacks, uses an ability, or casts a spell, the invisibility effect is lost.",
-      "stats": {},
-      "notes": "Breaks on attack or spell cast",
-      "icon": "icons/cloakofshadows.png",
-      "icon_index": null,
-      "icon_cols": 4,
-      "icon_rows": 2,
-      "raw_code": "clsd",
-      "cost_lumber": 0
-    },
-    {
       "id": "gem_of_true_seeing",
       "name": "Gem of True Seeing",
       "category": "Goblin Laboratory",
@@ -1916,7 +1956,7 @@
         "summon_unit": "Ice Revenant",
         "duration": 180
       },
-      "notes": "",
+      "notes": "Not in stock for the first 60 seconds of the game.",
       "icon": "icons/iceshard.png",
       "icon_index": null,
       "icon_cols": 4,
@@ -1930,11 +1970,12 @@
       "category": "Summon",
       "cost": 300,
       "effect_type": "active",
-      "description": "Permanent\nSummons 2 Berserkers to fight for you.\nAlso grants the hero and friendly nearby units increased attack speed and movement speed.",
+      "description": "Summons 2 Berserkers to fight for you.\nAlso grants the hero and friendly nearby units increased attack speed and movement speed.",
       "stats": {
         "summons": 2,
         "summon_unit": "Berserker",
-        "aura": "Attack Rate + Movement Speed"
+        "aura": "Attack Rate + Movement Speed",
+        "charges": 6
       },
       "notes": "",
       "icon": "icons/ancestralstaff.png",
@@ -1950,11 +1991,12 @@
       "category": "Summon",
       "cost": 150,
       "effect_type": "active",
-      "description": "Permanent\nCreates 2 Skeleton Warriors from a corpse.",
+      "description": "Creates 2 Skeleton Warriors from a corpse.",
       "stats": {
         "summons": 2,
         "summon_unit": "Skeleton Warrior",
-        "trigger": "on_corpse"
+        "trigger": "on_corpse",
+        "charges": 6
       },
       "notes": "",
       "icon": "icons/rodofnecromancy.png",

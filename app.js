@@ -183,7 +183,31 @@ function statDelta(curr, prev, key) {
   if (!prev || curr[key] == null || prev[key] == null) return '';
   const d = (parseFloat(curr[key]) - parseFloat(prev[key]));
   if (d === 0) return '';
-  return `<span class="stat-delta">+${Number.isInteger(d) ? d : d.toFixed(1)}</span>`;
+  // Two decimals, because that is the precision the growth is written with:
+  // Blademaster gains 1.75 agility a level, and at one decimal the step read
+  // +1.8 on one row and +1.7 on the next. Hit points and mana step by whole
+  // numbers and keep the short form.
+  return `<span class="stat-delta">+${Number.isInteger(d) ? d : d.toFixed(2)}</span>`;
+}
+
+// The four numbers a hero carries at every level. They sit in the same row as
+// the ones the slider moves, the way a spell's constants sit in its table --
+// what a reader wants is all of a hero's figures in one place, not a second
+// strip above them. Collision size is the one that is not obviously a stat:
+// it is how wide the unit is for pathing, and this map narrows most heroes to
+// 30 while four of them keep the base-game 32.
+function heroConstants(hero) {
+  const boxes = [
+    ['Movement Speed', hero.move_speed],
+    ['Collision Size', hero.collision_size],
+    ['Cast Point', hero.cast_point],
+    ['Base Attack Timer', hero.attack_speed],
+  ];
+  return boxes.filter(([, v]) => v != null).map(([label, v]) => `
+      <div class="level-stat-item">
+        <span class="level-stat-label">${label}</span>
+        <span class="level-stat-value">${v}</span>
+      </div>`).join('');
 }
 
 function renderHeroLevelStats(hero, level) {
@@ -208,17 +232,18 @@ function renderHeroLevelStats(hero, level) {
       </div>
       <div class="level-stat-item">
         <span class="level-stat-label" style="color:var(--str)">Strength</span>
-        <span class="level-stat-value" style="color:var(--str)">${s.str != null ? parseFloat(s.str).toFixed(1) : '?'} ${statDelta(s, prev, 'str')}</span>
+        <span class="level-stat-value" style="color:var(--str)">${s.str != null ? parseFloat(s.str).toFixed(2) : '?'} ${statDelta(s, prev, 'str')}</span>
       </div>
       <div class="level-stat-item">
         <span class="level-stat-label" style="color:var(--agi)">Agility</span>
-        <span class="level-stat-value" style="color:var(--agi)">${s.agi != null ? parseFloat(s.agi).toFixed(1) : '?'} ${statDelta(s, prev, 'agi')}</span>
+        <span class="level-stat-value" style="color:var(--agi)">${s.agi != null ? parseFloat(s.agi).toFixed(2) : '?'} ${statDelta(s, prev, 'agi')}</span>
       </div>
       <div class="level-stat-item">
         <span class="level-stat-label" style="color:var(--int)">Intelligence</span>
-        <span class="level-stat-value" style="color:var(--int)">${s.int != null ? parseFloat(s.int).toFixed(1) : '?'} ${statDelta(s, prev, 'int')}</span>
+        <span class="level-stat-value" style="color:var(--int)">${s.int != null ? parseFloat(s.int).toFixed(2) : '?'} ${statDelta(s, prev, 'int')}</span>
       </div>
       ${s.armor != null ? `<div class="level-stat-item"><span class="level-stat-label">Armor</span><span class="level-stat-value">${s.armor} ${statDelta(s, prev, 'armor')}</span></div>` : ''}
+      ${heroConstants(hero)}
     </div>
   `;
 }
@@ -731,6 +756,16 @@ function showItemTooltip(id, el) {
     ? `${statValue(k, stackValues[k][n - 1])} ${stackLabel(k)}`
     : `+${statValue(k, v * n)} ${stackLabel(k)}`;
 
+  // A rung spelled out in stack_values prints as a bare figure, because it is
+  // not a bonus that adds up -- the Thunderlizard Diamond's cooldown counts
+  // *down* 19/18/17/16. Left in data order it landed between "+100 Damage" and
+  // "+40 Mana" and broke the run of plus signs in half, so the box read as
+  // three unrelated lines. The plain figures sort below the bonuses instead:
+  // inside each group the data order still decides, so this only moves a line
+  // that was never part of the run.
+  const bonusFirst = ([k]) => (k in stackValues ? 1 : 0);
+  const tierStats = [...numericStats].sort((a, b) => bonusFirst(a) - bonusFirst(b));
+
   const stackHtml = item.upgrade_tiers && numericStats.length > 0
     ? `<div style="margin-bottom:16px;">
         <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">STACK PROGRESSION</div>
@@ -739,7 +774,7 @@ function showItemTooltip(id, el) {
             <div class="stat-box${numericStats.length > 1 ? ' stack-box' : ''}">
               <div class="stat-label" style="color:var(--gold)">×${n}</div>
               <div class="stat-value">
-                ${numericStats.map(e => tierCell(e, n)).join('<br>')}
+                ${tierStats.map(e => tierCell(e, n)).join('<br>')}
               </div>
             </div>
           `).join('')}
@@ -1006,10 +1041,11 @@ function structureStats(s) {
     ['Damage', s.damage],
     ['Attack Type', s.attack_type],
     ['Attack Cooldown', s.attack_cooldown],
-    // Damage alone ranks the towers wrongly: the Nerubian Tower hits for the
-    // same 120 as the Arcane one but swings a sixth slower, and only the
-    // per-second figure says so.
+    // Only worth a row when the swing is not one second: since 1.3.9 every
+    // tower and both bases sit at 1.00, so the figure would just repeat the
+    // damage above it. Kept for the day a patch splits the cooldowns again.
     ['Damage per Second', s.damage != null && s.attack_cooldown
+      && s.attack_cooldown !== 1
       ? +(s.damage / s.attack_cooldown).toFixed(1) : undefined],
     ['Attack Range', s.attack_range],
   ];
@@ -1212,7 +1248,11 @@ function populateBuildCreator() {
 }
 
 // ─── SKILL ORDER ───────────────────────────────────────────────────────────────
-const SKILL_LEVELS = 25;
+// Twenty, because that is where MaxHeroLevel in the map's war3mapMisc.txt
+// stops since 1.3.9 -- the grid used to offer five levels the game never
+// hands out. Builds saved with the old 25-cell array still render: the
+// saved-build view maps over whatever length it was given.
+const SKILL_LEVELS = 20;
 const skillOrder = new Array(SKILL_LEVELS).fill(null); // null | 'a0'|'a1'|'a2'|'a3'|'stats'
 
 function renderSkillOrderGrid(hero) {
@@ -1225,9 +1265,12 @@ function renderSkillOrderGrid(hero) {
   section.classList.remove('hidden');
 
   const abilities = hero.abilities.slice(0, 4);
-  const KEY_LABELS = ['Q', 'W', 'E', 'R'];
+  // The key the game actually binds, not the slot. Mini-Dota leaves hero
+  // spells on their base-game hotkeys -- Blizzard is B, Hex is X -- so a QWER
+  // strip here was telling the reader to press the wrong letter. A passive has
+  // no key to press and gets none.
   const rows = [
-    ...abilities.map((ab, i) => ({ key: `a${i}`, label: ab.name, shortLabel: KEY_LABELS[i], maxRank: ab.levels?.length || 6 })),
+    ...abilities.map((ab, i) => ({ key: `a${i}`, label: ab.name, shortLabel: ab.hotkey || '', maxRank: ab.levels?.length || 6 })),
     { key: 'stats', label: 'Stats', shortLabel: 'S', maxRank: 6 }
   ];
 
@@ -1646,6 +1689,12 @@ const STAT_LABELS = {
   invis_duration: 'Duration',
   // A trailing "units" or "heroes" on a spell says who the number lands on,
   // not what is being counted -- "Duration Units" reads like a count of units.
+  // The lightning and slow orbs roll three separate chances -- the World
+  // Editor calls them "Chance To Hit Heroes / Summons / Units" -- and only the
+  // hero one reaches the prose, so each box has to name who it is against.
+  chance_heroes_pct: 'Chance vs Heroes',
+  chance_units_pct: 'Chance vs Units',
+  chance_summons_pct: 'Chance vs Summons',
   duration_units: 'Duration vs Units',
   duration_heroes: 'Duration vs Heroes',
   stun_units: 'Stun Duration vs Units',
@@ -1683,10 +1732,15 @@ function statLabel(key) {
 
 // A price shows only the currencies it is actually paid in. Gold Coins cost a
 // lumber and no gold, and "0 gold" is noise the same way "0 lumber" would be.
+// Each currency glyph gets its own element. It carries no styling of its own
+// here, but it is the only handle a stylesheet has on the icon: a price is one
+// text node, so without it a theme can reach the first glyph with
+// ::first-letter and the second one not at all -- which is how the lumber icon
+// ended up sitting a pixel and a half below the coin on Searing Blade.
 function priceHtml(it, sep = ' ') {
   const parts = [];
-  if (it.cost) parts.push(`🪙 ${it.cost}`);
-  if (it.cost_lumber) parts.push(`🪵 ${it.cost_lumber}`);
+  if (it.cost) parts.push(`<span class="price-icon">🪙</span> ${it.cost}`);
+  if (it.cost_lumber) parts.push(`<span class="price-icon">🪵</span> ${it.cost_lumber}`);
   return parts.join(sep);
 }
 

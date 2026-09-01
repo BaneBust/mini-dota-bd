@@ -266,7 +266,7 @@
         {
           "name": "Purge",
           "type": "Active",
-          "description": "Removes all buffs from a target unit and slows its movement speed. Also deals 600 damage to summoned units."
+          "description": "Removes all buffs from a target unit and slows its movement speed. Also deals 600 damage to summoned units. Costs 65 mana."
         },
         {
           "name": "Lightning Shield",
@@ -369,7 +369,7 @@
       "id": "witch_doctor",
       "name": "Witch Doctor",
       "cost": 250,
-      "cost_lumber": 4,
+      "cost_lumber": 5,
       "building": "Mercenary Camp",
       "health": 745,
       "description": "Places wards for detection, stunning, and area healing.",
@@ -408,24 +408,24 @@
       "id": "druid_of_the_talon",
       "name": "Druid of the Talon",
       "building": "Mercenary Camp",
-      "description": "",
+      "description": "Ranged caster that strips armor with Faerie Fire, locks a unit down with Cyclone, and can shift into a Storm Crow to fly.",
       "buffs": [],
       "abilities": [
         {
           "name": "Faerie Fire",
           "type": "Active",
-          "description": "Reduces the armor of a target enemy unit by ? and grants vision of it for ? (?) seconds.",
+          "description": "Reduces the armor of a target enemy unit by 4 and grants vision of it for 40 (70) seconds. It is cast manually and no longer autocasts.",
           "from_base_game": true
         },
         {
           "name": "Storm Crow Form",
           "type": "Active",
-          "description": "Transforms into a Storm Crow, becoming a flying unit."
+          "description": "Transforms into a Storm Crow, becoming a flying unit. Costs no mana, takes 0.5 seconds to cast and 0.05 seconds to land."
         },
         {
           "name": "Cyclone",
           "type": "Active",
-          "description": "Tosses a target enemy unit into the air, disabling it for 5.0 (?) seconds.\n\nHealth: 680",
+          "description": "Tosses a target enemy unit into the air, disabling it for 5 (20) seconds.",
           "from_base_game": true
         }
       ],
@@ -439,7 +439,8 @@
       "damage_dice": 0,
       "damage_sides": 0,
       "cost": 250,
-      "cost_lumber": 2
+      "cost_lumber": 2,
+      "move_speed": 300
     },
     {
       "id": "zeppelin",

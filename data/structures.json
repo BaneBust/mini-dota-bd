@@ -14,8 +14,8 @@
       "armor_type": "Fortified",
       "damage": 80,
       "attack_type": "Piercing",
-      "attack_cooldown": 0.9,
-      "attack_range": 800,
+      "attack_cooldown": 1,
+      "attack_range": 700,
       "bounty": 400,
       "bounty_lumber": 2,
       "abilities": [
@@ -25,9 +25,9 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "The Middle Guard Tower behind it stays invulnerable until this one falls. Its own team can attack it at any health — the lane towers and the Castle are the exceptions to the rule that stops a team from damaging its own buildings above 50% health.",
       "icon": "icons/guardtower.png",
-      "raw_code": "hgtw"
+      "raw_code": "h00E"
     },
     {
       "id": "middle_guard_tower",
@@ -43,8 +43,8 @@
       "armor_type": "Fortified",
       "damage": 100,
       "attack_type": "Piercing",
-      "attack_cooldown": 0.9,
-      "attack_range": 800,
+      "attack_cooldown": 1,
+      "attack_range": 700,
       "bounty": 600,
       "bounty_lumber": 2,
       "abilities": [
@@ -54,43 +54,38 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "Invulnerable until the Outer Guard Tower falls, and the Inner Guard Tower behind it stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/guardtower.png",
       "raw_code": "h003"
     },
     {
-      "id": "inner_arcane_tower",
-      "name": "Inner Arcane Tower",
+      "id": "inner_guard_tower",
+      "name": "Inner Guard Tower",
       "team": "Human",
       "kind": "Tower",
       "tier": "Inner",
       "count": 2,
-      "description": "The last tower before the Castle. Hits harder than the lane towers but has to be walked into — its range is 200 shorter.",
+      "description": "The last tower before the Castle. Hits harder than the lane towers and, since 1.3.9, reaches just as far.",
       "health": 3000,
       "health_regen": 5,
-      "armor": 20,
+      "armor": 10,
       "armor_type": "Fortified",
       "damage": 120,
       "attack_type": "Piercing",
       "attack_cooldown": 1,
-      "attack_range": 600,
+      "attack_range": 700,
       "bounty": 800,
       "bounty_lumber": 4,
       "abilities": [
-        {
-          "name": "Feedback",
-          "type": "Passive",
-          "description": "Every attack destroys 24 mana — 14 against a hero — and deals bonus damage equal to the mana destroyed. Deals 20 extra damage to summoned units."
-        },
         {
           "name": "Magic Sentry",
           "type": "Passive",
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
-      "icon": "icons/arcanetower.png",
-      "raw_code": "hatw"
+      "notes": "Rebuilt in 1.3.9 on the Guard Tower, replacing the Arcane Tower that stood here and taking Feedback with it. Invulnerable until the Middle Guard Tower falls, and the Castle stays invulnerable until this one goes down. Its own team can attack it at any health.",
+      "icon": "icons/guardtower.png",
+      "raw_code": "h00D"
     },
     {
       "id": "side_guard_tower",
@@ -102,7 +97,7 @@
       "description": "Stands at the corners of the Human base and cannot be attacked. Anything it reaches dies to one hit.",
       "damage": 5000,
       "attack_type": "Piercing",
-      "attack_cooldown": 0.9,
+      "attack_cooldown": 1,
       "attack_range": 700,
       "abilities": [
         {
@@ -135,7 +130,7 @@
       "damage": 200,
       "attack_type": "Piercing",
       "attack_cooldown": 1,
-      "attack_range": 550,
+      "attack_range": 700,
       "abilities": [
         {
           "name": "Magic Sentry",
@@ -143,9 +138,9 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "Invulnerable until the Inner Guard Tower falls. Its own team can attack it at any health.",
       "icon": "icons/castle.png",
-      "raw_code": "hcas"
+      "raw_code": "h00F"
     },
     {
       "id": "fountain_human",
@@ -154,7 +149,7 @@
       "kind": "Fountain",
       "tier": "Fountain",
       "count": 1,
-      "description": "Stands behind the Human base among the shops. Refills health and mana of anything standing near it, and shoots back at whatever comes close.",
+      "description": "Stands behind the Human base among the shops. Restores health and mana to its own team, never to the enemy, and shoots back at whatever comes close.",
       "damage": 300,
       "attack_type": "Piercing",
       "attack_cooldown": 0,
@@ -163,12 +158,12 @@
         {
           "name": "Healing Ward (Fountain)",
           "type": "Aura",
-          "description": "Restores 3.5% of maximum hit points per second to units within 500 range."
+          "description": "Restores 3.5% of maximum hit points per second to friendly units within 500 range."
         },
         {
           "name": "Fountain of Mana",
           "type": "Aura",
-          "description": "Restores 3.5% of maximum mana per second to units within 500 range."
+          "description": "Restores 3.5% of maximum mana per second to friendly units within 500 range."
         },
         {
           "name": "Invulnerable",
@@ -199,8 +194,8 @@
       "armor_type": "Fortified",
       "damage": 80,
       "attack_type": "Piercing",
-      "attack_cooldown": 0.9,
-      "attack_range": 800,
+      "attack_cooldown": 1,
+      "attack_range": 700,
       "bounty": 400,
       "bounty_lumber": 2,
       "abilities": [
@@ -210,9 +205,9 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "The Middle Spirit Tower behind it stays invulnerable until this one falls. Its own team can attack it at any health — the lane towers and the Black Citadel are the exceptions to the rule that stops a team from damaging its own buildings above 50% health.",
       "icon": "icons/spirittower.png",
-      "raw_code": "uzg1"
+      "raw_code": "u00E"
     },
     {
       "id": "middle_spirit_tower",
@@ -228,8 +223,8 @@
       "armor_type": "Fortified",
       "damage": 100,
       "attack_type": "Piercing",
-      "attack_cooldown": 0.9,
-      "attack_range": 800,
+      "attack_cooldown": 1,
+      "attack_range": 700,
       "bounty": 600,
       "bounty_lumber": 2,
       "abilities": [
@@ -239,43 +234,38 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "Invulnerable until the Outer Spirit Tower falls, and the Inner Spirit Tower behind it stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/spirittower.png",
       "raw_code": "u006"
     },
     {
-      "id": "inner_nerubian_tower",
-      "name": "Inner Nerubian Tower",
+      "id": "inner_spirit_tower",
+      "name": "Inner Spirit Tower",
       "team": "Undead",
       "kind": "Tower",
       "tier": "Inner",
       "count": 2,
-      "description": "The last tower before the Black Citadel. Its attack freezes whatever it hits, so walking off it costs more than the damage alone.",
+      "description": "The last tower before the Black Citadel. Hits harder than the lane towers and, since 1.3.9, reaches just as far.",
       "health": 3000,
       "health_regen": 5,
-      "armor": 20,
+      "armor": 10,
       "armor_type": "Fortified",
       "damage": 120,
       "attack_type": "Piercing",
-      "attack_cooldown": 1.15,
-      "attack_range": 600,
+      "attack_cooldown": 1,
+      "attack_range": 700,
       "bounty": 800,
       "bounty_lumber": 4,
       "abilities": [
-        {
-          "name": "Frost Attack",
-          "type": "Passive",
-          "description": "Attacks slow movement speed by 50% and attack speed by 25% for 5 seconds."
-        },
         {
           "name": "Magic Sentry",
           "type": "Passive",
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
-      "icon": "icons/frosttower.png",
-      "raw_code": "uzg2"
+      "notes": "Rebuilt in 1.3.9 on the Spirit Tower, replacing the Nerubian Tower that stood here and taking Frost Attack with it. Invulnerable until the Middle Spirit Tower falls, and the Black Citadel stays invulnerable until this one goes down. Its own team can attack it at any health.",
+      "icon": "icons/spirittower.png",
+      "raw_code": "u00D"
     },
     {
       "id": "side_spirit_tower",
@@ -312,7 +302,7 @@
       "kind": "Base",
       "tier": "Base",
       "count": 1,
-      "description": "The Undead base. Destroy it and the Human team wins the game. Unlike the Castle, its attack also freezes.",
+      "description": "The Undead base. Destroy it and the Human team wins the game.",
       "health": 5000,
       "health_regen": 5,
       "armor": 30,
@@ -320,22 +310,17 @@
       "damage": 200,
       "attack_type": "Piercing",
       "attack_cooldown": 1,
-      "attack_range": 550,
+      "attack_range": 700,
       "abilities": [
-        {
-          "name": "Frost Attack",
-          "type": "Passive",
-          "description": "Attacks slow movement speed by 50% and attack speed by 25% for 5 seconds."
-        },
         {
           "name": "Magic Sentry",
           "type": "Passive",
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Its own team cannot damage it above 50% health — denying only works once it is already half down.",
+      "notes": "Lost Frost Attack in 1.3.9, so both bases now hit the same way. Invulnerable until the Inner Spirit Tower falls. Its own team can attack it at any health.",
       "icon": "icons/blackcitadel.png",
-      "raw_code": "unp2"
+      "raw_code": "u00F"
     },
     {
       "id": "fountain_undead",
@@ -344,7 +329,7 @@
       "kind": "Fountain",
       "tier": "Fountain",
       "count": 1,
-      "description": "Stands behind the Undead base among the shops. Refills health and mana of anything standing near it, and shoots back at whatever comes close.",
+      "description": "Stands behind the Undead base among the shops. Restores health and mana to its own team, never to the enemy, and shoots back at whatever comes close.",
       "damage": 300,
       "attack_type": "Piercing",
       "attack_cooldown": 0,
@@ -353,12 +338,12 @@
         {
           "name": "Healing Ward (Fountain)",
           "type": "Aura",
-          "description": "Restores 3.5% of maximum hit points per second to units within 500 range."
+          "description": "Restores 3.5% of maximum hit points per second to friendly units within 500 range."
         },
         {
           "name": "Fountain of Mana",
           "type": "Aura",
-          "description": "Restores 3.5% of maximum mana per second to units within 500 range."
+          "description": "Restores 3.5% of maximum mana per second to friendly units within 500 range."
         },
         {
           "name": "Invulnerable",

@@ -1,6 +1,7 @@
 # Capture scratch space. The spell art the site draws is converted straight out
 # of the game files into icons/ by tools/icons.py, so nothing here is shipped.
 screenshots/
+.playwright-mcp/
 
 # Local dev files
 start.bat
