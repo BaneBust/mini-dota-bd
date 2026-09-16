@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,500..700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=202">
+  <link rel="stylesheet" href="style.css?v=203">
   <!-- Motyw First Blood Gaming. Nakladka na style.css: nadpisuje tokeny z :root
        i te miejsca, gdzie kolor albo kroj byl wpisany na sztywno. Musi zostac
        ponizej style.css, bo caly dziala na kolejnosci. -->
@@ -22,6 +22,7 @@
       <button class="nav-btn" data-tab="items">Items</button>
       <button class="nav-btn" data-tab="mercs">Mercenaries</button>
       <button class="nav-btn" data-tab="structures">Towers &amp; Bases</button>
+      <button class="nav-btn" data-tab="campaign-items">Campaign Items</button>
       <!-- Hidden, not deleted: app.js reads TAB_NAMES off these buttons and
            clicks the Builds one by selector after a build is saved, so removing
            them from the markup would throw. style.css hides the pair. -->
@@ -87,6 +88,39 @@
         </select>
       </div>
       <div id="structure-list"></div>
+    </section>
+
+    <!-- CAMPAIGN ITEMS TAB
+         The 365 items patch 3.0's Rebirth campaign added to the base game.
+         Grouped by the equipment slot the game names in each tooltip, with the
+         rarity as a second filter, since that is how the campaign sorts them. -->
+    <section id="tab-campaign-items" class="tab">
+      <div class="search-bar">
+        <input type="text" id="citem-search" placeholder="Search campaign items...">
+        <select id="citem-filter-cat">
+          <option value="">All Types</option>
+          <option value="Primary Weapon">Primary Weapons</option>
+          <option value="Secondary Weapon">Secondary Weapons</option>
+          <option value="Helm">Helms</option>
+          <option value="Armor">Armor</option>
+          <option value="Gloves">Gloves</option>
+          <option value="Boots">Boots</option>
+          <option value="Accessory">Accessories</option>
+          <option value="Trinket">Trinkets</option>
+          <option value="Consumable">Consumables</option>
+          <option value="Quest Item">Quest Items</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+        <select id="citem-filter-rarity">
+          <option value="">All Rarities</option>
+          <option value="Common">Common</option>
+          <option value="Uncommon">Uncommon</option>
+          <option value="Rare">Rare</option>
+          <option value="Epic">Epic</option>
+          <option value="Legendary">Legendary</option>
+        </select>
+      </div>
+      <div id="citem-list"></div>
     </section>
 
     <!-- BUILDS TAB -->
@@ -196,6 +230,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js?v=212"></script>
+  <script src="app.js?v=214"></script>
 </body>
 </html>

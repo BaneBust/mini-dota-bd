@@ -25,6 +25,22 @@ poziomach, a gra daje 10 i 5, bo mapa nadpisuje dopiero poziom 3. Sciezke do
 plikow gry mozna podac przez `WC3_GAME_DATA`; bez nich skrypt takie poziomy
 pomija i mowi o tym na wejsciu.
 
+## Przedmioty z kampanii (zakładka Campaign Items)
+
+```bash
+python tools/campaign_items.py            # raport
+python tools/campaign_items.py --write    # data/campaign_items.json + icons/campaign-*.png
+```
+
+365 przedmiotów kampanii Rebirth (patch 3.0) nie ma w mapie — siedzą w plikach
+gry. `campaign_items.py` czyta je przez `tools/casc.py` prosto z instalacji
+(`C:\Program Files (x86)\Warcraft III\Data`, klucz builda na górze `casc.py`):
+`units/itemdata.slk` (wiersze `version=2`), `units/itemstrings.txt` (nazwy,
+tooltipy), `units/abilitydata.slk` (liczby pod placeholdery `<kod,DataA1>`).
+Kategoria to slot z pierwszej linii tooltipa, rzadkość z koloru nazwy, źródło
+z kolumny `tag`. Po nowym patchu podmień `BUILD_KEY` w `casc.py` na wpis
+z `.build.info` i odpal ponownie.
+
 ## Skąd się bierze najnowsza mapa
 
 Skrypt przeszukuje `~/Downloads` i `Warcraft III/Maps/**` wzorcem `*ini*Dota*.w3x`

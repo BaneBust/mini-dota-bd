@@ -366,6 +366,21 @@ main { padding: 24px 20px 64px; max-width: 1440px; margin: 0 auto; }
    past Orb (0.68), Advanced (0.46) and Summon (0.43). */
 .tag-Corruption { background: rgba(144,32,224,0.2); color: #9020e0; border: 1px solid #9020e0; }
 .tag-unknown { background: rgba(100,100,100,0.2); color: #888; border: 1px solid #444; }
+
+/* Campaign items. The rarity chips use the colours the game paints the item
+   names in, so a Rare reads blue here the way it does in the campaign bag.
+   The slot chips are one muted family: the slot is the section heading already,
+   and a loud chip for it would fight the rarity beside it. */
+.tag-Common    { background: rgba(174,174,174,0.15); color: #b8b8b8; border: 1px solid #8a8a8a; }
+.tag-Uncommon  { background: rgba(64,218,0,0.15);    color: #5ce23c; border: 1px solid #40da00; }
+.tag-Rare      { background: rgba(98,149,227,0.18);  color: #7fabf0; border: 1px solid #6295e3; }
+.tag-Epic      { background: rgba(124,42,187,0.22);  color: #b47ae6; border: 1px solid #9a4fd6; }
+.tag-Legendary { background: rgba(242,131,2,0.18);   color: #f5a040; border: 1px solid #f28302; }
+.tag-Primary-Weapon, .tag-Secondary-Weapon, .tag-Helm, .tag-Armor, .tag-Gloves,
+.tag-Boots, .tag-Accessory, .tag-Trinket, .tag-Quest-Item, .tag-Miscellaneous {
+  background: rgba(150,150,160,0.12); color: #a8a8b4; border: 1px solid #5c5c66;
+}
+.tag-source { background: rgba(200,160,60,0.15); color: #d4b060; border: 1px solid #a08040; }
 .tag-unique { background: rgba(255,204,0,0.15); color: var(--gold); border: 1px solid var(--gold); }
 /* How the item works. Quieter than the shop tags -- these say "passive", not
    "legendary", and should not compete with them for the eye. */
@@ -1484,3 +1499,5 @@ main { padding: 24px 20px 64px; max-width: 1440px; margin: 0 auto; }
 /* A team does not stock its towers the way a shop stocks mercenaries -- it has
    one of each kind, standing in several places. The number counts the kinds. */
 .merc-group-count.structure-group-count::after { content: ' types'; }
+/* Campaign items are drops and rewards, not a shop's stock. */
+.merc-group-count.campaign-group-count::after { content: ' items'; }

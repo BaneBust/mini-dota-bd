@@ -12,6 +12,10 @@ let builds = [];
 let buildsError = false;
 let mercs = [];
 let structures = [];
+// The Rebirth campaign's items -- base-game data, not the map's, so they are
+// their own list rather than more entries in `items` (nothing in a build can
+// point at them).
+let campaignItems = [];
 let activeSlot = null;
 let activePhase = null;
 let pickerMode = 'item'; // 'item' or 'legendary'
@@ -25,17 +29,19 @@ const loadJson = (file, key) =>
   fetch(`data/${file}.json`, { cache: 'no-cache' }).then(r => r.json()).then(d => d[key]);
 
 async function loadData() {
-  [heroes, items, mercs, structures] = await Promise.all([
+  [heroes, items, mercs, structures, campaignItems] = await Promise.all([
     loadJson('heroes', 'heroes'),
     loadJson('items', 'items'),
     loadJson('mercs', 'mercs'),
     loadJson('structures', 'structures'),
+    loadJson('campaign_items', 'items'),
   ]);
   fillRoleFilter();
   renderHeroes();
   renderItems();
   renderMercs();
   renderStructures();
+  renderCampaignItems();
   populateBuildCreator();
   await loadBuildsFromSupabase();
 }
@@ -830,6 +836,166 @@ document.getElementById('item-search').addEventListener('input', e => {
 document.getElementById('item-filter-cat').addEventListener('change', e => {
   renderItems(document.getElementById('item-search').value, e.target.value);
 });
+
+// ─── CAMPAIGN ITEMS ────────────────────────────────────────────────────────────
+// Same card and panel as the shop items, fed from data/campaign_items.json.
+// The category is the equipment slot the campaign sorts an item under, and the
+// sections run in the order a character sheet reads: weapons, then armour top
+// to bottom, then the jewellery, then the things that are not equipment.
+const CAMPAIGN_CATEGORY_ORDER = [
+  'Primary Weapon', 'Secondary Weapon', 'Helm', 'Armor', 'Gloves', 'Boots',
+  'Accessory', 'Trinket', 'Consumable', 'Quest Item', 'Miscellaneous',
+];
+const CAMPAIGN_TITLES = {
+  'Primary Weapon': 'Primary Weapons', 'Secondary Weapon': 'Secondary Weapons',
+  Helm: 'Helms', Accessory: 'Accessories', Trinket: 'Trinkets',
+  Consumable: 'Consumables', 'Quest Item': 'Quest Items',
+};
+
+// The slot chip, then the rarity chip; the rarity carries the game's own colour
+// so a card reads at a glance the way the item does in the campaign inventory.
+function campaignTags(it, withSource = true) {
+  const chips = [`<span class="card-tag tag-${it.category.replace(/ /g, '-')}">${it.category}</span>`];
+  if (it.rarity) chips.push(`<span class="card-tag tag-${it.rarity}">${it.rarity}</span>`);
+  if (withSource && it.source && it.source !== 'Droppable') {
+    chips.push(`<span class="card-tag tag-source">${it.source}</span>`);
+  }
+  return chips.join('');
+}
+
+// The game paints its tooltips with |cAARRGGBB ... |r runs, and the campaign
+// data keeps them so the page can show an item the colour the game does. The
+// alpha byte is dropped: the game ignores it too. A |c inside an open run
+// starts a new colour where the game would, and an unclosed run ends with the
+// text. Text between the codes is escaped, since it goes into innerHTML.
+function wc3Colored(text) {
+  if (!text) return '';
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let out = '', open = false;
+  const re = /\|c[0-9a-fA-F]{2}([0-9a-fA-F]{6})|\|r/g;
+  let last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    out += esc(text.slice(last, m.index));
+    if (open) { out += '</span>'; open = false; }
+    if (m[1]) { out += `<span style="color:#${m[1]}">`; open = true; }
+    last = re.lastIndex;
+  }
+  out += esc(text.slice(last));
+  return open ? out + '</span>' : out;
+}
+
+// The card's two lines, from the coloured text. Same rule as cardBlurb -- the
+// label line is the tag beside it and goes; a list of bonuses stays whole,
+// anything else keeps its first line -- decided on the plain text, so the
+// colour codes cannot tip the length checks.
+function campaignBlurb(it) {
+  const plainLines = (it.description || '').split('\n');
+  const colLines = (it.description_colored || it.description || '').split('\n');
+  if (plainLines.length !== colLines.length) return cardBlurb(it.description);
+  const isLabel = plainLines.length > 1 && plainLines[0].length < 40
+    && !plainLines[0].endsWith('.') && !/^\+/.test(plainLines[0]);
+  const start = isLabel ? 1 : 0;
+  const body = plainLines.slice(start);
+  const bonusList = body.length > 1 && body.every(l => /^\+/.test(l));
+  const keep = bonusList ? colLines.slice(start) : colLines.slice(start, start + 1);
+  const text = keep.map(wc3Colored).join('\n');
+  return text ? `<div class="card-sub">${text}</div>` : '';
+}
+
+function renderCampaignItems(filter = '', catFilter = '', rarityFilter = '') {
+  const grid = document.getElementById('citem-list');
+  const q = filter.toLowerCase();
+  const filtered = campaignItems.filter(it =>
+    it.name.toLowerCase().includes(q)
+    && (!catFilter || it.category === catFilter)
+    && (!rarityFilter || it.rarity === rarityFilter));
+
+  if (filtered.length === 0) {
+    grid.innerHTML = noMatches('campaign items', filter);
+    return;
+  }
+
+  const card = it => `
+    <div class="card" role="button" tabindex="0" onclick="showCampaignItemDetail('${it.id}', this)">
+      <div class="card-top-row">
+        ${itemIcon(it, 56) ? `<div class="item-card-icon" ${itemIcon(it, 56)}></div>` : ''}
+        <div class="card-top-text">
+          ${priceHtml(it) ? `<div class="card-cost">${priceHtml(it)}</div>` : ''}
+          <div class="card-name">${it.name}</div>
+        </div>
+      </div>
+      <div class="card-tags-row" style="margin-bottom:8px;">
+        ${campaignTags(it, false)}
+      </div>
+      ${campaignBlurb(it)}
+    </div>`;
+
+  const cats = CAMPAIGN_CATEGORY_ORDER.filter(c => filtered.some(it => it.category === c));
+  grid.innerHTML = cats.map(cat => {
+    const inCat = filtered.filter(it => it.category === cat);
+    return `
+      <div class="merc-group">
+        <h3 class="merc-group-title">${CAMPAIGN_TITLES[cat] || cat}<span class="merc-group-count campaign-group-count">${inCat.length}</span></h3>
+        <div class="card-grid">${inCat.map(card).join('')}</div>
+      </div>`;
+  }).join('');
+}
+
+function showCampaignItemDetail(id, el) {
+  const item = campaignItems.find(it => it.id === id);
+  const stats = Object.entries(item.stats || {});
+  const statsHtml = stats.length === 0 ? '' : `
+    <div style="margin-bottom:16px;">
+      <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:8px;">STATS</div>
+      <div class="stats-grid" style="margin-bottom:0;">
+        ${stats.map(([k, v]) => `
+          <div class="stat-box">
+            <div class="stat-label">${statLabel(k)}</div>
+            <div class="stat-value">${statValue(k, v)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  // The item level is the campaign's own gauge of how far in an item turns up;
+  // the shop tab has no such number, so it sits with the price rather than as
+  // a stat box pretending to be a bonus.
+  const level = item.level ? `<span class="detail-price" style="color:var(--text-dim);">Level ${item.level}</span>` : '';
+
+  const itemHtml = `
+    <div class="detail-header">
+      ${itemIcon(item, 64) ? `<div class="item-detail-icon" ${itemIcon(item, 64)}></div>` : ''}
+      <div style="flex:1;">
+        <div class="detail-title">
+          ${item.name}
+          ${priceHtml(item) ? `<span class="detail-price">${priceHtml(item, '&nbsp; ')}</span>` : ''}
+          ${level}
+        </div>
+        <div class="detail-subtitle card-tags-row" style="margin-top:6px;">
+          ${campaignTags(item)}
+          ${effectTypeTags(item)}
+        </div>
+      </div>
+    </div>
+    ${item.description ? `<p style="color:var(--text); line-height:1.6; margin-bottom:16px; white-space:pre-line;">${wc3Colored(item.description_colored || item.description)}</p>` : ''}
+    ${statsHtml}
+    ${item.notes ? `<div>
+        <div style="color:var(--gold); font-size:12px; font-weight:600; margin-bottom:2px;">NOTES</div>
+        <div style="color:var(--text-dim); font-size:13px; line-height:1.5; font-style:italic;">${wc3Colored(item.notes_colored || item.notes)}</div>
+      </div>` : ''}
+  `;
+
+  showInlineDetail('citem-list', el, itemHtml);
+}
+
+function rerenderCampaignItems() {
+  renderCampaignItems(
+    document.getElementById('citem-search').value,
+    document.getElementById('citem-filter-cat').value,
+    document.getElementById('citem-filter-rarity').value);
+}
+document.getElementById('citem-search').addEventListener('input', rerenderCampaignItems);
+document.getElementById('citem-filter-cat').addEventListener('change', rerenderCampaignItems);
+document.getElementById('citem-filter-rarity').addEventListener('change', rerenderCampaignItems);
 
 // ─── BUILDS ────────────────────────────────────────────────────────────────────
 function renderBuilds(filter = '') {

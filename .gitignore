@@ -12,3 +12,6 @@ __pycache__/
 
 # Base-game icon source (9 MB); only the converted PNGs in icons/ are needed
 war3.w3mod/
+
+# File list tools/casc.py caches after its first read of the game install
+tools/casc_files.pkl
