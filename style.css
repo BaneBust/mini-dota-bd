@@ -981,19 +981,6 @@ main { padding: 24px 20px 64px; max-width: 1440px; margin: 0 auto; }
   align-items: center;
   gap: 5px;
 }
-.so-key {
-  display: inline-block;
-  background: var(--bg3);
-  border: 1px solid var(--gold-dim);
-  color: var(--gold);
-  border-radius: 2px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 1px 5px;
-  flex-shrink: 0;
-}
-.so-row:last-child .so-key { border-color: var(--positive); color: var(--positive); }
 .so-key-name {
   font-size: 10px;
   color: var(--text-dim);
@@ -1455,11 +1442,10 @@ main { padding: 24px 20px 64px; max-width: 1440px; margin: 0 auto; }
   .levels-table-wrap { overflow-x: auto; }
   .levels-table { min-width: 560px; }
   .levels-table th:first-child, .levels-table td:first-child { width: 78px; }
-  /* The name claims the row so the two chips drop under it instead of being
-     pushed off the edge: "Summon Quilbeast" plus "Active" plus "Hotkey: W" does
-     not fit on one phone line, and it was the hotkey that fell off. On a wide
-     screen they all fit, and letting the name grow there only shoved the chips
-     against the far margin, a long way from the spell they describe. */
+  /* The name claims the row so the type chip drops under it instead of being
+     pushed off the edge. On a wide screen it fits, and letting the name grow
+     there only shoved the chip against the far margin, a long way from the
+     spell it describes. */
   .ability-header .ability-name { flex: 1 1 auto; }
 }
 

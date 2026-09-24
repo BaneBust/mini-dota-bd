@@ -442,7 +442,6 @@ function showHeroDetail(id, el) {
           ${iconHtml}
           <span class="ability-name">${ab.name}</span>
           <span class="ability-type">${ab.type}</span>
-          ${ab.hotkey ? `<span class="ability-type">Hotkey: ${ab.hotkey}</span>` : ''}
         </div>
         <div class="ability-desc">${ab.description}</div>
         ${ab.required_level ? `<div class="ability-req">Requires Ability Level ${ab.required_level}${ab.hero_level_required ? ` / Hero Level ${ab.hero_level_required}` : ''}</div>` : ''}
@@ -1431,13 +1430,9 @@ function renderSkillOrderGrid(hero) {
   section.classList.remove('hidden');
 
   const abilities = hero.abilities.slice(0, 4);
-  // The key the game actually binds, not the slot. Mini-Dota leaves hero
-  // spells on their base-game hotkeys -- Blizzard is B, Hex is X -- so a QWER
-  // strip here was telling the reader to press the wrong letter. A passive has
-  // no key to press and gets none.
   const rows = [
-    ...abilities.map((ab, i) => ({ key: `a${i}`, label: ab.name, shortLabel: ab.hotkey || '', maxRank: ab.levels?.length || 6 })),
-    { key: 'stats', label: 'Stats', shortLabel: 'S', maxRank: 6 }
+    ...abilities.map((ab, i) => ({ key: `a${i}`, label: ab.name, maxRank: ab.levels?.length || 6 })),
+    { key: 'stats', label: 'Stats', maxRank: 6 }
   ];
 
   // Count current ranks per skill
@@ -1459,7 +1454,7 @@ function renderSkillOrderGrid(hero) {
     // Quilbeast and Summon Hawk into "Summon Bea…", "Summon Qui…" and "Summon
     // Haw…" -- three rows you had to hover to tell apart, in the one place on
     // the site where you are choosing between them.
-    html += `<div class="so-label" title="${row.label}"><span class="so-key">${row.shortLabel}</span><span class="so-key-name">${row.label}</span></div>`;
+    html += `<div class="so-label" title="${row.label}"><span class="so-key-name">${row.label}</span></div>`;
     for (let l = 0; l < SKILL_LEVELS; l++) {
       const selected = skillOrder[l] === row.key;
       const rankAtThisLevel = selected ? countRankUpTo(row.key, l) : '';
@@ -1746,7 +1741,7 @@ function showInlineDetail(gridId, cardEl, htmlContent) {
 // a spell is a stat, and gets printed whether or not anyone remembered to add
 // a line for it here.
 const ABILITY_STRUCTURAL = new Set([
-  'name', 'type', 'description', 'hotkey', 'icon', 'levels',
+  'name', 'type', 'description', 'icon', 'levels',
   'required_level', 'hero_level_required',
   // its own table under the ladder, not a column in it
   'scaling',
@@ -1841,6 +1836,8 @@ const STAT_LABELS = {
   immolation_aoe: 'Area of Effect',
   cleave_aoe: 'Area of Effect',
   splash_aoe: 'Area of Effect',
+  // Stampede's other area is where the lizards run; this one is each blast.
+  lizard_splash_area: 'Splash Area of Effect',
   // The map's own tooltip heads this effect "Splash Damage", and the bare
   // "Splash" left the number saying 30% of nothing in particular. It is also
   // what makes the box below it work: "Area of Effect" only reads as the splash

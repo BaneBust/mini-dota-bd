@@ -20,6 +20,7 @@ HEROES = {
     'Nngs': 'Sea Witch',            'Npbm': 'Brewmaster',
     'Nplh': 'Pit Lord',             'Ntin': 'Tinker',
     'Nbrn': 'Dark Ranger',          'Nfir': 'Firelord',
+    'Npal': 'Forsaken Paladin',
 }
 
 # Ability fields whose meaning is identical for every ability, so they can be
@@ -56,6 +57,8 @@ ABILITY_NAMES = {
     'AHfs': 'Flame Strike', 'AHbn': 'Banish',
     'AHdr': 'Siphon Mana', 'AHpx': 'Phoenix',
     'AHfa': 'Searing Arrows',
+    'AHcr': 'Consecration', 'AHpa': 'Sacred Aura',
+    'AHcl': 'Cleansing Fire', 'ANcp': 'Righteous Fury',
     # orc
     'AOwk': 'Wind Walk', 'AOcr': 'Critical Strike',
     'AOmi': 'Mirror Image', 'AOww': 'Bladestorm',

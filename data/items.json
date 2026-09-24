@@ -436,7 +436,7 @@
       "id": "boots_of_speed",
       "name": "Boots of Speed",
       "category": "Special",
-      "cost": 250,
+      "cost": 200,
       "effect_type": "passive",
       "unique": false,
       "stackable": false,
@@ -1968,7 +1968,7 @@
       "id": "ancestral_staff",
       "name": "Ancestral Staff",
       "category": "Summon",
-      "cost": 300,
+      "cost": 225,
       "effect_type": "active",
       "description": "Summons 2 Berserkers to fight for you.\nAlso grants the hero and friendly nearby units increased attack speed and movement speed.",
       "stats": {
@@ -1989,7 +1989,7 @@
       "id": "rod_of_necromancy",
       "name": "Rod of Necromancy",
       "category": "Summon",
-      "cost": 150,
+      "cost": 125,
       "effect_type": "active",
       "description": "Creates 2 Skeleton Warriors from a corpse.",
       "stats": {
