@@ -172,7 +172,7 @@
       "effect_type": "active",
       "description": "Summons an invisible and magic immune ward that provides vision in an area and reveals invisible units.",
       "stats": {
-        "detection_range": 1300,
+        "detection_range": 1100,
         "sight_range": 1200,
         "charges": 2
       },
@@ -192,7 +192,7 @@
       "effect_type": "active",
       "description": "Summons an invisible and invulnerable ward that provides vision in an area and reveals invisible units.",
       "stats": {
-        "detection_range": 1300,
+        "detection_range": 1100,
         "sight_range": 1200,
         "charges": 1
       },
@@ -1149,7 +1149,7 @@
         "ranged": true,
         "chance_heroes_pct": 15,
         "chance_units_pct": 20,
-        "chance_summons_pct": 35,
+        "chance_summons_pct": 25,
         "slow_movement_pct": 50,
         "slow_attack_rate_pct": 25,
         "slow_duration": 7
@@ -1169,9 +1169,9 @@
       "cost": 500,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "Creates a Dark Minion when it is the killing blow on an enemy unit.\nThe Dark Minion lasts 80 seconds.\nAdds 5 bonus damage to the attack of a Hero when carried.\nHero's attacks become ranged and can hit air units.",
+      "description": "Creates a Dark Minion when it is the killing blow on an enemy unit.\nThe Dark Minion lasts 80 seconds.\nAdds 6 bonus damage to the attack of a Hero when carried.\nHero's attacks become ranged and can hit air units.",
       "stats": {
-        "bonus_dmg": 5,
+        "bonus_dmg": 6,
         "ranged": true,
         "dark_minion_duration": 80
       },
@@ -1243,7 +1243,7 @@
       "stats": {
         "bonus_dmg": 5,
         "ranged": true,
-        "bonus_dmg_summoned": 150,
+        "bonus_dmg_summoned": 200,
         "chance_heroes_pct": 10,
         "chance_units_pct": 25,
         "chance_summons_pct": 25,
@@ -1264,12 +1264,12 @@
       "cost": 500,
       "effect_type": "on_attack",
       "unique": true,
-      "description": "Unique Poison\nDeals 14 poison damage per second for 8 seconds.",
+      "description": "Unique Poison\nDeals 14 poison damage per second for 6 seconds.",
       "stats": {
         "bonus_dmg": 5,
         "ranged": true,
         "poison_dps": 14,
-        "poison_duration": 8
+        "poison_duration": 6
       },
       "notes": "",
       "icon": "icons/orbofvenom.png",

@@ -1642,7 +1642,7 @@
               "range": 600,
               "area": 800,
               "cooldown": 6,
-              "mana": 10
+              "mana": 25
             },
             {
               "rank": 2,
@@ -1651,7 +1651,7 @@
               "range": 620,
               "area": 730,
               "cooldown": 6,
-              "mana": 10
+              "mana": 25
             },
             {
               "rank": 3,
@@ -1660,7 +1660,7 @@
               "range": 640,
               "area": 760,
               "cooldown": 6,
-              "mana": 10
+              "mana": 25
             },
             {
               "rank": 4,
