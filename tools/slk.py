@@ -28,6 +28,23 @@ def game_data():
     return None
 
 
+def ability_data():
+    """abilitydata.slk z aktualnej instalacji gry (CASC), a gdy jej nie ma --
+    z GameDataFiles. Kopia z deprotectora jest sprzed patchy 2.0 i ma stare
+    liczby (np. Siphon Mana 10 many zamiast 25), wiec jest tylko awaryjna."""
+    try:
+        import casc, tempfile
+        c = casc.Casc()
+        data = c.read('war3.w3mod:units/abilitydata.slk', c.list_files())
+        path = os.path.join(tempfile.gettempdir(), 'wc3_abilitydata.slk')
+        with open(path, 'wb') as f:
+            f.write(data)
+        return read(path)
+    except Exception:
+        root = game_data()
+        return read(os.path.join(root, 'units', 'abilitydata.slk')) if root else {}
+
+
 def read(path):
     """{wartosc pierwszej kolumny (male litery): {nazwa kolumny: wartosc}}."""
     rows, cols, x, y = {}, {}, 1, 1

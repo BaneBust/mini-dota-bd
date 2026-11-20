@@ -1286,6 +1286,7 @@ function structureStats(s) {
       && s.attack_cooldown !== 1
       ? +(s.damage / s.attack_cooldown).toFixed(1) : undefined],
     ['Attack Range', s.attack_range],
+    ['Missile Speed', s.missile_speed],
   ];
   return `<div class="level-stats-row structure-stats">${stats
     .filter(([, v]) => v !== undefined)

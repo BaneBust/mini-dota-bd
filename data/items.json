@@ -781,7 +781,7 @@
       "icon_cols": 4,
       "icon_rows": 3,
       "raw_code": "mcou",
-      "stock_replenish_interval": 80,
+      "stock_replenish_interval": 75,
       "cost_lumber": 0
     },
     {
@@ -802,7 +802,7 @@
       "icon_cols": 4,
       "icon_rows": 3,
       "raw_code": "hcun",
-      "stock_replenish_interval": 80,
+      "stock_replenish_interval": 75,
       "cost_lumber": 0
     },
     {
@@ -823,7 +823,7 @@
       "icon_cols": 4,
       "icon_rows": 3,
       "raw_code": "hval",
-      "stock_replenish_interval": 80,
+      "stock_replenish_interval": 75,
       "cost_lumber": 0
     },
     {
@@ -873,7 +873,7 @@
       "id": "cloak_of_flames",
       "name": "Cloak of Flames +10",
       "category": "Upgradable 2",
-      "cost": 430,
+      "cost": 435,
       "upgrade_tiers": 4,
       "effect_type": "passive",
       "description": "Permanent Immolation\nDeals 10 damage per second in an area of 260.",
@@ -1095,7 +1095,7 @@
       "icon_cols": 4,
       "icon_rows": 3,
       "raw_code": "rump",
-      "stock_replenish_interval": 115
+      "stock_replenish_interval": 110
     },
     {
       "id": "sturdy_war_axe",

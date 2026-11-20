@@ -56,8 +56,7 @@ def main():
     m = im.load(args.map_path or im.find_map())
     doc = json.load(open(os.path.join(ROOT, 'data', 'heroes.json'), encoding='utf-8'))
 
-    root = slk.game_data()
-    stock = slk.read(os.path.join(root, 'units', 'abilitydata.slk')) if root else {}
+    stock = slk.ability_data()
     if not stock:
         print('brak GameDataFiles -- poziomy bez nadpisania beda pominiete')
     base_of = {e['id']: e['base'] for e in m['raw']['w3a']['custom']}

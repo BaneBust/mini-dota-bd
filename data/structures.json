@@ -16,6 +16,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 400,
       "bounty_lumber": 2,
       "abilities": [
@@ -27,7 +28,7 @@
       ],
       "notes": "The Middle Guard Tower behind it stays invulnerable until this one falls. Its own team can attack it at any health — the lane towers and the Castle are the exceptions to the rule that stops a team from damaging its own buildings above 50% health.",
       "icon": "icons/guardtower.png",
-      "raw_code": "h00E"
+      "raw_code": "h004"
     },
     {
       "id": "middle_guard_tower",
@@ -45,6 +46,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 600,
       "bounty_lumber": 2,
       "abilities": [
@@ -56,7 +58,7 @@
       ],
       "notes": "Invulnerable until the Outer Guard Tower falls, and the Inner Guard Tower behind it stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/guardtower.png",
-      "raw_code": "h003"
+      "raw_code": "h00A"
     },
     {
       "id": "inner_guard_tower",
@@ -74,6 +76,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 800,
       "bounty_lumber": 4,
       "abilities": [
@@ -85,7 +88,7 @@
       ],
       "notes": "Rebuilt in 1.3.9 on the Guard Tower, replacing the Arcane Tower that stood here and taking Feedback with it. Invulnerable until the Middle Guard Tower falls, and the Castle stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/guardtower.png",
-      "raw_code": "h00D"
+      "raw_code": "h00G"
     },
     {
       "id": "side_guard_tower",
@@ -99,6 +102,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "abilities": [
         {
           "name": "Invulnerable",
@@ -113,7 +117,7 @@
       ],
       "notes": "Four per team, two above the top lane and two below the bottom one, flanking the base. It carries no health or armor figure here because nothing can bring it down.",
       "icon": "icons/guardtower.png",
-      "raw_code": "h005"
+      "raw_code": "h00H"
     },
     {
       "id": "castle",
@@ -131,6 +135,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "abilities": [
         {
           "name": "Magic Sentry",
@@ -140,7 +145,7 @@
       ],
       "notes": "Invulnerable until the Inner Guard Tower falls. Its own team can attack it at any health.",
       "icon": "icons/castle.png",
-      "raw_code": "h00F"
+      "raw_code": "o000"
     },
     {
       "id": "fountain_human",
@@ -154,6 +159,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 0,
       "attack_range": 500,
+      "missile_speed": 900,
       "abilities": [
         {
           "name": "Rejuvenation Aura",
@@ -171,9 +177,9 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given.",
+      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given. It counts as a Structure, so Archmage's Mass Teleport and the Staff of Teleportation can target it and land right at the Fountain.",
       "icon": "icons/fountain.png",
-      "raw_code": "o00D"
+      "raw_code": "nfoh"
     },
     {
       "id": "outer_spirit_tower",
@@ -191,6 +197,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 400,
       "bounty_lumber": 2,
       "abilities": [
@@ -202,7 +209,7 @@
       ],
       "notes": "The Middle Spirit Tower behind it stays invulnerable until this one falls. Its own team can attack it at any health — the lane towers and the Black Citadel are the exceptions to the rule that stops a team from damaging its own buildings above 50% health.",
       "icon": "icons/spirittower.png",
-      "raw_code": "u00E"
+      "raw_code": "h00K"
     },
     {
       "id": "middle_spirit_tower",
@@ -220,6 +227,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 600,
       "bounty_lumber": 2,
       "abilities": [
@@ -231,7 +239,7 @@
       ],
       "notes": "Invulnerable until the Outer Spirit Tower falls, and the Inner Spirit Tower behind it stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/spirittower.png",
-      "raw_code": "u006"
+      "raw_code": "h00L"
     },
     {
       "id": "inner_spirit_tower",
@@ -249,6 +257,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "bounty": 800,
       "bounty_lumber": 4,
       "abilities": [
@@ -260,7 +269,7 @@
       ],
       "notes": "Rebuilt in 1.3.9 on the Spirit Tower, replacing the Nerubian Tower that stood here and taking Frost Attack with it. Invulnerable until the Middle Spirit Tower falls, and the Black Citadel stays invulnerable until this one goes down. Its own team can attack it at any health.",
       "icon": "icons/spirittower.png",
-      "raw_code": "u00D"
+      "raw_code": "h00J"
     },
     {
       "id": "side_spirit_tower",
@@ -274,6 +283,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "abilities": [
         {
           "name": "Invulnerable",
@@ -288,7 +298,7 @@
       ],
       "notes": "Four per team, two above the top lane and two below the bottom one, flanking the base. It carries no health or armor figure here because nothing can bring it down.",
       "icon": "icons/spirittower.png",
-      "raw_code": "u009"
+      "raw_code": "h00S"
     },
     {
       "id": "black_citadel",
@@ -306,6 +316,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 1,
       "attack_range": 700,
+      "missile_speed": 1700,
       "abilities": [
         {
           "name": "Magic Sentry",
@@ -315,7 +326,7 @@
       ],
       "notes": "Lost Frost Attack in 1.3.9, so both bases now hit the same way. Invulnerable until the Inner Spirit Tower falls. Its own team can attack it at any health.",
       "icon": "icons/blackcitadel.png",
-      "raw_code": "u00F"
+      "raw_code": "h00I"
     },
     {
       "id": "fountain_undead",
@@ -329,6 +340,7 @@
       "attack_type": "Piercing",
       "attack_cooldown": 0,
       "attack_range": 500,
+      "missile_speed": 900,
       "abilities": [
         {
           "name": "Rejuvenation Aura",
@@ -346,9 +358,9 @@
           "description": "Reveals invisible units within 900 range."
         }
       ],
-      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given.",
+      "notes": "Both teams field the same building. Its attack carries no cooldown of its own — the map switched the attack on and left the field at zero — so it fires as fast as the animation allows and no damage per second can be given. It counts as a Structure, so Archmage's Mass Teleport and the Staff of Teleportation can target it and land right at the Fountain.",
       "icon": "icons/fountaindefiled.png",
-      "raw_code": "o00D"
+      "raw_code": "nfoh"
     }
   ]
 }

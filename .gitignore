@@ -15,3 +15,4 @@ war3.w3mod/
 
 # File list tools/casc.py caches after its first read of the game install
 tools/casc_files.pkl
+tools/casc_files_*.pkl

@@ -3,9 +3,24 @@ import struct, zlib, sys, pickle
 from pathlib import Path
 
 ROOT = Path(r"C:\Program Files (x86)\Warcraft III\Data")
-BUILD_KEY = "3a9d8f26806936764d2d9ad526a65e04"
 HERE = Path(__file__).parent
-CACHE = HERE / "casc_files.pkl"
+
+
+def current_build_key():
+    """Build Key aktywnej wersji z .build.info -- po kazdej aktualizacji gry
+    jest inny, a stary wskazuje na dane sprzed patcha."""
+    lines = (ROOT.parent / ".build.info").read_text().splitlines()
+    head = [c.split("!")[0] for c in lines[0].split("|")]
+    for line in lines[1:]:
+        row = dict(zip(head, line.split("|")))
+        if row.get("Active") == "1":
+            return row["Build Key"]
+    return dict(zip(head, lines[1].split("|")))["Build Key"]
+
+
+BUILD_KEY = current_build_key()
+# Lista plikow zalezy od wersji, wiec cache tez.
+CACHE = HERE / f"casc_files_{BUILD_KEY[:8]}.pkl"
 
 
 def read_config(h):

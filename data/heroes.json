@@ -249,44 +249,49 @@
           "name": "Holy Light",
           "type": "active",
           "description": "A holy light that can heal a friendly living unit or deal magic damage to an enemy undead unit. Healing pierces spell immunity.",
-          "cooldown": 5,
           "range": 800,
           "levels": [
             {
               "rank": 1,
-              "heal": 200,
+              "heal": 140,
               "damage": 100,
-              "mana": 65
+              "mana": 65,
+              "cooldown": 5.5
             },
             {
               "rank": 2,
-              "heal": 330,
+              "heal": 280,
               "damage": 200,
-              "mana": 70
+              "mana": 70,
+              "cooldown": 5.5
             },
             {
               "rank": 3,
-              "heal": 460,
+              "heal": 420,
               "damage": 300,
-              "mana": 75
+              "mana": 75,
+              "cooldown": 5.5
             },
             {
               "rank": 4,
-              "heal": 590,
+              "heal": 560,
               "damage": 400,
-              "mana": 80
+              "mana": 80,
+              "cooldown": 5.5
             },
             {
               "rank": 5,
-              "heal": 720,
+              "heal": 700,
               "damage": 500,
-              "mana": 85
+              "mana": 85,
+              "cooldown": 5.5
             },
             {
               "rank": 6,
-              "heal": 850,
+              "heal": 840,
               "damage": 600,
-              "mana": 90
+              "mana": 90,
+              "cooldown": 5.5
             }
           ],
           "icon": "icons/spell-holylight.png"
@@ -1646,8 +1651,8 @@
               "drain_per_sec": 50,
               "transfer_per_sec": 80,
               "range": 600,
-              "area": 800,
-              "cooldown": 6,
+              "area": 700,
+              "cooldown": 8,
               "mana": 25
             },
             {
@@ -1656,7 +1661,7 @@
               "transfer_per_sec": 120,
               "range": 620,
               "area": 730,
-              "cooldown": 6,
+              "cooldown": 8,
               "mana": 25
             },
             {
@@ -1665,7 +1670,7 @@
               "transfer_per_sec": 170,
               "range": 640,
               "area": 760,
-              "cooldown": 6,
+              "cooldown": 8,
               "mana": 25
             },
             {
@@ -3459,7 +3464,7 @@
       "race": null,
       "primary_stat": "STR",
       "roles": ["Support", "Pusher", "Mage"],
-      "difficulty": 2,
+      "difficulty": 1,
       "difficulty_max": 4,
       "str_base": 23,
       "str_growth": 2.7,
@@ -3706,37 +3711,37 @@
           "levels": [
             {
               "rank": 1,
-              "heal": 200,
+              "heal": 140,
               "damage": 100,
               "mana": 75
             },
             {
               "rank": 2,
-              "heal": 330,
+              "heal": 280,
               "damage": 200,
               "mana": 80
             },
             {
               "rank": 3,
-              "heal": 460,
+              "heal": 420,
               "damage": 300,
               "mana": 85
             },
             {
               "rank": 4,
-              "heal": 590,
+              "heal": 560,
               "damage": 400,
               "mana": 90
             },
             {
               "rank": 5,
-              "heal": 720,
+              "heal": 700,
               "damage": 500,
               "mana": 95
             },
             {
               "rank": 6,
-              "heal": 850,
+              "heal": 840,
               "damage": 600,
               "mana": 100
             }
@@ -3860,7 +3865,7 @@
       "race": null,
       "primary_stat": "INT",
       "roles": ["Carry", "Pusher", "Mage"],
-      "difficulty": 1,
+      "difficulty": 2,
       "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
@@ -4103,7 +4108,7 @@
           "type": "active",
           "description": "Deals magic damage to enemy units in an area. Slows movement by 50% and attack rate by 25%.",
           "cooldown": 8,
-          "range": 800,
+          "range": 750,
           "move_slow_pct": 50,
           "attack_slow_pct": 25,
           "levels": [
@@ -4289,7 +4294,7 @@
           "levels": [
             {
               "rank": 1,
-              "damage_per_sec_pct": 2.5,
+              "damage_per_sec_pct": 3,
               "mana": 200,
               "area": 296
             },
@@ -4727,7 +4732,7 @@
       "race": null,
       "primary_stat": "STR",
       "roles": ["Tank", "Stun", "Summoner", "Pusher"],
-      "difficulty": 1,
+      "difficulty": 2,
       "difficulty_max": 4,
       "str_base": 26,
       "str_growth": 3.2,
@@ -5172,7 +5177,7 @@
       "race": null,
       "primary_stat": "INT",
       "roles": ["Support", "Stun", "Jungler", "Summoner", "Pusher"],
-      "difficulty": 1,
+      "difficulty": 2,
       "difficulty_max": 4,
       "str_base": 16,
       "str_growth": 2.0,
@@ -5418,56 +5423,56 @@
             {
               "rank": 1,
               "damage": 80,
-              "duration_heroes": 2.5,
+              "duration_heroes": 2.75,
               "duration_units": 8,
               "range": 600,
               "mana": 75,
-              "cooldown": 8
+              "cooldown": 8.5
             },
             {
               "rank": 2,
-              "damage": 160,
-              "duration_heroes": 2.75,
+              "damage": 120,
+              "duration_heroes": 3,
               "duration_units": 10,
               "range": 640,
               "mana": 85,
-              "cooldown": 8
+              "cooldown": 8.5
             },
             {
               "rank": 3,
-              "damage": 240,
-              "duration_heroes": 3,
+              "damage": 180,
+              "duration_heroes": 3.25,
               "duration_units": 12,
               "range": 680,
               "mana": 95,
-              "cooldown": 8
+              "cooldown": 8.5
             },
             {
               "rank": 4,
-              "damage": 320,
-              "duration_heroes": 3.25,
+              "damage": 300,
+              "duration_heroes": 3.5,
               "duration_units": 14,
               "range": 720,
               "mana": 105,
-              "cooldown": 8
+              "cooldown": 8.5
             },
             {
               "rank": 5,
-              "damage": 400,
-              "duration_heroes": 3.5,
+              "damage": 450,
+              "duration_heroes": 3.75,
               "duration_units": 16,
               "range": 760,
               "mana": 115,
-              "cooldown": 8
+              "cooldown": 8.5
             },
             {
               "rank": 6,
-              "damage": 480,
-              "duration_heroes": 3.75,
+              "damage": 500,
+              "duration_heroes": 4,
               "duration_units": 18,
               "range": 800,
               "mana": 125,
-              "cooldown": 8
+              "cooldown": 8.5
             }
           ],
           "icon": "icons/spell-entanglingroots.png"
@@ -5634,7 +5639,7 @@
       "race": null,
       "primary_stat": "AGI",
       "roles": ["Carry", "Jungler", "Summoner"],
-      "difficulty": 1,
+      "difficulty": 3,
       "difficulty_max": 4,
       "str_base": 18,
       "str_growth": 1.9,
@@ -6818,7 +6823,7 @@
               "rank": 6,
               "mana": 25,
               "distance": 1110,
-              "cooldown": 0.45
+              "cooldown": 0.5
             }
           ],
           "icon": "icons/spell-blink.png"
@@ -6828,7 +6833,6 @@
           "type": "active",
           "description": "Hurls a poisoned dagger which deals initial enhanced damage and then deals magic damage over time. The poison slows the target's movement speed by 50% for 3 seconds.",
           "cooldown": 8,
-          "duration": 15,
           "move_slow_pct": 50,
           "slow_duration": 3,
           "levels": [
@@ -6837,42 +6841,48 @@
               "strike_dmg": 75,
               "dot_dmg": 75,
               "mana": 75,
-              "range": 350
+              "range": 350,
+              "duration": 15
             },
             {
               "rank": 2,
               "strike_dmg": 150,
               "dot_dmg": 150,
               "mana": 85,
-              "range": 350
+              "range": 350,
+              "duration": 15
             },
             {
               "rank": 3,
               "strike_dmg": 225,
               "dot_dmg": 225,
               "mana": 95,
-              "range": 350
+              "range": 350,
+              "duration": 15
             },
             {
               "rank": 4,
               "strike_dmg": 300,
               "dot_dmg": 300,
               "mana": 105,
-              "range": 350
+              "range": 350,
+              "duration": 15
             },
             {
               "rank": 5,
               "strike_dmg": 375,
               "dot_dmg": 375,
               "mana": 115,
-              "range": 350
+              "range": 350,
+              "duration": 15.1
             },
             {
               "rank": 6,
               "strike_dmg": 450,
               "dot_dmg": 450,
               "mana": 125,
-              "range": 350
+              "range": 350,
+              "duration": 15.1
             }
           ],
           "icon": "icons/spell-shadowstrike.png"
@@ -7766,8 +7776,8 @@
           "levels": [
             {
               "rank": 1,
-              "hp_per_sec": 25,
-              "range": 500,
+              "hp_per_sec": 26,
+              "range": 600,
               "mana": 35,
               "area": 850,
               "duration": 8,
@@ -8323,7 +8333,7 @@
       "race": null,
       "primary_stat": "INT",
       "roles": ["Carry", "Summoner", "Pusher"],
-      "difficulty": 1,
+      "difficulty": 2,
       "difficulty_max": 4,
       "str_base": 15,
       "str_growth": 2.0,
@@ -11096,7 +11106,7 @@
               "dps": 45,
               "heal_reduction_pct": 30,
               "cooldown": 7.5,
-              "area": 310
+              "area": 320
             },
             {
               "rank": 3,
@@ -11104,7 +11114,7 @@
               "dps": 60,
               "heal_reduction_pct": 35,
               "cooldown": 7,
-              "area": 320
+              "area": 340
             },
             {
               "rank": 4,
@@ -11112,7 +11122,7 @@
               "dps": 75,
               "heal_reduction_pct": 40,
               "cooldown": 6.5,
-              "area": 330
+              "area": 360
             },
             {
               "rank": 5,
@@ -11120,7 +11130,7 @@
               "dps": 90,
               "heal_reduction_pct": 45,
               "cooldown": 6,
-              "area": 340
+              "area": 380
             },
             {
               "rank": 6,
@@ -11128,7 +11138,7 @@
               "dps": 105,
               "heal_reduction_pct": 50,
               "cooldown": 5.5,
-              "area": 350
+              "area": 400
             }
           ],
           "icon": "icons/spell-consecration.png"
